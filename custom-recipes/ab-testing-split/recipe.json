@@ -1,0 +1,89 @@
+{
+    "meta": {
+        "label": "AB testing split",
+        "description": "Split a list of users into a A group and a B group.",
+        "icon": "icon-beaker"
+    },
+    "selectableFromDataset": "user_list",
+    "kind": "PYTHON",
+    "inputRoles": [
+        {
+            "name": "user_list",
+            "label": "Dataset with the reference of the users involved in the experiment ",
+            "description": "Dataframe containing the ids, the emails of the users in the experiment",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        }
+    ],
+    "outputRoles": [
+        {
+            "name": "groups",
+            "label": "Experiment dataset",
+            "description": "Input dataset with an extra column containing the group",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        },
+        {
+            "name": "tracking",
+            "label": "Tracking dataset",
+            "description": "Keeps the input parameters of the experiment",
+            "arity": "UNARY",
+            "required": true,
+            "acceptsDataset": true
+        },
+        {
+            "name": "A_group",
+            "label": "A group (optional)",
+            "description": "Dataset containing the users who are part of the group A",
+            "arity": "UNARY",
+            "required": false,
+            "acceptsDataset": true
+        },
+        {
+            "name": "B_group",
+            "label": "B group (optional)",
+            "description": "Dataset containing the users who are part of the group B",
+            "arity": "UNARY",
+            "required": false,
+            "acceptsDataset": true
+        }
+    ],
+    "params": [
+        {
+            "name": "input_parameters",
+            "label": "Input parameters",
+            "type": "SEPARATOR"
+        },
+        {
+            "name": "user_reference",
+            "type": "COLUMN",
+            "label": "User reference",
+            "description": "Column containing user reference (user Id , email...). Each user should have a unique reference.",
+            "columnRole": "user_list"
+        },
+        {
+            "type": "SELECT",
+            "name": "attribution_method",
+            "label": "Attribution for leftover users",
+            "selectChoices": [
+                {
+                    "value": "leftover_to_A",
+                    "label": "Group A"
+                },
+                {
+                    "value": "leftover_to_B",
+                    "label": "Group B"
+                },
+                {
+                    "value": "leftover_blank",
+                    "label": "Leave blank"
+                }
+            ],
+            "defaultValue": "leftover_to_A",
+            "visibilityCondition": true
+        }
+    ],
+    "resourceKeys": []
+}

@@ -1,0 +1,24 @@
+{
+    "meta": {
+        "label": "AB testing design",
+        "description": "This tool helps you design AB testing by computing the minimum sample size that you need",
+        "icon": " icon-zoom-in"
+    },
+    "baseType": "STANDARD",
+    "hasBackend": "true",
+    "noJSSecurity": "false",
+    "standardWebAppLibraries": [
+        "jquery",
+        "dataiku",
+        "bootstrap",
+        "d3"
+    ],
+    "params": [
+    ],
+    "roles": [
+        {
+            "type": "DATASET",
+            "targetParamsKey": "input_dataset"
+        }
+    ]
+}

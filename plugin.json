@@ -1,0 +1,16 @@
+{
+    "id": "ab-testing",
+    "version": "0.0.1",
+    "meta": {
+        "label": "AB testing",
+        "description": "Perform AB testing in the most enjoyable way",
+        "author": "Dataiku (Adam JELLEY and Marine SOBAS)",
+        "icon": "icon-beaker",
+        "tags": [
+            "Marketing"
+        ],
+        "url": "https://www.dataiku.com/dss/plugins/info/ab-testing.html",
+        "supportLevel": "NOT_SUPPORTED",
+        "licenseInfo": "Apache Software License"
+    }
+}
