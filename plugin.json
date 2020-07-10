@@ -1,0 +1,15 @@
+{
+    "id": "ab-testing",
+    "version": "0.0.1",
+    "meta": {
+        "label": "AB Testing",
+        "description": "",
+        "author": "Dataiku (Marine SOBAS)",
+        "icon": "icon-xxx",
+        "tags": [
+            "xxx"
+        ],
+        "url": "https://www.dataiku.com/product/plugins/ab-testing/",
+        "licenseInfo": "Apache Software License"
+    }
+}
