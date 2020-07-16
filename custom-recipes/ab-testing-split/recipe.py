@@ -30,17 +30,26 @@ if B_output:
 
 config = get_recipe_config()
 reference_column = config.get("user_reference")
+
+size_definition = config.get("sample_size_definition")
+if size_definition == "web_app":
+    variables = dataiku.get_custom_variables()
+    tracking = set_tracking_values(variables)
+    n_A = int(tracking["n_A"])
+    n_B = int(tracking["n_B"])
+elif size_definition == "manual":
+    n_A = config.get("n_A")
+    n_B = config.get("n_B")
+    if n_A <= 0 or n_B <= 0:
+        raise ValueError("Sample sizes need to be positive")
+    tracking = {"n_A": n_A, "n_B": n_B}
+
 attribution_method = config.get("attribution_method")
 
 
 # ==============================================================================
 # RUN
 # ==============================================================================
-variables = dataiku.get_custom_variables()
-tracking = set_tracking_values(variables)
-n_A = int(tracking["n_A"])
-n_B = int(tracking["n_B"])
-
 experiment_population = input_df[[reference_column]].drop_duplicates().values
 check_sample_size(experiment_population, n_A, n_B)
 

@@ -314,11 +314,11 @@
                     <tr>
                         <td class="confusion_header">Actual : No changes</td>
                         <td>1 - \( \alpha = \) stat significance </td>
-                        <td> \( \alpha = \) false negative </td>
+                        <td> \( \alpha = \) false positive probability </td>
                     </tr>
                     <tr>
                         <td class="confusion_header">Actual : Significant changes</td>
-                        <td>\( \beta\) = false positive</td>
+                        <td>\( \beta\) = false negative probability</td>
                         <td>1-\( \beta = \) power</td>
                     </tr>
                 </tbody>
@@ -439,8 +439,8 @@
                     $$
                     \left\{
                     \begin{array}{ll}
-                    P_{H_{0}}(|D| \leq t) \geq 1-\alpha & (1) \\
-                    P_{H_{1}}(|D| \leq t) \leq \beta & (2)
+                    P_{H_{0}}(|D| \leq t) = 1-\alpha & (1) \\
+                    P_{H_{1}}(|D| \leq t) = \beta & (2)
                     \end{array}
                     \right.
                     $$
@@ -459,24 +459,29 @@
                     \( \phi \) is symetric so:
                     $$ \Leftrightarrow 2\phi(x)-1= 1- \alpha $$
                     $$\Leftrightarrow \phi(x) = 1- \frac{\alpha}{2}$$
-                    $$ \Leftrightarrow t = \phi ^{-1}(1- \frac{\alpha}{2}) = z_{1-\frac{\alpha}{2}} $$
+                    $$ \Leftrightarrow x = \phi ^{-1}(1- \frac{\alpha}{2}) = z_{1-\frac{\alpha}{2}} $$
                     As a consequence :
-                    $$ P(|U_0|\leq z_{\frac{\alpha}{2}} ) = 1 - \alpha $$
+                    $$ P(|U_0|\leq z_{1-\frac{\alpha}{2}} ) = 1 - \alpha $$
+                    As, \(U_0 = \frac{D}{\sigma _p} \), 
                     $$ \Leftrightarrow P(|D| \leq z_{1-\frac{\alpha}{2}} \times \sigma_p ) = 1- \alpha $$
                     with \( \sigma _p^2 = \frac{p_A(1-p_A)}{n_A} + \frac{p_B(1-p_B)}{n_B} =
                     \frac{p_A+p_B}{n_A+n_B}(1-\frac{p_A+p_B}{n_A + n_B})(\frac{1}{n_A} + \frac{1}{n_B}) \)
+                </div>
+                <div class="derivation">
+                    Given (1), 
                     $$ \Leftrightarrow t = z_{1-\frac{\alpha}{2}} \times \sigma_p $$
                 </div>
                 <div class="derivation">
                     Consequently,
-                    $$(2) \Leftrightarrow P_{H_1}(|D| \leq z_{1-\frac{\alpha}{2}} \sigma_p )\leq \beta $$
-                    $$\Leftrightarrow P(U_1 \leq z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) + P(U_1 \leq -
-                    z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) \leq \beta $$
+                    $$(2) \Leftrightarrow P_{H_1}(|D| \leq z_{1-\frac{\alpha}{2}} \sigma_p ) = \beta $$
+                    As \(U_1 = \frac{D - (p_B-p_A)}{\sigma _p}\)
+                    $$\Leftrightarrow P(U_1 \leq z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) - P(U_1 \leq -
+                    z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) = \beta $$
                     If we assume that \(\frac{p_B-p_A}{\sigma_p} \geq 1\), then :
                     $$ P(U_1\leq - z_{1-\frac{\alpha}{2}}- \frac{(p_B-p_A)}{\sigma_p}) \leq \phi(-1 -
                     z_{1-\frac{\alpha}{2}}) \simeq 0 $$
                     So :
-                    $$ P(U_1 \leq z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) \leq \beta $$
+                    $$ P(U_1 \leq z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) = \beta $$
 
                     Besides : \(\forall x \in R, \)
                     $$ P(U_1 \leq x) = \beta\ $$

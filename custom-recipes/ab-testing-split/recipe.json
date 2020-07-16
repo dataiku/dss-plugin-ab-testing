@@ -65,6 +65,48 @@
         },
         {
             "type": "SELECT",
+            "name": "sample_size_definition",
+            "label": "Sample size definition",
+            "selectChoices": [
+                {
+                    "value": "web_app",
+                    "label": "Retrieve sizes computed in the Web app"
+                },
+                {
+                    "value": "manual",
+                    "label": "Edit sample sizes manually "
+                }
+            ],
+            "defaultValue": "web_app",
+            "visibilityCondition": true
+        },
+        {
+            "type": "INT",
+            "name": "n_A",
+            "label": "Sample size for variation A",
+            "description": "Minimul sample size for the A group",
+            "parameterSetId": "n_A",
+            "visibilityCondition": "model.sample_size_definition == 'manual'"
+        },
+        {
+            "type": "INT",
+            "name": "n_B",
+            "label": "Sample size for variation B",
+            "description": "Minimul sample size for the B group",
+            "parameterSetId": "n_B",
+            "visibilityCondition": "model.sample_size_definition == 'manual'"
+        },
+        {
+            "type": "STRING",
+            "name": "end",
+            "label": "End date (UTC midnight)",
+            "description": "Format dd/MM/YYYY",
+            "parameterSetId": "end-date",
+            "visibilityCondition": "model.date_manager == 'timerange'"
+        },
+
+        {
+            "type": "SELECT",
             "name": "attribution_method",
             "label": "Attribution for leftover users",
             "selectChoices": [
