@@ -1,5 +1,5 @@
 # AB Testing Plugin
-This plugin provides features to design AB testing and analyses their outcome. 
+This plugin provides features to design AB testing and analyses their outcome inside DSS. 
 
 ## Design
 A web app computes the minimum sample sizes needed in the experiment while providing insightful visualisations of the distributions (Z test). A custom recipe can then use these estimated figures to split the input dataset containing the email addresses of the experiment population into two groups, A and B. 
