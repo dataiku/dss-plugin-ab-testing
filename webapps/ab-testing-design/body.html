@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="/static/public/styles/1.0.0/dku-styles.css" />
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </link>
 <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/assets/css/docs.min.css">
 </link>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css">
 </link>
-<link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&amp;display=swap"
-    rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&amp;display=swap" rel="stylesheet">
 </link>
 
 
@@ -37,14 +34,10 @@
     <div class="row">
         <div class="col-xl">
             <h1>Frequentist AB Testing - Sample size estimator </h1>
-            <a class="anchorjs-link " href="#overview" aria-label="Anchor" data-anchorjs-icon="#"
-                style="padding-left: 0.375em;"></a>
+            <a class="anchorjs-link " href="#overview" aria-label="Anchor" data-anchorjs-icon="#" style="padding-left: 0.375em;"></a>
             <h2>Compare two proportions : conversion rate, click through rate.</h2>
             <p class="explanations">
-                The average conversion rates of two independent samples A and B are compared. A is the control group
-                while B is
-                the experiment group.
-                We assume that the two samples follow binomial distributions.
+                The average conversion rates of two independent samples A and B are compared. A is the control group while B is the experiment group. We assume that the two samples follow binomial distributions.
 
             </p>
 
@@ -87,11 +80,19 @@
             <span id="alert_mde" class="alert"> </span>
         </div>
         <div class="field">
-            <label for="traffic">Average number of people exposed to a variation daily <span id="optional"> [optional]
+            <label for="traffic">Average number of people exposed to a variation daily <span class="optional">
+                    [optional]
                 </span>
             </label>
             <input type="number" name="traffic" placeholder="Daily traffic" id="traffic" />
             <span id="alert_traffic" class="alert"> </span>
+        </div>
+        <div class="field">
+            <label for="reach"> Percentage of the traffic affected by the variations<span class="optional"> [optional]
+                </span>
+            </label>
+            <input type="number" name="reach" placeholder="Reach" id="reach" />
+            <span id="alert_reach" class="alert"> </span>
         </div>
         <div>
             <button id="more" class="btn btn-outline-info btn-rounded waves-effect  btn-block"> More parameters
@@ -243,7 +244,7 @@
                     <div>
                         days
                     </div>
-                </div>
+                </div> 
             </div>
             <div class="text-center">
                 <a id="attribution_button" type="button" class="btn btn-outline-info btn-rounded waves-effect  btn-lg">
@@ -261,8 +262,7 @@
                             The AB attribution recipe is now ready !
                         </div>
                         <div>
-                            You can create an AB split recipe from the AB testing plugin. It will use the sample
-                            sizes computed above.
+                            You can create an AB split recipe from the AB testing plugin. It will use the sample sizes computed above.
                         </div>
                     </div>
                 </div>
@@ -350,26 +350,23 @@
                             E. L. Lehmann and J.P. Romano. <span class="bib">Testing statistical hypotheses.</span> Springer Science & Business Media (2006)
                         </li>
                         <li>
-                            V. Spokoiny and T. Dickhaus. <span class="bib">Basics of modern mathematical statistics</span> Springer (2015)
+                            V. Spokoiny and T. Dickhaus. <span class="bib">Basics of modern mathematical
+                                statistics</span> Springer (2015)
                         </li>
                     </ul>
                 </div>
                 <h2 class="derivation_headers"> Test definition </h2>
                 <div class="derivation">
-                    Let's define two groups, A and B. \(n_A\) samples are drawn from A,
-                    \(n_B\) samples are drawn from B.
+                    Let's define two groups, A and B. \(n_A\) samples are drawn from A, \(n_B\) samples are drawn from B.
                 </div>
                 <div class="derivation">
-                    \(X_i^A \sim B(p_A)\) is a random variable representing a sample
-                    from group A
+                    \(X_i^A \sim B(p_A)\) is a random variable representing a sample from group A
                 </div>
                 <div class="derivation">
-                    \(X_i^B\sim B(p_B)\) is a random variable representing a sample
-                    from group B
+                    \(X_i^B\sim B(p_B)\) is a random variable representing a sample from group B
                 </div>
                 <div class="derivation">
-                    Our goal is to compare \(p_A\) and \(p_B\). Depending on your use case, please choose
-                    one of these two simple hypothesis tests :
+                    Our goal is to compare \(p_A\) and \(p_B\). Depending on your use case, please choose one of these two simple hypothesis tests :
                     <ul>
                         <li>
                             <span class="derivation">
@@ -381,126 +378,59 @@
                                 A one-tailed test : \(H_0\) : \(p_A = p_B \), \(H_1\) : \(p_A < p_B \) </span>
                         </li>
                     </ul>
-                    We assume that all samples are independent so :
-                    $$T^A = \sum_{i=1}^{n_{A}} X_i^A \sim B(n_A,p_A) $$
-                    $$ T^B = \sum_{i=1}^{n_{B}} X_i^A \sim B(n_B,p_B) $$
-                    We assume that \(T_A\) and \(T_B\) are independent and \(n_A\) and
-                    \(n_B\) are large enough for the theorem central limit theorem to apply.
+                    We assume that all samples are independent so : $$T^A = \sum_{i=1}^{n_{A}} X_i^A \sim B(n_A,p_A) $$ $$ T^B = \sum_{i=1}^{n_{B}} X_i^A \sim B(n_B,p_B) $$ We assume that \(T_A\) and \(T_B\) are independent and \(n_A\) and \(n_B\) are large enough for the
+                    theorem central limit theorem to apply.
                 </div>
                 <div class="derivation">
-                    According to the theorem central limit,
-                    \(T^A \sim N(p_A,n_Ap_A(1-p_A))\) and \(T^B \sim N(p_B,n_Bp_B(1-p_B))\)
+                    According to the theorem central limit, \(T^A \sim N(p_A,n_Ap_A(1-p_A))\) and \(T^B \sim N(p_B,n_Bp_B(1-p_B))\)
 
                 </div>
                 <div class="derivation">
-                    \(\frac{T^A}{n_A}\) and \(\frac{T^B}{n_B}\) are minimum variance
-                    unbiased estimator for \(p_A\) and \(p_B\). If we want to test
-                    \(H_0\) : \(p_A = p_B \), it makes sense to choose a rejection
-                    region \(W = \{ |\frac{t^B}{n_B} - \frac{t^A}{n_A} | > t \}\)
-                    for a two-tailed test and \(W' = \{ \frac{t^B}{n_B} - \frac{t^A}{n_A} > t \}\)
-                    for a one-tailed test.
+                    \(\frac{T^A}{n_A}\) and \(\frac{T^B}{n_B}\) are minimum variance unbiased estimator for \(p_A\) and \(p_B\). If we want to test \(H_0\) : \(p_A = p_B \), it makes sense to choose a rejection region \(W = \{ |\frac{t^B}{n_B} - \frac{t^A}{n_A} | > t \}\)
+                    for a two-tailed test and \(W' = \{ \frac{t^B}{n_B} - \frac{t^A}{n_A} > t \}\) for a one-tailed test.
                 </div>
                 <div class="derivation">
-                    As \(T^A\) and \(T^B\) are independent:
-                    $$ \frac{T^B}{n_B} - \frac{T^A}{n_A} \sim N(p_B-p_A, \frac{p_A(1-p_A)}{n_A} +
-                    \frac{p_B(1-p_B)}{n_B} )$$
-                    Under \(H_0\), \(p_A = p_B = p\), so :
-                    $$ \frac{\frac{T^B}{n_B} - \frac{T^A}{n_A}}{\sqrt{p(1-p)(\frac{1}{n_A} + \frac{1}{n_B})}}
-                    \sim N(0,1) $$
-                    \(p\) is unknown. However, under \(H_0\), \(\hat{p}= \frac{T_A+T_B}{n_A+n_B} \) is minimum variance
-                    unbiased estimator
-                    for \(p\). So this result is still valid when \(p\) is replaced with \(\hat{p}\).
+                    As \(T^A\) and \(T^B\) are independent: $$ \frac{T^B}{n_B} - \frac{T^A}{n_A} \sim N(p_B-p_A, \frac{p_A(1-p_A)}{n_A} + \frac{p_B(1-p_B)}{n_B} )$$ Under \(H_0\), \(p_A = p_B = p\), so : $$ \frac{\frac{T^B}{n_B} - \frac{T^A}{n_A}}{\sqrt{p(1-p)(\frac{1}{n_A}
+                    + \frac{1}{n_B})}} \sim N(0,1) $$ \(p\) is unknown. However, under \(H_0\), \(\hat{p}= \frac{T_A+T_B}{n_A+n_B} \) is minimum variance unbiased estimator for \(p\). So this result is still valid when \(p\) is replaced with \(\hat{p}\).
                 </div>
                 <div class="derivation">
-                    Therefore, the test is built using the random variables \(U_0\) and \(U_1\). Under \(H_0\) :
-                    $$ U_0 = \frac{\frac{T^B}{n_B} - \frac{T^B}{n_B}}{\sqrt{\frac{T_A+T_B}{n_A+n_B}(1-\frac{T_A+T_B}{n_A
-                    + n_B})(\frac{1}{n_A} + \frac{1}{n_B})}} \sim N(0,1) $$
-                    Under \(H_1\), the variance of \(U_1\) is the same as under \(H_0\) given the test definition.
-                    So :
-                    $$\frac{T^B}{n_B} - \frac{T^A}{n_A} \sim N(p_B-p_A,p(1-p)(\frac{1}{n_A} +
-                    \frac{1}{n_B}))$$
-                    $$U_1 = \frac{\frac{T^B}{n_B} - \frac{T^A}{n_A} -
-                    (p_B-p_A)}{\sqrt{\frac{T_A+T_B}{n_A+n_B}(1-\frac{T_A+T_B}{n_A + n_B})(\frac{1}{n_A} +
-                    \frac{1}{n_B})}} \sim N(0,1)$$
+                    Therefore, the test is built using the random variables \(U_0\) and \(U_1\). Under \(H_0\) : $$ U_0 = \frac{\frac{T^B}{n_B} - \frac{T^B}{n_B}}{\sqrt{\frac{T_A+T_B}{n_A+n_B}(1-\frac{T_A+T_B}{n_A + n_B})(\frac{1}{n_A} + \frac{1}{n_B})}} \sim N(0,1) $$ Under
+                    \(H_1\), the variance of \(U_1\) is the same as under \(H_0\) given the test definition. So : $$\frac{T^B}{n_B} - \frac{T^A}{n_A} \sim N(p_B-p_A,p(1-p)(\frac{1}{n_A} + \frac{1}{n_B}))$$ $$U_1 = \frac{\frac{T^B}{n_B} - \frac{T^A}{n_A}
+                    - (p_B-p_A)}{\sqrt{\frac{T_A+T_B}{n_A+n_B}(1-\frac{T_A+T_B}{n_A + n_B})(\frac{1}{n_A} + \frac{1}{n_B})}} \sim N(0,1)$$
                 </div>
                 <h2 class="derivation_headers"> Sample size computation </h2>
 
                 <div class="derivation">
-                    Let's define the random variable D :
-                    $$D = \frac{T^B}{n_B} - \frac{T^A}{n_A} $$
+                    Let's define the random variable D : $$D = \frac{T^B}{n_B} - \frac{T^A}{n_A} $$
 
                 </div>
                 <div class="derivation">
-                    During the design of the experiment, you set minimum values
-                    for the statistical significance and the power, respectively
-                    \(1-\alpha\) and \(1-\beta\). The sample size is derived from
-                    these two constraints. For a two tailed test, let's find the threshold value t for the
-                    rejection region \(W = \{ |d| > t \}\), given that :
-                    $$
-                    \left\{
-                    \begin{array}{ll}
-                    P_{H_{0}}(|D| \leq t) = 1-\alpha & (1) \\
-                    P_{H_{1}}(|D| \leq t) = \beta & (2)
-                    \end{array}
-                    \right.
-                    $$
-                    Let's derive (1):
+                    During the design of the experiment, you set minimum values for the statistical significance and the power, respectively \(1-\alpha\) and \(1-\beta\). The sample size is derived from these two constraints. For a two tailed test, let's find the threshold
+                    value t for the rejection region \(W = \{ |d| > t \}\), given that : $$ \left\{ \begin{array}{ll} P_{H_{0}}(|D| \leq t) = 1-\alpha & (1) \\ P_{H_{1}}(|D| \leq t) = \beta & (2) \end{array} \right. $$ Let's derive (1):
                 </div>
                 <div class="derivation">
                     We want to find \(t\) such that \(P(|D| \leq t) = 1 - \alpha\ \).
                 </div>
                 <div class="derivation">
 
-                    \(U_0\ \sim N(0,1) \), \( \phi \) is the cumulative distribution function of a standard
-                    normal distribution. \(\forall x \in R, \)
-                    $$P(|U_0| \leq x) = 1 - \alpha$$
-                    $$ \Leftrightarrow P(U_0\leq x) - P(U_0 \leq -x) = \phi(x) - (1-\phi(-x)) = 1-\alpha $$
-
-                    \( \phi \) is symetric so:
-                    $$ \Leftrightarrow 2\phi(x)-1= 1- \alpha $$
-                    $$\Leftrightarrow \phi(x) = 1- \frac{\alpha}{2}$$
-                    $$ \Leftrightarrow x = \phi ^{-1}(1- \frac{\alpha}{2}) = z_{1-\frac{\alpha}{2}} $$
-                    As a consequence :
-                    $$ P(|U_0|\leq z_{1-\frac{\alpha}{2}} ) = 1 - \alpha $$
-                    As, \(U_0 = \frac{D}{\sigma _p} \), 
-                    $$ \Leftrightarrow P(|D| \leq z_{1-\frac{\alpha}{2}} \times \sigma_p ) = 1- \alpha $$
-                    with \( \sigma _p^2 = \frac{p_A(1-p_A)}{n_A} + \frac{p_B(1-p_B)}{n_B} =
-                    \frac{p_A+p_B}{n_A+n_B}(1-\frac{p_A+p_B}{n_A + n_B})(\frac{1}{n_A} + \frac{1}{n_B}) \)
+                    \(U_0\ \sim N(0,1) \), \( \phi \) is the cumulative distribution function of a standard normal distribution. \(\forall x \in R, \) $$P(|U_0| \leq x) = 1 - \alpha$$ $$ \Leftrightarrow P(U_0\leq x) - P(U_0 \leq -x) = \phi(x) - (1-\phi(-x)) = 1-\alpha $$
+                    \( \phi \) is symetric so: $$ \Leftrightarrow 2\phi(x)-1= 1- \alpha $$ $$\Leftrightarrow \phi(x) = 1- \frac{\alpha}{2}$$ $$ \Leftrightarrow x = \phi ^{-1}(1- \frac{\alpha}{2}) = z_{1-\frac{\alpha}{2}} $$ As a consequence : $$ P(|U_0|\leq
+                    z_{1-\frac{\alpha}{2}} ) = 1 - \alpha $$ As, \(U_0 = \frac{D}{\sigma _p} \), $$ \Leftrightarrow P(|D| \leq z_{1-\frac{\alpha}{2}} \times \sigma_p ) = 1- \alpha $$ with \( \sigma _p^2 = \frac{p_A(1-p_A)}{n_A} + \frac{p_B(1-p_B)}{n_B}
+                    = \frac{p_A+p_B}{n_A+n_B}(1-\frac{p_A+p_B}{n_A + n_B})(\frac{1}{n_A} + \frac{1}{n_B}) \)
                 </div>
                 <div class="derivation">
-                    Given (1), 
-                    $$ \Leftrightarrow t = z_{1-\frac{\alpha}{2}} \times \sigma_p $$
+                    Given (1), $$ \Leftrightarrow t = z_{1-\frac{\alpha}{2}} \times \sigma_p $$
                 </div>
                 <div class="derivation">
-                    Consequently,
-                    $$(2) \Leftrightarrow P_{H_1}(|D| \leq z_{1-\frac{\alpha}{2}} \sigma_p ) = \beta $$
-                    As \(U_1 = \frac{D - (p_B-p_A)}{\sigma _p}\)
-                    $$\Leftrightarrow P(U_1 \leq z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) - P(U_1 \leq -
-                    z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) = \beta $$
-                    If we assume that \(\frac{p_B-p_A}{\sigma_p} \geq 1\), then :
-                    $$ P(U_1\leq - z_{1-\frac{\alpha}{2}}- \frac{(p_B-p_A)}{\sigma_p}) \leq \phi(-1 -
-                    z_{1-\frac{\alpha}{2}}) \simeq 0 $$
-                    So :
-                    $$ P(U_1 \leq z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) = \beta $$
-
-                    Besides : \(\forall x \in R, \)
-                    $$ P(U_1 \leq x) = \beta\ $$
-                    $$ \Leftrightarrow x = \phi ^{-1}(\beta) = z_{\beta} = -z_{1-\beta} $$
-                    Hence,
-
-                    $$ z_{1-\frac{\alpha}{2}} - \frac{p_B - p_A}{\sigma _p} = z_{\beta} \quad (a) $$
-                    Let's consider \( \sigma\ \), such as \(\sigma^2 = p(1-p) \) with \(p = \frac{p_A+p_B}{n_A+n_B} \),
-                    and r, the size ratio : \(r = \frac{n_B}{n_A}\) with \(n_B \leq n_A\)
-
-                    $$\sigma _p = \sqrt{p(1-p)(\frac{1}{n_A} + \frac{1}{n_B})} = \sqrt{\sigma^2 (\frac{1}{n_A} +
-                    \frac{1}{rn_A}) } \quad (b) $$
-                    Let's note \(\delta \), the minimum detectable effect, \(\delta = p_B-p_A \)
+                    Consequently, $$(2) \Leftrightarrow P_{H_1}(|D| \leq z_{1-\frac{\alpha}{2}} \sigma_p ) = \beta $$ As \(U_1 = \frac{D - (p_B-p_A)}{\sigma _p}\) $$\Leftrightarrow P(U_1 \leq z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) - P(U_1 \leq - z_{1-\frac{\alpha}{2}}
+                    - \frac{(p_B-p_A)}{\sigma _p}) = \beta $$ If we assume that \(\frac{p_B-p_A}{\sigma_p} \geq 1\), then : $$ P(U_1\leq - z_{1-\frac{\alpha}{2}}- \frac{(p_B-p_A)}{\sigma_p}) \leq \phi(-1 - z_{1-\frac{\alpha}{2}}) \simeq 0 $$ So : $$ P(U_1
+                    \leq z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) = \beta $$ Besides : \(\forall x \in R, \) $$ P(U_1 \leq x) = \beta\ $$ $$ \Leftrightarrow x = \phi ^{-1}(\beta) = z_{\beta} = -z_{1-\beta} $$ Hence, $$ z_{1-\frac{\alpha}{2}}
+                    - \frac{p_B - p_A}{\sigma _p} = z_{\beta} \quad (a) $$ Let's consider \( \sigma\ \), such as \(\sigma^2 = p(1-p) \) with \(p = \frac{p_A+p_B}{n_A+n_B} \), and r, the size ratio : \(r = \frac{n_B}{n_A}\) with \(n_B \leq n_A\) $$\sigma
+                    _p = \sqrt{p(1-p)(\frac{1}{n_A} + \frac{1}{n_B})} = \sqrt{\sigma^2 (\frac{1}{n_A} + \frac{1}{rn_A}) } \quad (b) $$ Let's note \(\delta \), the minimum detectable effect, \(\delta = p_B-p_A \)
                 </div>
                 <div class="derivation">
-                    By combining \((a)\) and \((b)\), we obtain the following result for a two tailed test :
-                    $$ n_A = \frac{r+1}{r} \frac{\sigma^2(z_{1-\frac{ \alpha}{2}}+ z_{1-\beta})^2}{\delta^2}$$
-                    For a one tailed test :
-                    $$ n_A = \frac{r+1}{r} \frac{\sigma^2(z_{1-\alpha}+ z_{1-\beta})^2}{\delta^2}$$
+                    By combining \((a)\) and \((b)\), we obtain the following result for a two tailed test : $$ n_A = \frac{r+1}{r} \frac{\sigma^2(z_{1-\frac{ \alpha}{2}}+ z_{1-\beta})^2}{\delta^2}$$ For a one tailed test : $$ n_A = \frac{r+1}{r} \frac{\sigma^2(z_{1-\alpha}+
+                    z_{1-\beta})^2}{\delta^2}$$
 
                 </div>
             </div>

@@ -140,3 +140,7 @@ dmypy.json
 .pytype/
 
 state.json
+
+#vs code
+.vscode/
+setup.cfg

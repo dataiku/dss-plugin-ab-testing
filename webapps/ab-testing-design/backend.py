@@ -13,9 +13,11 @@ def get_sample_size():
     alpha = 1-float(request.form.get("sig_level"))/100
     power = float(request.form.get("power"))/100
     ratio = float(request.form.get("ratio"))/100
+    reach = float(request.form.get("reach"))/100
     two_tailed = strtobool(request.form.get("tail"))
-    n_A, n_B = min_sample_size(bcr=bcr, mde=mde, sig_level=alpha,
-                               min_power=power, size_ratio=ratio, two_tailed=two_tailed)
+    n_A, n_B = min_sample_size(bcr=bcr, mde=mde, sig_level=alpha, min_power=power, size_ratio=ratio, two_tailed=two_tailed)
+    n_A = n_A / reach
+    n_B = n_B / reach
     return json.dumps({"n_A": n_A, "n_B": n_B})
 
 

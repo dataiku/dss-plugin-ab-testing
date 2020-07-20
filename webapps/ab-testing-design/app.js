@@ -9,24 +9,34 @@ function check_form_input(form_field) {
 function alert_invalid_value(form_field, value, lower_bound, upper_bound) {
     if (out_of_bound(value, lower_bound, upper_bound)) {
         $("#" + "alert_" + form_field).html("Please enter a value between 0 and 100")
-    }
-    else {
+    } else {
         $("#" + "alert_" + form_field).html("")
     }
 }
 
 function invalid_form(lower_bound, upper_bound) {
-    const bcr = $("#bcr").val();
-    const mde = $("#mde").val();
-    const sig_level = $("#sig_level").val();
-    const power = $("#power").val();
-    const ratio = $("#ratio").val();
-    return (out_of_bound(bcr, lower_bound, upper_bound) || out_of_bound(mde, lower_bound, upper_bound) || out_of_bound(sig_level, lower_bound, upper_bound) || out_of_bound(power, lower_bound, upper_bound) || out_of_bound(ratio, lower_bound, upper_bound));
+    let bcr = $("#bcr").val();
+    let mde = $("#mde").val();
+    let sig_level = $("#sig_level").val();
+    let power = $("#power").val();
+    let ratio = $("#ratio").val();
+    let reach = $("#reach").val();
+    if (reach) {
+        var invalid_output = (out_of_bound(bcr, lower_bound, upper_bound) || out_of_bound(mde, lower_bound, upper_bound) || out_of_bound(sig_level, lower_bound, upper_bound) || out_of_bound(power, lower_bound, upper_bound) || out_of_bound(ratio, lower_bound, upper_bound) || out_of_bound(reach, lower_bound, upper_bound));
+    } else {
+        var invalid_output = (out_of_bound(bcr, lower_bound, upper_bound) || out_of_bound(mde, lower_bound, upper_bound) || out_of_bound(sig_level, lower_bound, upper_bound) || out_of_bound(power, lower_bound, upper_bound) || out_of_bound(ratio, lower_bound, upper_bound));
+    }
+    return invalid_output
 }
 
 function out_of_bound(value, lower_bound, upper_bound) {
     const input = parseFloat(value);
     return (input > upper_bound || input < lower_bound);
+}
+
+function too_small(value, lower_bound) {
+    const input = parseFloat(value);
+    return (input < lower_bound);
 }
 
 function missing_values() {
@@ -118,6 +128,7 @@ document.getElementById("mde").defaultValue = "5";
 document.getElementById("sig_level").defaultValue = "95";
 document.getElementById("power").defaultValue = "80";
 document.getElementById("ratio").defaultValue = "100";
+document.getElementById("reach").defaultValue = "100";
 
 
 // check input
@@ -126,6 +137,7 @@ check_form_input("mde");
 check_form_input("sig_level");
 check_form_input("power");
 check_form_input("ratio");
+check_form_input("reach");
 
 
 // show / hide optional parameters
@@ -161,6 +173,7 @@ const formButton = document.getElementById('submit_button');
 let hide_duration = true;
 
 formButton.addEventListener('click', function (event, hide_duration) {
+    let traffic = $("#traffic").val()
     if (missing_values()) {
         alert_sample_size("A field is empty, please fill all of them", "missing value");
     } else if (invalid_form(0, 100)) {
@@ -181,8 +194,7 @@ formButton.addEventListener('click', function (event, hide_duration) {
             });
     };
     event.preventDefault();
-}
-);
+});
 
 // visualization
 function Random_normal_Dist(mean, sd) {
@@ -327,12 +339,10 @@ function build_max_bounds(x_max, z_value, mean, std) {
         y_max_bounds.push(jStat.normal.pdf(i, mean, std));
     }
 
-    let data = [
-        {
-            x_coordinate: x_max_bounds,
-            y_coordinate: y_max_bounds
-        }
-    ];
+    let data = [{
+        x_coordinate: x_max_bounds,
+        y_coordinate: y_max_bounds
+    }];
     return data;
 }
 
@@ -543,8 +553,7 @@ plot_legend(x_legend, y_legend + 20, "Power", "#fdae61", $("#power").val(), "lab
 function update_legend(label, new_value, id, percentage) {
     if (percentage) {
         var new_text = label + ": " + new_value + "%";
-    }
-    else {
+    } else {
         var new_text = label + ": " + new_value;
     }
     svg.select("#" + id)
@@ -593,10 +602,15 @@ function store_sizes_in_variables() {
 
 // compute duration
 function manage_duration(hide_duration) {
-    if ($("#traffic").val()) {
-        display_experiment_duration(hide_duration);
-    }
-    else {
+    let traffic = $("#traffic").val();
+    if (traffic) { 
+        if (too_small(traffic, 0)) {
+            hide_duration = display(hide_duration, "submit_button", "duration", false);
+            $("#" + "alert_traffic").html("Please enter a positive number")
+        } else {
+            display_experiment_duration(hide_duration);
+        }
+    } else {
         hide_duration = display(hide_duration, "submit_button", "duration", false);
     }
     return hide_duration;
@@ -617,3 +631,4 @@ function compute_duration() {
     let sample_size = n_A + n_B;
     return Math.ceil(sample_size / daily_traffic);
 }
+
