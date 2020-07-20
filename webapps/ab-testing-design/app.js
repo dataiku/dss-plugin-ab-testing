@@ -609,6 +609,7 @@ function manage_duration(hide_duration) {
             $("#" + "alert_traffic").html("Please enter a positive number")
         } else {
             display_experiment_duration(hide_duration);
+            $("#alert_traffic").html("");
         }
     } else {
         hide_duration = display(hide_duration, "submit_button", "duration", false);
