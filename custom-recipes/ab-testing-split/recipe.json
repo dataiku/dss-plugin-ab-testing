@@ -5,7 +5,10 @@
         "icon": "icon-beaker"
     },
     "selectableFromDataset": "user_list",
+    "selectableFromFolder": "folder",
+
     "kind": "PYTHON",
+
     "inputRoles": [
         {
             "name": "user_list",
@@ -14,6 +17,15 @@
             "arity": "UNARY",
             "required": true,
             "acceptsDataset": true
+        },
+        {
+            "name": "folder",
+            "label": "Folder",
+            "description": "Folder containing the parameters",
+            "arity": "UNARY",
+            "required": false,
+            "acceptsDataset": false,
+            "acceptsManagedFolder": true
         }
     ],
     "outputRoles": [
@@ -21,14 +33,6 @@
             "name": "groups",
             "label": "Experiment dataset",
             "description": "Input dataset with an extra column containing the group",
-            "arity": "UNARY",
-            "required": true,
-            "acceptsDataset": true
-        },
-        {
-            "name": "tracking",
-            "label": "Tracking dataset",
-            "description": "Keeps the input parameters of the experiment",
             "arity": "UNARY",
             "required": true,
             "acceptsDataset": true
@@ -50,12 +54,8 @@
             "acceptsDataset": true
         }
     ],
+    "paramsPythonSetup": "py/compute_files_in_folder.py",
     "params": [
-        {
-            "name": "input_parameters",
-            "label": "Input parameters",
-            "type": "SEPARATOR"
-        },
         {
             "name": "user_reference",
             "type": "COLUMN",
@@ -70,7 +70,7 @@
             "selectChoices": [
                 {
                     "value": "web_app",
-                    "label": "Retrieve sizes computed in the Web app"
+                    "label": "Retrieve values from web app"
                 },
                 {
                     "value": "manual",
@@ -79,6 +79,15 @@
             ],
             "defaultValue": "web_app",
             "visibilityCondition": true
+        },
+        {
+            "name": "parameters",
+            "label" : "Parameters (computed in the web app)",
+            "type": "SELECT",
+            "getChoicesFromPython": true,
+            "description": "Name of the JSON file",
+            "mandatory" : false,
+            "visibilityCondition": "model.sample_size_definition == 'web_app'"
         },
         {
             "type": "INT",
@@ -104,7 +113,6 @@
             "parameterSetId": "end-date",
             "visibilityCondition": "model.date_manager == 'timerange'"
         },
-
         {
             "type": "SELECT",
             "name": "attribution_method",

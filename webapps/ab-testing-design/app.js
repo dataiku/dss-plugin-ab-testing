@@ -570,7 +570,7 @@ power.addEventListener('change', function (event) {
 let hide_attribution = true;
 const attribution = document.getElementById('attribution_button');
 attribution.addEventListener("click", function (event) {
-    store_sizes_in_variables()
+    store_parameters()
         .then(function (response) {
             manage_response(response);
         }).catch(function (error) {
@@ -581,7 +581,7 @@ attribution.addEventListener("click", function (event) {
 })
 
 
-function store_sizes_in_variables() {
+function store_parameters() {
     let formData = new FormData(document.getElementById('form_data'));
     let n_A = $("#sample_size_A").html();
     let n_B = $("#sample_size_B").html();
@@ -594,7 +594,7 @@ function store_sizes_in_variables() {
         headers: headers,
         body: data
     };
-    const url = getWebAppBackendUrl('/set_variables');
+    const url = getWebAppBackendUrl('/write_parameters');
     let promise = fetch(url, init);
     return promise;
 }

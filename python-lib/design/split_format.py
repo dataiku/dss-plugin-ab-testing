@@ -17,8 +17,3 @@ def group_to_df(group, column_name):
     columns = [column_name]
     df = pd.DataFrame(data=group, index=range(group.shape[0]), columns=columns)
     return df
-
-
-def format_tracking(tracking):
-    tracking_df = pd.DataFrame(tracking, index=range(1))
-    return tracking_df
