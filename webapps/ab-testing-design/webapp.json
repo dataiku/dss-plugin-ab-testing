@@ -6,7 +6,7 @@
     },
     "baseType": "STANDARD",
     "hasBackend": "true",
-    "noJSSecurity": "false",
+    "noJSSecurity": "true",
     "standardWebAppLibraries": [
         "jquery",
         "dataiku",
