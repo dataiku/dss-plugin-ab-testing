@@ -1,7 +1,7 @@
 set_form_default_values();
 check_form_inputs();
 
-// show / hide optional parameters for the different fields
+// show / hide optional parameters 
 let hide_parameters = true;
 const advancedButton = document.getElementById('more');
 advancedButton.addEventListener('click', function (event) {
@@ -9,7 +9,7 @@ advancedButton.addEventListener('click', function (event) {
     event.preventDefault();
 });
 
-// show / hide explanations
+// show / hide explanations of the different fields
 explain_form_fields();
 
 // show/ hide maths derivations
