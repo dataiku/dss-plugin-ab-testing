@@ -1,69 +1,34 @@
-import dataiku
-from dataiku.customrecipe import get_input_names_for_role, get_output_names_for_role, get_recipe_config
+from dataiku.customrecipe import get_recipe_config
 
-from design.ab_split import check_sample_size, split_into_groups
-from design.split_format import add_group_column, group_to_df
+from design.dku_tools import get_input_output, get_parameters
+from design.ab_dispatcher import AbDispatcher
 
 # ==============================================================================
 # SETUP
 # ==============================================================================
-input_name = get_input_names_for_role('user_list')[0]
-input_dataset = dataiku.Dataset(input_name)
+
+input_dataset, folder_ref, output_dataset, A_dataset, B_dataset = get_input_output()
 input_df = input_dataset.get_dataframe()
-
-folder_name = get_input_names_for_role('folder')[0]
-folder = dataiku.Folder(folder_name)
-
-groups_name = get_output_names_for_role('groups')[0]
-groups_dataset = dataiku.Dataset(groups_name)
-
-A_output = get_output_names_for_role("A_group")
-B_output = get_output_names_for_role("B_group")
-
-if A_output:
-    A_output_name = A_output[0]
-    A_group_dataset = dataiku.Dataset(A_output_name)
-
-if B_output:
-    B_output_name = B_output[0]
-    B_group_dataset = dataiku.Dataset(B_output_name)
-
 config = get_recipe_config()
-reference_column = config.get("user_reference")
-
-size_definition = config.get("sample_size_definition")
-if size_definition == "web_app":
-    parameter_filename = config.get("parameters")
-    tracking = folder.read_json(parameter_filename)
-    n_A = int(tracking["n_A"])
-    n_B = int(tracking["n_B"])
-elif size_definition == "manual":
-    n_A = config.get("n_A")
-    n_B = config.get("n_B")
-    if n_A <= 0 or n_B <= 0:
-        raise ValueError("Sample sizes need to be positive")
-    tracking = {"n_A": n_A, "n_B": n_B}
-
-attribution_method = config.get("attribution_method")
-
+reference_column, size_definition, attribution_method, size_A, size_B = get_parameters(config, folder_ref)
 
 # ==============================================================================
 # RUN
 # ==============================================================================
 experiment_population = input_df[[reference_column]].drop_duplicates().values
-check_sample_size(experiment_population, n_A, n_B)
-
-A_group, B_group = split_into_groups(experiment_population, n_A, n_B, attribution_method)
-groups_df = add_group_column(input_df, A_group, B_group, reference_column, attribution_method)
+ab_dispatcher = AbDispatcher(size_A, size_B, reference_column)
+ab_dispatcher.check_sample_size(experiment_population)
+A_group, B_group = ab_dispatcher.dispatch(experiment_population, attribution_method)
+groups_df = ab_dispatcher.add_group_column(input_df, A_group, B_group)
 
 # ===============================================================================
 # WRITE
 # ===============================================================================
-groups_dataset.write_with_schema(groups_df)
+output_dataset.write_with_schema(groups_df)
 
-if A_output:
-    A_df = group_to_df(A_group, reference_column)
-    A_group_dataset.write_with_schema(A_df)
-if B_output:
-    B_df = group_to_df(B_group, reference_column)
-    B_group_dataset.write_with_schema(B_df)
+if A_dataset:
+    A_df = ab_dispatcher.group_to_df(A_group)
+    A_dataset.write_with_schema(A_df)
+if B_dataset:
+    B_df = ab_dispatcher.group_to_df(B_group)
+    B_dataset.write_with_schema(B_df)
