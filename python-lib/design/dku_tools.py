@@ -1,8 +1,9 @@
 import dataiku
 from dataiku.customrecipe import get_input_names_for_role, get_output_names_for_role
+from typing import List
 
 
-def get_input_output():
+def get_input_output() -> tuple:
     if len(get_input_names_for_role("user_list")) == 0:
         raise ValueError("No input dataset.")
     if len(get_output_names_for_role("groups")) == 0:
@@ -27,7 +28,7 @@ def get_input_output():
     return input_dataset, folder_ref, output_dataset, A_dataset, B_dataset
 
 
-def get_parameters(config, folder_ref):
+def get_parameters(config: dict, folder_ref: List[str]) -> tuple:
     reference_column = config.get("user_reference", None)
     size_definition = config.get("sample_size_definition", None)
     attribution_method = config.get("attribution_method", "leftover_to_A")
@@ -49,7 +50,7 @@ def get_parameters(config, folder_ref):
     return reference_column, size_definition, attribution_method, size_A, size_B
 
 
-def check_folder_parameters(folder_ref, filename):
+def check_folder_parameters(folder_ref: List[str], filename: str):
     folder_name = folder_ref[0]
     folder = dataiku.Folder(folder_name)
     paths = folder.list_paths_in_partition()
