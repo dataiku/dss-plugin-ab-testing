@@ -17,9 +17,7 @@ reference_column, size_definition, attribution_method, size_A, size_B = get_para
 # ==============================================================================
 experiment_population = input_df[[reference_column]].drop_duplicates().values
 ab_dispatcher = AbDispatcher(size_A, size_B, reference_column)
-ab_dispatcher.check_sample_size(experiment_population)
-A_group, B_group = ab_dispatcher.dispatch(experiment_population, attribution_method)
-groups_df = ab_dispatcher.add_group_column(input_df, A_group, B_group)
+groups_df, A_group, B_group = ab_dispatcher.dispatch(experiment_population, attribution_method, input_df)
 
 # ===============================================================================
 # WRITE

@@ -6,14 +6,12 @@
     },
     "selectableFromDataset": "user_list",
     "selectableFromFolder": "folder",
-
     "kind": "PYTHON",
-
     "inputRoles": [
         {
             "name": "user_list",
-            "label": "Dataset with the reference of the users involved in the experiment ",
-            "description": "Dataframe containing the ids, the emails of the users in the experiment",
+            "label": "Population",
+            "description": "Dataset with the reference of the users involved in the experiment(ids, emails...)",
             "arity": "UNARY",
             "required": true,
             "acceptsDataset": true
@@ -77,21 +75,20 @@
                     "label": "Edit sample sizes manually "
                 }
             ],
-            "defaultValue": "web_app",
-            "visibilityCondition": true
+            "defaultValue": "web_app"
         },
         {
             "name": "parameters",
-            "label" : "Parameters (computed in the web app)",
+            "label": "Parameters (computed in the web app)",
             "type": "SELECT",
             "getChoicesFromPython": true,
             "description": "Name of the JSON file",
-            "mandatory" : false,
+            "mandatory": false,
             "visibilityCondition": "model.sample_size_definition == 'web_app'"
         },
         {
             "type": "INT",
-            "name": "n_A",
+            "name": "size_A",
             "label": "Sample size for variation A",
             "description": "Minimul sample size for the A group",
             "parameterSetId": "n_A",
@@ -99,24 +96,17 @@
         },
         {
             "type": "INT",
-            "name": "n_B",
+            "name": "size_B",
             "label": "Sample size for variation B",
             "description": "Minimul sample size for the B group",
             "parameterSetId": "n_B",
             "visibilityCondition": "model.sample_size_definition == 'manual'"
         },
         {
-            "type": "STRING",
-            "name": "end",
-            "label": "End date (UTC midnight)",
-            "description": "Format dd/MM/YYYY",
-            "parameterSetId": "end-date",
-            "visibilityCondition": "model.date_manager == 'timerange'"
-        },
-        {
             "type": "SELECT",
             "name": "attribution_method",
             "label": "Attribution for leftover users",
+            "description": "If the population is greater than the sample size, this field specifies in which group the leftover users should go.",
             "selectChoices": [
                 {
                     "value": "leftover_to_A",

@@ -37,27 +37,32 @@ def get_parameters(config, folder_ref):
         raise ValueError("Size definition is missing")
 
     filename = config.get("parameters", None)
-    size_A = config.get("n_A", None)
-    size_B = config.get("n_B", None)
+    size_A = config.get("size_A", None)
+    size_B = config.get("size_B", None)
     if size_definition == "manual" and size_A and size_B:
         if size_A < 0 or size_B < 0:
             raise ValueError("Sample sizes need to be positive")
     elif folder_ref:
-        folder_name = folder_ref[0]
-        folder = dataiku.Folder(folder_name)
-        paths = folder.list_paths_in_partition()
-        if len(paths) == 0:
-            raise ValueError("The input folder is empty")
-        else:
-            if filename:
-                if filename in paths:
-                    tracking = folder.read_json(filename)
-                    size_A = int(tracking["n_A"])
-                    size_B = int(tracking["n_B"])
-                else:
-                    raise ValueError("The parameter's file is not in the managed folder")
-            else:
-                raise ValueError("The parameters' filename is missing")
-    else:
+        size_A, size_B = check_folder_parameters(folder_ref, filename)
+    elif size_definition == "web_app":
         raise ValueError("The input folder is missing")
     return reference_column, size_definition, attribution_method, size_A, size_B
+
+
+def check_folder_parameters(folder_ref, filename):
+    folder_name = folder_ref[0]
+    folder = dataiku.Folder(folder_name)
+    paths = folder.list_paths_in_partition()
+    if len(paths) == 0:
+        raise ValueError("The input folder is empty")
+    else:
+        if filename:
+            if filename in paths:
+                tracking = folder.read_json(filename)
+                size_A = int(tracking["n_A"])
+                size_B = int(tracking["n_B"])
+                return size_A, size_B
+            else:
+                raise ValueError("The parameter's file is not in the managed folder")
+        else:
+            raise ValueError("The parameters' filename is missing")
