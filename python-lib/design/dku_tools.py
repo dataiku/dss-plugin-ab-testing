@@ -2,6 +2,8 @@ import dataiku
 from dataiku.customrecipe import get_input_names_for_role, get_output_names_for_role
 from typing import List
 
+from design.constants import SizeDefinition, AttributionMethod, Parameters
+
 
 def get_input_output() -> tuple:
     if len(get_input_names_for_role("user_list")) == 0:
@@ -30,8 +32,8 @@ def get_input_output() -> tuple:
 
 def get_parameters(config: dict, folder_ref: List[str]) -> tuple:
     reference_column = config.get("user_reference", None)
-    size_definition = config.get("sample_size_definition", None)
-    attribution_method = config.get("attribution_method", "leftover_to_A")
+    size_definition = SizeDefinition(config.get("sample_size_definition", SizeDefinition.WEB_APP))
+    attribution_method = AttributionMethod(config.get("attribution_method", AttributionMethod.LEFTOVER_TO_A))
     if not reference_column:
         raise ValueError("Reference column is missing")
     if not size_definition:
@@ -40,12 +42,12 @@ def get_parameters(config: dict, folder_ref: List[str]) -> tuple:
     filename = config.get("parameters", None)
     size_A = config.get("size_A", None)
     size_B = config.get("size_B", None)
-    if size_definition == "manual" and size_A and size_B:
+    if size_definition == SizeDefinition.MANUAL and size_A and size_B:
         if size_A < 0 or size_B < 0:
             raise ValueError("Sample sizes need to be positive")
     elif folder_ref:
         size_A, size_B = check_folder_parameters(folder_ref, filename)
-    elif size_definition == "web_app":
+    elif size_definition == SizeDefinition.WEB_APP:
         raise ValueError("The input folder is missing")
     return reference_column, size_definition, attribution_method, size_A, size_B
 
@@ -60,8 +62,8 @@ def check_folder_parameters(folder_ref: List[str], filename: str):
         if filename:
             if filename in paths:
                 tracking = folder.read_json(filename)
-                size_A = int(tracking["n_A"])
-                size_B = int(tracking["n_B"])
+                size_A = int(tracking[Parameters.SIZE_A])
+                size_B = int(tracking[Parameters.SIZE_B])
                 return size_A, size_B
             else:
                 raise ValueError("The parameter's file is not in the managed folder")

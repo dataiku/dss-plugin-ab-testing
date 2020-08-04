@@ -1,10 +1,12 @@
 from io import StringIO
 from dataiku.core.dkujson import dumps
 import time
+from design.constants import Parameters
 
 
 def save_parameters(variables, folder):
-    fields = [u'ratio', u'power', u'mde', u'tail', u'traffic', u'n_B', u'sig_level', u'n_A', u'bcr']
+    fields = [Parameters.SIZE_A, Parameters.SIZE_B, Parameters.RATIO, Parameters.POWER,
+              Parameters.MDE, Parameters.TAIL, Parameters.TRAFFIC, Parameters.SIG_LEVEL, Parameters.BCR]
     tracking = {key: variables[key] for key in variables if key in fields}
     filename = str(time.time())[:5] + ".json"
     parameters = StringIO()

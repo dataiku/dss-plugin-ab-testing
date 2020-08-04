@@ -3,8 +3,8 @@ function store_parameters() {
     let n_A = $("#sample_size_A").html();
     let n_B = $("#sample_size_B").html();
     let data = new URLSearchParams(formData);
-    data.append("n_A", n_A);
-    data.append("n_B", n_B);
+    data.append("size_A", n_A);
+    data.append("size_B", n_B);
     let headers = new Headers();
     let init = {
         method: 'POST',

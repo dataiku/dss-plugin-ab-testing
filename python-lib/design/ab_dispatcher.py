@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import logging
 
+from design.constants import AttributionMethod
+
 logger = logging.getLogger()
 logging.basicConfig(level=logging.INFO, format="AB testing plugin %(levelname)s - %(message)s")
 
@@ -35,13 +37,13 @@ class AbDispatcher(object):
     def split_into_groups(self, experiment_population: np.array, attribution_method: str) -> tuple:
         logger.info("Dispatching experiment population: shuffle")
         np.random.permutation(experiment_population)
-        if attribution_method == "leftover_to_A":
+        if attribution_method == AttributionMethod.LEFTOVER_TO_A:
             B_group = experiment_population[:self.size_B]
             A_group = experiment_population[self.size_B:]
-        elif attribution_method == "leftover_to_B":
+        elif attribution_method == AttributionMethod.LEFTOVER_TO_B:
             A_group = experiment_population[:self.size_A]
             B_group = experiment_population[self.size_A:]
-        elif attribution_method == "leftover_blank":
+        elif attribution_method == AttributionMethod.LEFTOVER_BLANK:
             B_group = experiment_population[:self.size_B]
             A_group = experiment_population[self.size_B:self.size_A+self.size_B]
         return A_group, B_group
