@@ -1,13 +1,9 @@
 import dataiku
+from results.dku_tools import get_input_output
 
-input_A_names = get_input_names_for_role('input_A_role')
-input_A_datasets = [dataiku.Dataset(name) for name in input_A_names]
 
-output_A_names = get_output_names_for_role('main_output')
-output_A_datasets = [dataiku.Dataset(name) for name in output_A_names]
+results, statistics = get_input_output()
 
-dataset_DKU_TUTORIAL_LAB_experience_joined = dataiku.Dataset("DKU_TUTORIAL_LAB_experience_joined")
-df = dataset_DKU_TUTORIAL_LAB_experience_joined.get_dataframe()
 column_id = "customer_id"
 column_conversion = "conversion"
 column_group = "AB_group"
