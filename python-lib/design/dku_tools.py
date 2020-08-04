@@ -6,6 +6,13 @@ from design.constants import SizeDefinition, AttributionMethod, Parameters
 
 
 def get_input_output() -> tuple:
+    """Returns input and output datasets after sanity check
+
+    :raises: :class:`ValueError`: Missing input or output dataset(s)
+
+    :returns: input and output datasets
+    :rtype: tuple
+    """
     if len(get_input_names_for_role("user_list")) == 0:
         raise ValueError("No input dataset.")
     if len(get_output_names_for_role("groups")) == 0:
@@ -31,6 +38,15 @@ def get_input_output() -> tuple:
 
 
 def get_parameters(config: dict, folder_ref: List[str]) -> tuple:
+    """Returns recipe parameters after sanity check
+
+    :param dict config: parameters defined in the recipe settings
+    :param List[str] folder_ref: reference to the input folder containing the experiment parameters
+    :raises: :class:`ValueError`: Missing parameters
+
+    :returns: Parameters
+    :rtype: tuple
+    """
     reference_column = config.get("user_reference", None)
     size_definition = SizeDefinition(config.get("sample_size_definition", SizeDefinition.WEB_APP))
     attribution_method = AttributionMethod(config.get("attribution_method", AttributionMethod.LEFTOVER_TO_A))
@@ -53,6 +69,14 @@ def get_parameters(config: dict, folder_ref: List[str]) -> tuple:
 
 
 def check_folder_parameters(folder_ref: List[str], filename: str):
+    """Extracts sample sizes from the managed folder
+
+    :param str filename: name of the json containing the experiment parameters
+    :raises: :class:`ValueError`: Missing folder or filename. 
+
+    :returns: sample sizes
+    :rtype: tuple
+    """
     folder_name = folder_ref[0]
     folder = dataiku.Folder(folder_name)
     paths = folder.list_paths_in_partition()

@@ -23,3 +23,8 @@ class Parameters(object):
     SIG_LEVEL = "sig_level"
     BCR = "bcr"
     REACH = "reach"
+
+
+class Group(object):
+    A = "A"
+    B = "B"
