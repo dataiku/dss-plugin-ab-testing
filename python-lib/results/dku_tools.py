@@ -10,13 +10,35 @@ def get_input_output() -> tuple:
     :returns: input and output datasets
     :rtype: tuple
     """
-    input_name = get_input_names_for_role("results")[0]
-    output_name = get_output_names_for_role('groups')[0]
-    if len(get_input_names_for_role("results")) == 0:
+    input_names = get_input_names_for_role("results")
+    output_names = get_output_names_for_role('statistics')
+    if len(input_names) == 0:
         raise ValueError("No input dataset.")
-    if len(get_output_names_for_role("statistics")) == 0:
+    if len(output_names) == 0:
         raise ValueError("No output dataset.")
 
-    input_dataset = dataiku.Dataset(input_name)
-    output_dataset = dataiku.Dataset(output_name)
+    input_dataset = dataiku.Dataset(input_names[0])
+    output_dataset = dataiku.Dataset(output_names[0])
     return input_dataset, output_dataset
+
+
+def get_parameters(config: dict) -> tuple:
+    """Returns recipe parameters after sanity check
+
+    :param dict config: parameters defined in the recipe settings
+    :raises: :class:`ValueError`: Missing parameters
+
+    :returns: Parameters
+    :rtype: tuple
+    """
+    reference_column = config.get("user_reference", None)
+    group_column = config.get("group_column", None)
+    conversion_column = config.get("conversion_column", None)
+
+    if not reference_column:
+        raise ValueError("User reference column is missing")
+    if not group_column:
+        raise ValueError("Group column is missing")
+    if not conversion_column:
+        raise ValueError("Conversion column is missing")
+    return reference_column, group_column, conversion_column
