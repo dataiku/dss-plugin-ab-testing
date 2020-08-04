@@ -13,16 +13,18 @@ def get_input_output() -> tuple:
     :returns: input and output datasets
     :rtype: tuple
     """
-    if len(get_input_names_for_role("user_list")) == 0:
+    input_names = get_input_names_for_role("user_list")
+    if len(input_names) == 0:
         raise ValueError("No input dataset.")
-    if len(get_output_names_for_role("groups")) == 0:
+    output_names = get_output_names_for_role("groups")
+    if len(output_names) == 0:
         raise ValueError("No output dataset.")
 
-    input_name = get_input_names_for_role('user_list')[0]
+    input_name = input_names[0]
     input_dataset = dataiku.Dataset(input_name)
     folder_ref = get_input_names_for_role('folder')
 
-    output_name = get_output_names_for_role('groups')[0]
+    output_name = output_names[0]
     output_dataset = dataiku.Dataset(output_name)
     A_output = get_output_names_for_role("A_group")
     B_output = get_output_names_for_role("B_group")
