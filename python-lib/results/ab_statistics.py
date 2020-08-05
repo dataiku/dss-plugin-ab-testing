@@ -10,13 +10,25 @@ class AbStatistics(object):
         self.conversion_column = conversion_column
 
     def compute(self, results_df):
-        self.check_results_df(results_df)
+        results_df = self.check_results_df(results_df)
         aggregation = self.aggregate_by_group(results_df)
         statistics_df = self.format_statistics(aggregation)
         return statistics_df
 
     def check_results_df(self, result_df):
-        print("WIP")
+        valid_rows = result_df[[self.user_reference_column, self.group_column, self.conversion_column]].dropna()
+        not_empty_rows_nb = valid_rows.shape[0]
+        if not result_df[self.user_reference_column].is_unique:
+            raise ValueError("There should be only one row per user in the input dataset")
+        if not_empty_rows_nb < 2:
+            raise ValueError("The input dataset should contain at least 2 users with conversion and group references")
+        invalid_groups = valid_rows[(valid_rows[self.group_column] != Group.A) & (valid_rows[self.group_column] != Group.B)]
+        if not invalid_groups.empty:
+            raise ValueError("The group indicator should be either 'A' or 'B'")
+        invalid_conversion = valid_rows[(valid_rows[self.conversion_column] != 0) & (valid_rows[self.conversion_column] != 1)]
+        if not invalid_conversion.empty:
+            raise ValueError("The group indicator should be either 0 or 1")
+        return valid_rows
 
     def aggregate_by_group(self, result_df):
         aggregation = result_df.groupby([self.group_column]).agg({self.user_reference_column: "nunique", self.conversion_column: "sum"})
