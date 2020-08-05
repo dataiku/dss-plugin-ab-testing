@@ -6,7 +6,6 @@
     },
     "selectableFromDataset": "results",
     "kind": "PYTHON",
-    
     "inputRoles": [
         {
             "name": "results",
@@ -17,10 +16,9 @@
             "acceptsDataset": true
         }
     ],
-
     "outputRoles": [
         {
-            "name": "statistics", 
+            "name": "statistics",
             "label": "AB testing statistics",
             "description": "Statistics required to answer the statistical test",
             "arity": "UNARY",
@@ -28,7 +26,6 @@
             "acceptsDataset": true
         }
     ],
-
     "params": [
         {
             "name": "user_reference",
@@ -43,7 +40,7 @@
             "label": "Conversion column",
             "description": "Column indicating if a user converted or not (Binary values)",
             "columnRole": "results"
-        }, 
+        },
         {
             "name": "group_column",
             "type": "COLUMN",
