@@ -1,6 +1,6 @@
 from dataiku.customrecipe import get_recipe_config
 
-from design.dku_tools import get_input_output, get_parameters
+from dku_tools import get_input_output, get_parameters
 from design.ab_dispatcher import AbDispatcher
 
 # ==============================================================================
