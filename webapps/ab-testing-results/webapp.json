@@ -1,0 +1,48 @@
+{
+    "meta": {
+        "label": "AB test results",
+        "description": "Analyse the results of an AB test",
+        "icon": "icon-dashboard"
+    },
+    "baseType": "STANDARD",
+    "hasBackend": "true",
+    "noJSSecurity": "false",
+    "standardWebAppLibraries": [
+        "jquery",
+        "dataiku",
+        "bootstrap",
+        "d3"
+    ],
+    "params": [
+        {
+            "type": "SELECT",
+            "name": "statistics_entry",
+            "label": "AB statistics entry from : ",
+            "selectChoices": [
+                {
+                    "value": "input_dataset",
+                    "label": "an input dataset"
+                },
+                {
+                    "value": "manual",
+                    "label": "this web app"
+                }
+            ],
+            "defaultValue": "input_dataset"
+        },
+        {
+            "name": "statistics_dataset",
+            "type": "DATASET",
+            "label": "Dataset",
+            "description": "output of the recipe AB statistics",
+            "mandatory": false,
+            "visibilityCondition": "model.statistics_entry == 'input_dataset'"
+        }
+    ],
+    "roles": [
+        {
+            "type": "DATASET",
+            "targetParamsKey": "statistics_dataset"
+        }
+    ]
+}
