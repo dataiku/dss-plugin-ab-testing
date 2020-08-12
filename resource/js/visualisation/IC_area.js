@@ -1,6 +1,5 @@
 // area under curve
-function draw_initial_area(svg, x, y, distribution_A, distribution_B, std) {
-    let z_value = 0.034;
+function draw_initial_area(svg, z_value, x, y, distribution_A, distribution_B, std) {
     let x_max_A = get_x_max(distribution_A);
     let area_defined_A = define_area(x_max_A, 0, z_value, x, y, std)
     let area_sig_level = area_defined_A[0];

@@ -53,7 +53,7 @@ let y = build_y_axis(distribution_A, distribution_B, height);
 draw_initial_x_axis(svg, x, height);
 draw_initial_IC(svg, x, y, y_max);
 draw_initial_plots(svg, x, y, std, mde_val);
-draw_initial_area(svg, x, y, distribution_A, distribution_B, std);
+draw_initial_area(svg,  0.034, x, y, distribution_A, distribution_B, std);
 set_initial_legend(svg, y_max);
 
 //update distributions and axis

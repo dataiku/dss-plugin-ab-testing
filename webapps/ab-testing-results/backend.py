@@ -12,6 +12,6 @@ def analyse_results():
     CR_A = float(request.form.get("CR_A"))/100
     CR_B = float(request.form.get("CR_B"))/100
     two_tailed = strtobool(request.form.get("tail"))
-    Z_score = compute_Z_score(size_A, size_B, CR_A, CR_B)
-    p_value = compute_p_value(Z_score, two_tailed)
+    Z_score = round(compute_Z_score(size_A, size_B, CR_A, CR_B), 3)
+    p_value = round(compute_p_value(Z_score, two_tailed), 3)
     return json.dumps({"Z_score": Z_score, "p_value": p_value})
