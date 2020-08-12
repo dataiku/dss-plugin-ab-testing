@@ -22,10 +22,10 @@ computation.addEventListener('click', function (event) {
 
 
 //Submit form 
-const formButton = document.getElementById('submit_button');
+const formButton = document.getElementById("submit_button");
 let hide_duration = true;
 
-formButton.addEventListener('click', function (event, hide_duration) {
+formButton.addEventListener("click", function (event, hide_duration) {
     manage_size_computation(event, svg, height, width, hide_duration);
 }
 );

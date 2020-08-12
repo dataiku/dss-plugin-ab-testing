@@ -1,4 +1,4 @@
-function set_form_default_values(){
+function set_form_default_values() {
     document.getElementById("bcr").defaultValue = "30";
     document.getElementById("mde").defaultValue = "5";
     document.getElementById("sig_level").defaultValue = "95";
@@ -24,7 +24,7 @@ function invalid_form(lower_bound, upper_bound) {
     return invalid_output
 }
 
-function check_form_inputs(){
+function check_form_inputs() {
     check_form_input("bcr");
     check_form_input("mde");
     check_form_input("sig_level");
@@ -51,6 +51,14 @@ function alert_invalid_value(form_field, value, lower_bound, upper_bound) {
 function out_of_bound(value, lower_bound, upper_bound) {
     const input = parseFloat(value);
     return (input > upper_bound || input < lower_bound);
+}
+
+function alert_value_too_small(form_field, value) {
+    if (too_small(value, 0)) {
+        $("#" + "alert_" + form_field).html("Please enter a positive value")
+    } else {
+        $("#" + "alert_" + form_field).html("")
+    }
 }
 
 // compute duration

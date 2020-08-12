@@ -1,9 +1,4 @@
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
     font-family: 'Open Sans', sans-serif;
 }
 
@@ -21,4 +16,59 @@ h6 {
 .explanations {
     font-size: 16px;
     color: #718093
+}
+
+.alert {
+    color: #ff7979;
+}
+
+.group {
+    font-size: 35px;
+    justify-content: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.textbox_results {
+    height: 50px;
+}
+
+.headers{
+    font-size: 18px;
+    margin-left: 10px;
+    justify-content: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.corner{
+    font-size: 45px;
+    justify-content: center;
+}
+
+.explanation_text{
+    color: #718093;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#A_header {
+    color: rgb(54, 163, 158);
+}
+
+#B_header {
+    color: #ff7979;
+}
+
+.explanation_smaller{
+    font-size: 12px;
+}
+
+.spacing {
+    margin-bottom: 10px;
+}
+
+#submit{
+    margin-top: 25px;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    padding: 11px 28px;
 }

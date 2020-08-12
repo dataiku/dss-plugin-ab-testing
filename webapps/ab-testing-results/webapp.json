@@ -18,7 +18,7 @@
             "type": "SELECT",
             "name": "statistics_entry",
             "label": "AB statistics entry from : ",
-            "selectChoices": [
+            "selectChoices": [ 
                 {
                     "value": "input_dataset",
                     "label": "an input dataset"
