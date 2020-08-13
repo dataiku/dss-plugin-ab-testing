@@ -98,6 +98,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .red{
     color: #EA2027;
+    font-weight:500;
 }
 
 .yellow{
@@ -106,4 +107,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .green{
     color: #009432;
+    font-weight:550;
 }
+
+.question{
+    font-size: 15px;
+    color: rgb(54, 163, 158);
+    font-family: 'Open Sans', sans-serif;
+}
+

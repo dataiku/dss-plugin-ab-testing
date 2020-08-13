@@ -38,11 +38,11 @@ function update_results_table(uplift, Z_score, p_value) {
     $("#p_value").html(p_value);
 }
 
-function test_outcome(p_value) {
+function test_outcome(p_value, svg) {
     let displayed_sig_level = parseFloat($("#sig_level").val());
     let sig_level = displayed_sig_level / 100;
     let confidence_level = 1 - p_value;
-    let displayed_confidence = Math.round(confidence_level) * 100;
+    let displayed_confidence = confidence_level * 100;
     let difference = parseFloat($("#CR_A").val()) / 100 - parseFloat($("#CR_B").val()) / 100;
     let displayed_difference = Math.round(difference * 100);
     let conclusion = $("#result_caption");
@@ -58,6 +58,8 @@ function test_outcome(p_value) {
         $("#significance").addClass("green");
         $("#confidence").addClass("green");
         $("#p_value").addClass("green");
+        svg.select("#area_standard")
+            .style("fill", "#009432")
     } else {
         message += "<div id = 'significance' > • These results are not statistically significant within " + displayed_sig_level + "% significance level </div> </div>";
         conclusion.html(message);
@@ -65,6 +67,8 @@ function test_outcome(p_value) {
         $("#p_value").removeClass("green");
         $("#p_value").addClass("red");
         $("#confidence").addClass("red");
+        svg.select("#area_standard")
+            .style("fill", "#EA2027")
     };
 }
 
@@ -78,9 +82,17 @@ formButton.addEventListener("click", function (event) {
                 const p_value = parseFloat(json.p_value);
                 let uplift = Math.abs(parseFloat($("#CR_A").val()) - parseFloat($("#CR_B").val()))
                 update_results_table(uplift, Z_score, p_value);
-                test_outcome(p_value);
+                test_outcome(p_value, svg);
                 let new_z = update_z_value(1)
                 update_IC(svg, new_z, x, y, y_max);
+                //update area
+                let new_area_defined = define_area(x_max, 0, new_z, x, y, 1);
+                let new_area = new_area_defined[0];
+                let new_indexies = new_area_defined[1];
+                svg.select("#area_standard")
+                    .datum(new_indexies)
+                    .attr("d", new_area);
+                update_z_score(svg, x, Z_score);
             })
     }).catch(function (error) {
         console.log('There was an issue with the fetch operation ' + error.message);
@@ -119,7 +131,7 @@ svg.append("path")
     .attr("d", line)
     .attr("id", "plot")
     .style("stroke-width", 2.5)
-    .style("stroke", "rgb(54,163,158)")
+    .style("stroke", "#718093")
     .style("fill", "none");
 
 // draw IC
@@ -137,6 +149,29 @@ svg.append('line')
 
 // update IC
 let area_defined = define_area(x_max, 0, z_value, x, y, 1);
-let area_sig_level = area_defined[0]; 
+let area_sig_level = area_defined[0];
 let indexies = area_defined[1];
 draw_area(svg, area_sig_level, indexies, "#009432", "standard");
+
+// draw Z score
+let Z_score = 3.381;
+svg.append("rect").attr("x", x(Z_score))
+    .attr("y", y(0) - 15)
+    .attr("width", 6)
+    .attr("height", 30)
+    .attr("id", "plot_Z_score")
+    .style("fill", "rgb(54, 163, 158)");
+svg.append("text").attr("x", x(Z_score) + 3)
+    .attr("y", y(0) + 25)
+    .attr("class", "label_legend")
+    .text("Your A/B")
+    .attr("id", "label_z_score")
+    .style("text-anchor", "middle");
+
+function update_z_score(svg, x, Z_score) {
+    svg.select("#plot_Z_score")
+        .attr("x", x(Z_score));
+    svg.select("#label_z_score")
+        .attr("x", x(Z_score) + 3);
+};
+
