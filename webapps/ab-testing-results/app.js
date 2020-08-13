@@ -80,7 +80,7 @@ formButton.addEventListener("click", function (event) {
             .then(function (json) {
                 const Z_score = parseFloat(json.Z_score);
                 const p_value = parseFloat(json.p_value);
-                let uplift = Math.abs(parseFloat($("#CR_A").val()) - parseFloat($("#CR_B").val()))
+                let uplift = Math.round(Math.abs(parseFloat($("#CR_A").val()) - parseFloat($("#CR_B").val())));
                 update_results_table(uplift, Z_score, p_value);
                 test_outcome(p_value, svg);
                 let new_z = update_z_value(1)
