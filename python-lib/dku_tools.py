@@ -39,11 +39,11 @@ def get_input_output() -> tuple:
     return input_dataset, folder_ref, output_dataset, A_dataset, B_dataset
 
 
-def get_parameters(config: dict, folder_ref: List[str]) -> tuple:
+def get_parameters(config: dict, folder_ref: str) -> tuple:
     """Returns recipe parameters after sanity check
 
     :param dict config: parameters defined in the recipe settings
-    :param List[str] folder_ref: reference to the input folder containing the experiment parameters
+    :param str folder_ref: reference to the input folder containing the experiment parameters
     :raises: :class:`ValueError`: Missing parameters
 
     :returns: Parameters
@@ -64,13 +64,13 @@ def get_parameters(config: dict, folder_ref: List[str]) -> tuple:
         if size_A < 0 or size_B < 0:
             raise ValueError("Sample sizes need to be positive")
     elif folder_ref:
-        size_A, size_B = check_folder_parameters(folder_ref, filename)
+        size_A, size_B = get_folder_parameters(folder_ref, filename)
     elif size_definition == SizeDefinition.WEB_APP:
         raise ValueError("The input folder is missing")
     return reference_column, size_definition, attribution_method, size_A, size_B
 
 
-def check_folder_parameters(folder_ref: List[str], filename: str):
+def get_folder_parameters(folder_ref: List[str], filename: str):
     """Extracts sample sizes from the managed folder
 
     :param str filename: name of the json containing the experiment parameters
@@ -79,8 +79,7 @@ def check_folder_parameters(folder_ref: List[str], filename: str):
     :returns: sample sizes
     :rtype: tuple
     """
-    folder_name = folder_ref[0]
-    folder = dataiku.Folder(folder_name)
+    folder = dataiku.Folder(folder_ref)
     paths = folder.list_paths_in_partition()
     if len(paths) == 0:
         raise ValueError("The input folder is empty")

@@ -144,3 +144,6 @@ state.json
 #vs code
 .vscode/
 setup.cfg
+
+#Mac 
+.DS_Store
