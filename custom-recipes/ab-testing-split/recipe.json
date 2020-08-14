@@ -34,22 +34,6 @@
             "arity": "UNARY",
             "required": true,
             "acceptsDataset": true
-        },
-        {
-            "name": "A_group",
-            "label": "A group (optional)",
-            "description": "Dataset containing the users who are part of the group A",
-            "arity": "UNARY",
-            "required": false,
-            "acceptsDataset": true
-        },
-        {
-            "name": "B_group",
-            "label": "B group (optional)",
-            "description": "Dataset containing the users who are part of the group B",
-            "arity": "UNARY",
-            "required": false,
-            "acceptsDataset": true
         }
     ],
     "paramsPythonSetup": "py/compute_files_in_folder.py",

@@ -26,17 +26,8 @@ def get_input_output() -> tuple:
 
     output_name = output_names[0]
     output_dataset = dataiku.Dataset(output_name)
-    A_output = get_output_names_for_role("A_group")
-    B_output = get_output_names_for_role("B_group")
-    if A_output:
-        A_dataset = dataiku.Dataset(A_output[0])
-    else:
-        A_dataset = None
-    if B_output:
-        B_dataset = dataiku.Dataset(B_output[0])
-    else:
-        B_dataset = None
-    return input_dataset, folder_ref, output_dataset, A_dataset, B_dataset
+
+    return input_dataset, folder_ref, output_dataset
 
 
 def get_parameters(config: dict, folder_ref: str) -> tuple:
