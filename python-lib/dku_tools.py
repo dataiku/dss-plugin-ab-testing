@@ -2,7 +2,7 @@ import dataiku
 from dataiku.customrecipe import get_input_names_for_role, get_output_names_for_role
 from typing import List
 
-from design.constants import SizeDefinition, AttributionMethod, Parameters
+from design_experiment.constants import SizeDefinition, AttributionMethod, Parameters
 
 
 def get_input_output() -> tuple:

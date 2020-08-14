@@ -5,9 +5,9 @@ import logging
 import dataiku
 from dataiku.customwebapp import get_webapp_config
 
-from design.sample_size import min_sample_size, z_value
-from design.helpers import save_parameters
-from design.constants import Parameters
+from design_experiment.sample_size import min_sample_size, z_value
+from design_experiment.helpers import save_parameters
+from design_experiment.constants import Parameters
 
 try:
     folder_name = get_webapp_config()["input_folder"]

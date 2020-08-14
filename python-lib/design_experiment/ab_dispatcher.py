@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import logging
 
-from design.constants import AttributionMethod, Group
+from design_experiment.constants import AttributionMethod, Group
 
 logger = logging.getLogger()
 logging.basicConfig(level=logging.INFO, format="AB testing plugin %(levelname)s - %(message)s")
