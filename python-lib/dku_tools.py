@@ -82,6 +82,8 @@ def get_folder_parameters(folder_ref: List[str], filename: str):
                 size_B = int(tracking[Parameters.SIZE_B])
                 return size_A, size_B
             else:
-                raise ValueError("The parameter's file is not in the managed folder")
+                raise ValueError(
+                    "The parameter's file is not in the managed folder. It should be a json file created from the Web App 'AB testing design'. This web app is a component of the same plugin")
         else:
-            raise ValueError("The parameters' filename is missing")
+            raise ValueError(
+                "The parameters' filename is missing. It should point to a json file created from the Web App 'AB testing design'. This web app is a component of the same plugin")
