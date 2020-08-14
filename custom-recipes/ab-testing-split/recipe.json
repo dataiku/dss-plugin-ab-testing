@@ -74,16 +74,14 @@
             "type": "INT",
             "name": "size_A",
             "label": "Sample size for variation A",
-            "description": "Minimul sample size for the A group",
-            "parameterSetId": "n_A",
+            "description": "Minimum sample size for the A group",
             "visibilityCondition": "model.sample_size_definition == 'manual'"
         },
         {
             "type": "INT",
             "name": "size_B",
             "label": "Sample size for variation B",
-            "description": "Minimul sample size for the B group",
-            "parameterSetId": "n_B",
+            "description": "Minimum sample size for the B group",
             "visibilityCondition": "model.sample_size_definition == 'manual'"
         },
         {
