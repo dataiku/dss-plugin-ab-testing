@@ -1,14 +1,14 @@
 // explanation fields
 explain("size");
-explain("CR");
+explain("success_rate");
 explain("tail");
 explain("sig_level");
 
 // default values
 document.getElementById("size_A").defaultValue = "1000";
 document.getElementById("size_B").defaultValue = "1000";
-document.getElementById("CR_A").defaultValue = "10";
-document.getElementById("CR_B").defaultValue = "15";
+document.getElementById("success_rate_A").defaultValue = "10";
+document.getElementById("success_rate_B").defaultValue = "15";
 document.getElementById("sig_level").defaultValue = "95";
 
 // check size input
@@ -43,7 +43,7 @@ function test_outcome(p_value, svg) {
     let sig_level = displayed_sig_level / 100;
     let confidence_level = 1 - p_value;
     let displayed_confidence = confidence_level * 100;
-    let difference = parseFloat($("#CR_A").val()) / 100 - parseFloat($("#CR_B").val()) / 100;
+    let difference = parseFloat($("#success_rate_A").val()) / 100 - parseFloat($("#success_rate_B").val()) / 100;
     let displayed_difference = Math.round(difference * 100);
     let conclusion = $("#result_caption");
     if (difference > 0) {
@@ -80,7 +80,7 @@ formButton.addEventListener("click", function (event) {
             .then(function (json) {
                 const Z_score = parseFloat(json.Z_score);
                 const p_value = parseFloat(json.p_value);
-                let uplift = Math.round(Math.abs(parseFloat($("#CR_A").val()) - parseFloat($("#CR_B").val())));
+                let uplift = Math.round(Math.abs(parseFloat($("#success_rate_A").val()) - parseFloat($("#success_rate_B").val())));
                 update_results_table(uplift, Z_score, p_value);
                 test_outcome(p_value, svg);
                 let new_z = update_z_value(1)

@@ -48,9 +48,9 @@
             <h1>Frequentist AB Testing - Analysis of the results</h1>
             <a class="anchorjs-link " href="#overview" aria-label="Anchor" data-anchorjs-icon="#"
                 style="padding-left: 0.375em;"></a>
-            <h2>Compare two proportions : conversion rate, click through rate.</h2>
+            <h2>Compare two proportions : success rate, click through rate.</h2>
             <p class="explanations">
-                The average conversion rates of two independent samples A and B are compared. A is the control group
+                The average success rates of two independent samples A and B are compared. A is the control group
                 while B
                 is the experiment group. We assume that the two samples follow binomial distributions.
             </p>
@@ -64,7 +64,7 @@
                             Size
                         </div>
                         <div class="col-sm headers text-center">
-                            Conversion rate (%)
+                            Success rate (%)
                         </div>
                     </div>
                     <div class="row">
@@ -74,7 +74,7 @@
                             <button id="info_size" type="button" class="btn btn-link"> [Info] </button>
                         </div>
                         <div class="col-sm headers text-center">
-                            <button id="info_CR" type="button" class="btn btn-link"> [Info] </button>
+                            <button id="info_success_rate" type="button" class="btn btn-link"> [Info] </button>
                         </div>
                     </div>
                     <div class="row">
@@ -90,7 +90,7 @@
                             </span>
                         </div>
                         <div class="col-sm headers text-center">
-                            <span id="explanation_CR" class="d-none">
+                            <span id="explanation_success_rate" class="d-none">
                                 <div class="spacing">
                                     <div class="explanation_text">
                                         What is the percentage of success per group?
@@ -110,7 +110,7 @@
                         </div>
                         <div class="col-sm">
                             <div class="field">
-                                <input type="number" name="CR_A" placeholder="" id="CR_A" class="textbox_results" />
+                                <input type="number" name="success_rate_A" placeholder="" id="success_rate_A" class="textbox_results" />
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                         </div>
                         <div class="col-sm">
                             <div class="field">
-                                <input type="number" name="CR_B" placeholder="" id="CR_B" class="textbox_results" />
+                                <input type="number" name="success_rate_B" placeholder="" id="success_rate_B" class="textbox_results" />
                             </div>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                                                 The statistical significance is the probability to find that the two
                                                 samples have
                                                 the same
-                                                conversion rate (H0), when this is the case. It is therefore the minimum
+                                                success rate (H0), when this is the case. It is therefore the minimum
                                                 threshold
                                                 of the true
                                                 positive probability.
@@ -183,7 +183,7 @@
                                 <span id="explanation_tail" class="d-none">
                                     <div class="spacing explanation_text">
                                         <div class="explanation_smaller">
-                                            Are you willing to test for an increase in conversion rate, a decrease, or
+                                            Are you willing to test for an increase in success rate, a decrease, or
                                             even
                                             both?
                                         </div>
@@ -200,7 +200,7 @@
                                             However, if you only test in one direction, to find out for instance,
                                             whether
                                             the
-                                            conversion rate is
+                                            success rate is
                                             higher
                                             for B, you may want to use a one-tailed distribution. For example, if you
                                             test a
@@ -269,7 +269,7 @@
             <hr>
             </hr>
             <p class="question text-center">
-                What are the chances I would see these results if there was no difference? 
+                What are the chances I would see these results if there was no difference?
             </p>
         </div>
     </div>
