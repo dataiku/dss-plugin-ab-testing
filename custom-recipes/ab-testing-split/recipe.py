@@ -15,12 +15,10 @@ reference_column, size_definition, attribution_method, size_A, size_B = get_para
 # ==============================================================================
 # RUN
 # ==============================================================================
-experiment_population = input_df[[reference_column]].drop_duplicates().values
-ab_dispatcher = AbDispatcher(size_A, size_B, reference_column)
-groups_df, A_group, B_group = ab_dispatcher.dispatch(experiment_population, attribution_method, input_df)
+ab_dispatcher = AbDispatcher(size_A, size_B)
+groups_df = ab_dispatcher.dispatch(input_df, reference_column, attribution_method)
 
 # ===============================================================================
 # WRITE
 # ===============================================================================
 output_dataset.write_with_schema(groups_df)
-

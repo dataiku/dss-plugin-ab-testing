@@ -25,6 +25,10 @@ class Parameters(object):
     REACH = "reach"
 
 
-class Group(object):
+class Group(Enum):
     A = "A"
     B = "B"
+
+
+class Column(Enum):
+    AB_GROUP = "__dku_ab_group__"
