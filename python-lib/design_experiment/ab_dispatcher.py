@@ -53,23 +53,22 @@ class AbDispatcher(object):
         :rtype: tuple
         """
         logger.info("Dispatching experiment population: shuffle")
-        random_generator = Generator(np.random.PCG64())
-        index = population_df.index
+        shuffled_index = np.array(population_df.index)
         if leftovers_management == AttributionMethod.LEFTOVER_TO_A:
             population_df[Column.AB_GROUP.value] = Group.A.value
-            sampled_index = random_generator.choice(index, self.size_B, replace=False)
             column_index = population_df.columns.get_loc(Column.AB_GROUP.value)
-            population_df.iloc[sampled_index, column_index] = Group.B.value
+            np.random.shuffle(shuffled_index)
+            population_df.iloc[shuffled_index[:self.size_B], column_index] = Group.B.value
         elif leftovers_management == AttributionMethod.LEFTOVER_TO_B:
             population_df[Column.AB_GROUP.value] = Group.B.value
-            sampled_index = random_generator.choice(index, self.size_A, replace=False)
             column_index = population_df.columns.get_loc(Column.AB_GROUP.value)
-            population_df.iloc[sampled_index, column_index] = Group.A.value
+            np.random.shuffle(shuffled_index)
+            population_df.iloc[shuffled_index[:self.size_A], column_index] = Group.A.value
         elif leftovers_management == AttributionMethod.LEFTOVER_BLANK:
             population_df[Column.AB_GROUP.value] = np.nan
-            sampled_index = random_generator.choice(index, self.size_A + self.size_B, replace=False)
             column_index = population_df.columns.get_loc(Column.AB_GROUP.value)
-            population_df.iloc[sampled_index[:self.size_A], column_index] = Group.A.value
-            population_df.iloc[sampled_index[self.size_A:self.size_A+self.size_B], column_index] = Group.B.value
+            np.random.shuffle(shuffled_index)
+            population_df.iloc[shuffled_index[:self.size_A], column_index] = Group.A.value
+            population_df.iloc[shuffled_index[self.size_A:self.size_A+self.size_B], column_index] = Group.B.value
         logger.info("Dispatching experiment population: done")
         return population_df
