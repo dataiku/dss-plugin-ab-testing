@@ -12,7 +12,7 @@ class AttributionMethod(Enum):
     LEFTOVER_BLANK = "leftover_blank"
 
 
-class Parameters(object):
+class Parameters(Enum):
     SIZE_A = "size_A"
     SIZE_B = "size_B"
     RATIO = "ratio"

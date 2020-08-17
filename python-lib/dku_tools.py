@@ -87,8 +87,8 @@ def get_folder_parameters(folder_ref: List[str], filename: str):
         if filename:
             if filename in paths:
                 tracking = folder.read_json(filename)
-                size_A = int(tracking[Parameters.SIZE_A])
-                size_B = int(tracking[Parameters.SIZE_B])
+                size_A = int(tracking[Parameters.SIZE_A.value])
+                size_B = int(tracking[Parameters.SIZE_B.value])
                 return size_A, size_B
             else:
                 raise ValueError(

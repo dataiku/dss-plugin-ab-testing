@@ -21,13 +21,13 @@ logging.basicConfig(level=logging.INFO, format="AB_testing %(levelname)s - %(mes
 
 @app.route('/sample_size', methods=['POST'])
 def get_sample_size():
-    bcr = float(request.form.get(Parameters.BCR))/100
-    mde = float(request.form.get(Parameters.MDE))/100
-    alpha = 1-float(request.form.get(Parameters.SIG_LEVEL))/100
-    power = float(request.form.get(Parameters.POWER))/100
-    ratio = float(request.form.get(Parameters.RATIO))/100
-    reach = float(request.form.get(Parameters.REACH))/100
-    two_tailed = strtobool(request.form.get(Parameters.TAIL))
+    bcr = float(request.form.get(Parameters.BCR.value))/100
+    mde = float(request.form.get(Parameters.MDE.value))/100
+    alpha = 1-float(request.form.get(Parameters.SIG_LEVEL.value))/100
+    power = float(request.form.get(Parameters.POWER.value))/100
+    ratio = float(request.form.get(Parameters.RATIO.value))/100
+    reach = float(request.form.get(Parameters.REACH.value))/100
+    two_tailed = strtobool(request.form.get(Parameters.TAIL.value))
     n_A, n_B = min_sample_size(bcr=bcr, mde=mde, sig_level=alpha, min_power=power, size_ratio=ratio, two_tailed=two_tailed)
     n_A = n_A / reach
     n_B = n_B / reach
@@ -36,8 +36,8 @@ def get_sample_size():
 
 @app.route('/z_value', methods=['POST'])
 def get_z_value():
-    alpha = 1-float(request.form.get(Parameters.SIG_LEVEL))/100
-    two_tailed = strtobool(request.form.get(Parameters.TAIL))
+    alpha = 1-float(request.form.get(Parameters.SIG_LEVEL.value))/100
+    two_tailed = strtobool(request.form.get(Parameters.TAIL.value))
     std = float(request.form.get("std"))
     z = std*z_value(alpha, two_tailed)
     return json.dumps({"z": z})
