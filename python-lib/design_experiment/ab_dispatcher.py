@@ -49,6 +49,8 @@ class AbDispatcher(object):
     def split_into_groups(self, population_df: pd.DataFrame, leftovers_management: AttributionMethod) -> tuple:
         """Shuffle the population and splits it into groups
 
+        :param pd.DataFrame population_df; input dataframe without duplicated ids
+
         :returns: Two arrays containing the contacts for each group
         :rtype: tuple
         """

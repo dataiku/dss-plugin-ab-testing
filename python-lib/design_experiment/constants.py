@@ -31,4 +31,4 @@ class Group(Enum):
 
 
 class Column(Enum):
-    AB_GROUP = "__dku_ab_group__"
+    AB_GROUP = "dku_ab_group"
