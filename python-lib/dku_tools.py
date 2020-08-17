@@ -23,11 +23,15 @@ def get_input_output() -> tuple:
     input_name = input_names[0]
     input_dataset = dataiku.Dataset(input_name)
     folder_ref = get_input_names_for_role('folder')
+    if len(folder_ref) == 0:
+        folder_name = None
+    else:
+        folder_name = folder_ref[0]
 
     output_name = output_names[0]
     output_dataset = dataiku.Dataset(output_name)
 
-    return input_dataset, folder_ref, output_dataset
+    return input_dataset, folder_name, output_dataset
 
 
 def get_parameters(config: dict, folder_ref: str) -> tuple:
@@ -51,13 +55,18 @@ def get_parameters(config: dict, folder_ref: str) -> tuple:
     filename = config.get("parameters", None)
     size_A = config.get("size_A", None)
     size_B = config.get("size_B", None)
-    if size_definition == SizeDefinition.MANUAL and size_A and size_B:
-        if size_A < 0 or size_B < 0:
-            raise ValueError("Sample sizes need to be positive")
-    elif folder_ref:
-        size_A, size_B = get_folder_parameters(folder_ref, filename)
+    if size_definition == SizeDefinition.MANUAL:
+        if size_A and size_B:
+            if size_A < 0 or size_B < 0:
+                raise ValueError("Sample sizes need to be positive")
+        else:
+            raise ValueError("Sample sizes need to be defined under manual mode.")
     elif size_definition == SizeDefinition.WEB_APP:
-        raise ValueError("The input folder is missing")
+        if folder_ref:
+            size_A, size_B = get_folder_parameters(folder_ref, filename)
+        else:
+            raise ValueError(
+                "The input folder is missing. It is mandatory under folder mode. From the Wep APP 'AB testing design', you can save parameters and sample sizes in a managed folder and reuse them in this recipe. You may also enter sample sizes manually by choosing the manual mode.")
     return reference_column, size_definition, attribution_method, size_A, size_B
 
 

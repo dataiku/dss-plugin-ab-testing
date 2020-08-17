@@ -18,6 +18,7 @@ class AbDispatcher(object):
     def dispatch(self, input_df: pd.DataFrame, reference_column: str, attribution: AttributionMethod) -> tuple:
         """Dispatch the experiment population into two groups
 
+        :param pd.DataFrame input_df: population dataset, an input of the recipe
         :param AttributionMethod attribution: defines how to deal with the leftover users.
         :raises: :class:`ValueError`: Not enough users to run the experiment
 

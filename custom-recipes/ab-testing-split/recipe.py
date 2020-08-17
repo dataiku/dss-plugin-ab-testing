@@ -10,7 +10,7 @@ from design_experiment.ab_dispatcher import AbDispatcher
 input_dataset, folder_ref, output_dataset = get_input_output()
 input_df = input_dataset.get_dataframe()
 config = get_recipe_config()
-reference_column, size_definition, attribution_method, size_A, size_B = get_parameters(config, folder_ref[0])
+reference_column, size_definition, attribution_method, size_A, size_B = get_parameters(config, folder_ref)
 
 # ==============================================================================
 # RUN
