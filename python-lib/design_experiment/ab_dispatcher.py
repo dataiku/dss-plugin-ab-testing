@@ -56,19 +56,16 @@ class AbDispatcher(object):
         shuffled_index = np.array(population_df.index)
         if leftovers_management == AttributionMethod.LEFTOVER_TO_A:
             population_df[Column.AB_GROUP.value] = Group.A.value
-            column_index = population_df.columns.get_loc(Column.AB_GROUP.value)
             np.random.shuffle(shuffled_index)
-            population_df.iloc[shuffled_index[:self.size_B], column_index] = Group.B.value
+            population_df.loc[shuffled_index[:self.size_B], Column.AB_GROUP.value] = Group.B.value
         elif leftovers_management == AttributionMethod.LEFTOVER_TO_B:
             population_df[Column.AB_GROUP.value] = Group.B.value
-            column_index = population_df.columns.get_loc(Column.AB_GROUP.value)
             np.random.shuffle(shuffled_index)
-            population_df.iloc[shuffled_index[:self.size_A], column_index] = Group.A.value
+            population_df.loc[shuffled_index[:self.size_A], Column.AB_GROUP.value] = Group.A.value
         elif leftovers_management == AttributionMethod.LEFTOVER_BLANK:
             population_df[Column.AB_GROUP.value] = np.nan
-            column_index = population_df.columns.get_loc(Column.AB_GROUP.value)
             np.random.shuffle(shuffled_index)
-            population_df.iloc[shuffled_index[:self.size_A], column_index] = Group.A.value
-            population_df.iloc[shuffled_index[self.size_A:self.size_A+self.size_B], column_index] = Group.B.value
+            population_df.loc[shuffled_index[:self.size_A], Column.AB_GROUP.value] = Group.A.value
+            population_df.loc[shuffled_index[self.size_A:self.size_A+self.size_B], Column.AB_GROUP.value] = Group.B.value
         logger.info("Dispatching experiment population: done")
         return population_df
