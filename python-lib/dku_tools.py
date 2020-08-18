@@ -67,6 +67,8 @@ def get_parameters(config: dict, folder_ref: str) -> tuple:
         else:
             raise ValueError(
                 "The input folder is missing. It is mandatory under folder mode. From the Wep APP 'AB testing design', you can save sample sizes in a managed folder and reuse them in this recipe. You may also enter sample sizes manually by choosing the manual mode.")
+    else:
+        raise ValueError("The size definition is invalid.")
     return reference_column, size_definition, attribution_method, size_A, size_B
 
 
