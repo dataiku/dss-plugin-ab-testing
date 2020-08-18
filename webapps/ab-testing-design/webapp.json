@@ -1,35 +1,34 @@
 {
-    "meta": {
-        "label": "AB testing design",
-        "description": "This tool helps you design AB testing by computing the minimum sample size that you need",
-        "icon": " icon-zoom-in"
+  "meta": {
+    "label": "AB testing design",
+    "description": "This tool helps you design AB testing by computing the minimum sample size that you need",
+    "icon": " icon-zoom-in"
+  },
+  "baseType": "STANDARD",
+  "hasBackend": "true",
+  "noJSSecurity": "true",
+  "standardWebAppLibraries": [
+    "jquery",
+    "dataiku",
+    "bootstrap",
+    "d3"
+  ],
+  "params": [
+    {
+      "type": "SEPARATOR",
+      "label": "Folder (mandatory to save/load experiment parameters)"
     },
-    "baseType": "STANDARD",
-    "hasBackend": "true",
-    "noJSSecurity": "true",
-    "standardWebAppLibraries": [
-        "jquery",
-        "dataiku",
-        "bootstrap",
-        "d3"
-    ],
-    "params": [
-        {
-          "type": "SEPARATOR",
-          "label": "Folder (mandatory to save/load experiment parameters)"
-        },
-        {
-          "name": "input_folder",
-          "type": "FOLDER",
-          "label": "Folder",
-          "mandatory": true
-        }
-      ]
-    ,
-    "roles": [
-        {
-            "type": "DATASET",
-            "targetParamsKey": "input_dataset"
-        }
-    ]
+    {
+      "name": "input_folder",
+      "type": "FOLDER",
+      "label": "Folder",
+      "mandatory": true
+    }
+  ],
+  "roles": [
+    {
+      "type": "DATASET",
+      "targetParamsKey": "input_dataset"
+    }
+  ]
 }
