@@ -13,16 +13,21 @@
     "bootstrap",
     "d3"
   ],
+  "kind": "PYTHON",
+  "paramsPythonSetup": "py/webapp_helper.py",
   "params": [
-    {
-      "type": "SEPARATOR",
-      "label": "Folder (mandatory to save/load experiment parameters)"
-    },
     {
       "name": "input_folder",
       "type": "FOLDER",
       "label": "Folder",
       "mandatory": true
+    },
+    {
+      "name": "output_managed_folder",
+      "label": "Output folder for parameters",
+      "type": "SELECT",
+      "description": "Where do you want to save the parameters of the experiment?",
+      "getChoicesFromPython": true
     }
   ],
   "roles": [
