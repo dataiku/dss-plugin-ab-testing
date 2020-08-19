@@ -98,3 +98,20 @@ def get_folder_parameters(folder_ref: List[str], filename: str):
         else:
             raise ValueError(
                 "The parameters' filename is missing. It should point to a json file created from the Web App 'AB testing design'. This web app is a component of the same plugin")
+
+
+def get_output_folder(config, project, project_key):
+    output_managed_id = config.get('output_managed_folder', None)
+    output_new_folder_name = config.get('output_new_folder_name', None)
+
+    if output_managed_id == "create_new_folder":
+        if output_new_folder_name:
+            output_folder_dss = project.create_managed_folder(output_new_folder_name)
+        else:
+            raise ValueError("The name for the input folder is missing.")
+    elif output_managed_id:
+        output_folder_dss = project.get_managed_folder(output_managed_id)
+    else:
+        raise ValueError("The output folder parameter is missing. Create or select one from the setting of the web app")
+    output_folder = dataiku.Folder(output_folder_dss.get_definition()['name'], project_key=project_key)
+    return output_folder

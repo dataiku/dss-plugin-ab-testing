@@ -1,22 +1,20 @@
 from flask import request
 from distutils.util import strtobool
 import json
-import logging
 import dataiku
 from dataiku.customwebapp import get_webapp_config
 
 from design_experiment.sample_size import min_sample_size, z_value
 from design_experiment.helpers import save_parameters
 from design_experiment.constants import Parameters
+from dku_tools import get_output_folder
 
-try:
-    folder_name = get_webapp_config()["input_folder"]
-except KeyError:
-    raise SystemError("No folder has been chosen in the settings of the webapp")
+config = get_webapp_config()
+project_key = dataiku.default_project_key()
+client = dataiku.api_client()
+project = client.get_project(project_key)
 
-folder = dataiku.Folder(folder_name)
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO, format="AB_testing %(levelname)s - %(message)s")
+output_folder = get_output_folder(config, project, project_key)
 
 
 @app.route('/sample_size', methods=['POST'])
@@ -46,5 +44,5 @@ def get_z_value():
 @app.route('/write_parameters', methods=['POST'])
 def save():
     data = request.form
-    save_parameters(data, folder)
+    save_parameters(data, output_folder)
     return json.dumps({"status": "Parameters saved"})
