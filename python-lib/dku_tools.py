@@ -72,7 +72,7 @@ def get_parameters(config: dict, folder_ref: str) -> tuple:
     return reference_column, size_definition, leftovers_handling, size_A, size_B
 
 
-def get_folder_parameters(folder_ref: List[str], filename: str):
+def get_folder_parameters(folder_ref: str, filename: str):
     """Extracts sample sizes from the managed folder
 
     :param str filename: name of the json containing the experiment parameters

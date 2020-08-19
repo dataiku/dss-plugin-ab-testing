@@ -46,7 +46,7 @@ class AbDispatcher(object):
         if self.size_A + self.size_B > population_size:
             raise ValueError("Not enough user ids or emails to run the current AB testing.")
 
-    def split_into_groups(self, population_df: pd.DataFrame, leftovers_handling: AttributionMethod) -> tuple:
+    def split_into_groups(self, population_df: pd.DataFrame, leftovers_handling: AttributionMethod) -> pd.DataFrame:
         """Shuffle the population and splits it into groups
 
         :param pd.DataFrame population_df; input dataframe without duplicated ids
