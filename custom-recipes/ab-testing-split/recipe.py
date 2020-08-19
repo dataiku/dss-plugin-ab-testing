@@ -10,13 +10,13 @@ from design_experiment.ab_dispatcher import AbDispatcher
 input_dataset, folder_ref, output_dataset = get_input_output()
 input_df = input_dataset.get_dataframe()
 config = get_recipe_config()
-reference_column, size_definition, leftovers_management, size_A, size_B = get_parameters(config, folder_ref)
+reference_column, size_definition, leftovers_handling, size_A, size_B = get_parameters(config, folder_ref)
 
 # ==============================================================================
 # RUN
 # ==============================================================================
 ab_dispatcher = AbDispatcher(size_A, size_B)
-groups_df = ab_dispatcher.dispatch(input_df, reference_column, leftovers_management)
+groups_df = ab_dispatcher.dispatch(input_df, reference_column, leftovers_handling)
 
 # ===============================================================================
 # WRITE

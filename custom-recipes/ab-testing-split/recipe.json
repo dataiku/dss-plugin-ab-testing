@@ -86,17 +86,17 @@
         },
         {
             "type": "SELECT",
-            "name": "attribution_method",
-            "label": "Attribution for leftover users",
+            "name": "leftovers_handling",
+            "label": "Deal with leftover users",
             "description": "If the population is greater than the sample size, this field specifies in which group the leftover users should go.",
             "selectChoices": [
                 {
                     "value": "leftover_to_A",
-                    "label": "Group A"
+                    "label": "Add them to group A"
                 },
                 {
                     "value": "leftover_to_B",
-                    "label": "Group B"
+                    "label": "Add them to group B"
                 },
                 {
                     "value": "leftover_blank",

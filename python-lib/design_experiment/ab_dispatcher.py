@@ -15,11 +15,11 @@ class AbDispatcher(object):
         self.size_A = size_A
         self.size_B = size_B
 
-    def dispatch(self, input_df: pd.DataFrame, reference_column: str, leftovers_management: AttributionMethod) -> tuple:
+    def dispatch(self, input_df: pd.DataFrame, reference_column: str, leftovers_handling: AttributionMethod) -> tuple:
         """Dispatch the experiment population into two groups
 
         :param pd.DataFrame input_df: population dataset, an input of the recipe
-        :param AttributionMethod leftovers_management: defines how to deal with the leftover users.
+        :param AttributionMethod leftovers_handling: defines how to deal with the leftover users.
         :raises: :class:`ValueError`: Not enough users to run the experiment
 
         :returns: Experiment dataset and two arrays containing the contacts for each group
@@ -27,7 +27,7 @@ class AbDispatcher(object):
         """
         population_df = input_df.drop_duplicates(subset=[reference_column])
         self.check_sample_size(population_df)
-        group_df = self.split_into_groups(population_df, leftovers_management)
+        group_df = self.split_into_groups(population_df, leftovers_handling)
         return group_df
 
     def check_sample_size(self, df_unique_ids: pd.DataFrame):
@@ -46,7 +46,7 @@ class AbDispatcher(object):
         if self.size_A + self.size_B > population_size:
             raise ValueError("Not enough user ids or emails to run the current AB testing.")
 
-    def split_into_groups(self, population_df: pd.DataFrame, leftovers_management: AttributionMethod) -> tuple:
+    def split_into_groups(self, population_df: pd.DataFrame, leftovers_handling: AttributionMethod) -> tuple:
         """Shuffle the population and splits it into groups
 
         :param pd.DataFrame population_df; input dataframe without duplicated ids
@@ -57,15 +57,15 @@ class AbDispatcher(object):
         logger.info("Dispatching experiment population: shuffle")
         shuffled_index = np.array(population_df.index)
         random.seed(1)
-        if leftovers_management == AttributionMethod.LEFTOVER_TO_A:
+        if leftovers_handling == AttributionMethod.LEFTOVER_TO_A:
             population_df[Column.AB_GROUP.value] = Group.A.value
             random.shuffle(shuffled_index)
             population_df.loc[shuffled_index[:self.size_B], Column.AB_GROUP.value] = Group.B.value
-        elif leftovers_management == AttributionMethod.LEFTOVER_TO_B:
+        elif leftovers_handling == AttributionMethod.LEFTOVER_TO_B:
             population_df[Column.AB_GROUP.value] = Group.B.value
             random.shuffle(shuffled_index)
             population_df.loc[shuffled_index[:self.size_A], Column.AB_GROUP.value] = Group.A.value
-        elif leftovers_management == AttributionMethod.LEFTOVER_BLANK:
+        elif leftovers_handling == AttributionMethod.LEFTOVER_BLANK:
             population_df[Column.AB_GROUP.value] = np.nan
             random.shuffle(shuffled_index)
             population_df.loc[shuffled_index[:self.size_A], Column.AB_GROUP.value] = Group.A.value

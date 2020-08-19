@@ -46,7 +46,7 @@ def get_parameters(config: dict, folder_ref: str) -> tuple:
     """
     reference_column = config.get("user_reference", None)
     size_definition = SizeDefinition(config.get("sample_size_definition", SizeDefinition.WEB_APP))
-    attribution_method = AttributionMethod(config.get("attribution_method", AttributionMethod.LEFTOVER_TO_A))
+    leftovers_handling = AttributionMethod(config.get("leftovers_handling", AttributionMethod.LEFTOVER_TO_A))
     if not reference_column:
         raise ValueError("Reference column is missing")
     if not size_definition:
@@ -69,7 +69,7 @@ def get_parameters(config: dict, folder_ref: str) -> tuple:
                 "The input folder is missing. It is mandatory under folder mode. From the Wep APP 'AB testing design', you can save sample sizes in a managed folder and reuse them in this recipe. You may also enter sample sizes manually by choosing the manual mode.")
     else:
         raise ValueError("The size definition is invalid.")
-    return reference_column, size_definition, attribution_method, size_A, size_B
+    return reference_column, size_definition, leftovers_handling, size_A, size_B
 
 
 def get_folder_parameters(folder_ref: List[str], filename: str):
