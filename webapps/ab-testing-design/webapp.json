@@ -1,7 +1,7 @@
 {
   "meta": {
     "label": "AB testing design",
-    "description": "This tool helps you design AB testing by computing the minimum sample size that you need",
+    "description": "Design AB testing by computing the minimum sample size that you need",
     "icon": " icon-zoom-in"
   },
   "baseType": "STANDARD",
