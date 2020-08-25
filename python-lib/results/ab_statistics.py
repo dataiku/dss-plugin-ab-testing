@@ -1,6 +1,6 @@
 import pandas as pd
 
-from design.constants import Group
+from design_experiment.constants import Group
 
 
 class AbStatistics(object):
@@ -22,7 +22,7 @@ class AbStatistics(object):
             raise ValueError("There should be only one row per user in the input dataset")
         if not_empty_rows_nb < 2:
             raise ValueError("The input dataset should contain at least 2 users with conversion and group references")
-        invalid_groups = valid_rows[(valid_rows[self.group_column] != Group.A) & (valid_rows[self.group_column] != Group.B)]
+        invalid_groups = valid_rows[(valid_rows[self.group_column] != Group.A.value) & (valid_rows[self.group_column] != Group.B.value)]
         if not invalid_groups.empty:
             raise ValueError("The group indicator should be either 'A' or 'B'")
         invalid_conversion = valid_rows[(valid_rows[self.conversion_column] != 0) & (valid_rows[self.conversion_column] != 1)]
@@ -35,7 +35,7 @@ class AbStatistics(object):
         return aggregation
 
     def format_statistics(self, aggregation):
-        groups = [Group.A, Group.B]
+        groups = [Group.A.value, Group.B.value]
         rows = []
         for group in groups:
             rows.append(self.statistic_per_group(group, aggregation))

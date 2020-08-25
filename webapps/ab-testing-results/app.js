@@ -5,11 +5,32 @@ explain("tail");
 explain("sig_level");
 
 // default values
-document.getElementById("size_A").defaultValue = "1000";
-document.getElementById("size_B").defaultValue = "1000";
-document.getElementById("success_rate_A").defaultValue = "10";
-document.getElementById("success_rate_B").defaultValue = "15";
 document.getElementById("sig_level").defaultValue = "95";
+
+let stat_entry = dataiku.getWebAppConfig()['statistics_entry'];
+if (stat_entry === "manual") {
+    document.getElementById("size_A").defaultValue = "1000";
+    document.getElementById("size_B").defaultValue = "1000";
+    document.getElementById("success_rate_A").defaultValue = "10";
+    document.getElementById("success_rate_B").defaultValue = "15";
+} else if (stat_entry === "input_dataset") {
+    let dataset_name = dataiku.getWebAppConfig()['statistics_dataset'];
+    dataiku.fetch(dataset_name, {
+        sampling: 'head',
+        limit: 2
+    },
+        function (dataFrame) {
+            let rows = dataFrame.getRows();
+            document.getElementById("size_A").defaultValue = rows[0][2];
+            document.getElementById("size_B").defaultValue = rows[1][2];
+            document.getElementById("success_rate_A").defaultValue = rows[0][0];
+            document.getElementById("success_rate_B").defaultValue = rows[1][0];
+        });
+}
+
+//retrieve values from dataframe
+
+
 
 // check size input
 let size_A_form = document.getElementById("size_A");
