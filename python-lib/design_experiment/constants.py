@@ -12,7 +12,7 @@ class AttributionMethod(Enum):
     LEFTOVER_BLANK = "leftover_blank"
 
 
-class Parameters(object):
+class Parameters(Enum):
     SIZE_A = "size_A"
     SIZE_B = "size_B"
     RATIO = "ratio"
@@ -25,6 +25,10 @@ class Parameters(object):
     REACH = "reach"
 
 
-class Group(object):
+class Group(Enum):
     A = "A"
     B = "B"
+
+
+class Column(Enum):
+    AB_GROUP = "dku_ab_group"

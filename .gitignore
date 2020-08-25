@@ -145,4 +145,8 @@ state.json
 .vscode/
 setup.cfg
 
+<<<<<<< HEAD
+=======
+#Mac 
+>>>>>>> feature/1.0
 .DS_Store

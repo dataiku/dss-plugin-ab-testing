@@ -1,35 +1,40 @@
 {
-    "meta": {
-        "label": "AB testing design",
-        "description": "This tool helps you design AB testing by computing the minimum sample size that you need",
-        "icon": " icon-zoom-in"
+  "meta": {
+    "label": "AB testing design",
+    "description": "Design AB testing by computing the minimum sample size that you need",
+    "icon": " icon-zoom-in"
+  },
+  "baseType": "STANDARD",
+  "hasBackend": "true",
+  "noJSSecurity": "true",
+  "standardWebAppLibraries": [
+    "jquery",
+    "dataiku",
+    "bootstrap",
+    "d3"
+  ],
+  "kind": "PYTHON",
+  "paramsPythonSetup": "py/webapp_helper.py",
+  "params": [
+    {
+      "name": "output_managed_folder",
+      "label": "Output folder for parameters",
+      "type": "SELECT",
+      "description": "Where do you want to save the parameters of the experiment?",
+      "getChoicesFromPython": true
     },
-    "baseType": "STANDARD",
-    "hasBackend": "true",
-    "noJSSecurity": "true",
-    "standardWebAppLibraries": [
-        "jquery",
-        "dataiku",
-        "bootstrap",
-        "d3"
-    ],
-    "params": [
-        {
-          "type": "SEPARATOR",
-          "label": "Folder (mandatory to save/load experiment parameters)"
-        },
-        {
-          "name": "input_folder",
-          "type": "FOLDER",
-          "label": "Folder",
-          "mandatory": true
-        }
-      ]
-    ,
-    "roles": [
-        {
-            "type": "DATASET",
-            "targetParamsKey": "input_dataset"
-        }
-    ]
+    {
+      "name": "output_new_folder_name",
+      "label": "Output folder name",
+      "type": "STRING",
+      "mandatory": true,
+      "visibilityCondition": "model.output_managed_folder == 'create_new_folder'"
+    }
+  ],
+  "roles": [
+    {
+      "type": "DATASET",
+      "targetParamsKey": "input_dataset"
+    }
+  ]
 }

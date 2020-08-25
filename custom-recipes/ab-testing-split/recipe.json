@@ -34,22 +34,6 @@
             "arity": "UNARY",
             "required": true,
             "acceptsDataset": true
-        },
-        {
-            "name": "A_group",
-            "label": "A group (optional)",
-            "description": "Dataset containing the users who are part of the group A",
-            "arity": "UNARY",
-            "required": false,
-            "acceptsDataset": true
-        },
-        {
-            "name": "B_group",
-            "label": "B group (optional)",
-            "description": "Dataset containing the users who are part of the group B",
-            "arity": "UNARY",
-            "required": false,
-            "acceptsDataset": true
         }
     ],
     "paramsPythonSetup": "py/compute_files_in_folder.py",
@@ -90,31 +74,29 @@
             "type": "INT",
             "name": "size_A",
             "label": "Sample size for variation A",
-            "description": "Minimul sample size for the A group",
-            "parameterSetId": "n_A",
+            "description": "Minimum sample size for the A group",
             "visibilityCondition": "model.sample_size_definition == 'manual'"
         },
         {
             "type": "INT",
             "name": "size_B",
             "label": "Sample size for variation B",
-            "description": "Minimul sample size for the B group",
-            "parameterSetId": "n_B",
+            "description": "Minimum sample size for the B group",
             "visibilityCondition": "model.sample_size_definition == 'manual'"
         },
         {
             "type": "SELECT",
-            "name": "attribution_method",
-            "label": "Attribution for leftover users",
+            "name": "leftovers_handling",
+            "label": "Deal with leftover users",
             "description": "If the population is greater than the sample size, this field specifies in which group the leftover users should go.",
             "selectChoices": [
                 {
                     "value": "leftover_to_A",
-                    "label": "Group A"
+                    "label": "Add them to group A"
                 },
                 {
                     "value": "leftover_to_B",
-                    "label": "Group B"
+                    "label": "Add them to group B"
                 },
                 {
                     "value": "leftover_blank",
