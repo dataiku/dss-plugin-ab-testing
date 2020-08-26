@@ -5,7 +5,7 @@ check_form_inputs();
 let hide_parameters = true;
 const advancedButton = document.getElementById('more');
 advancedButton.addEventListener('click', function (event) {
-    hide_parameters = display(hide_parameters, "more", "optional_fields", true, "More parameters", "Less parameters");
+    hide_parameters = display(hide_parameters, "more", "optional_fields", true, "Advanced parameters", "Less parameters");
     event.preventDefault();
 });
 
@@ -54,7 +54,7 @@ draw_initial_x_axis(svg, x, height);
 draw_initial_IC(svg, x, y, y_max);
 draw_initial_plots(svg, x, y, std, mde_val);
 draw_initial_area(svg, x, y, distribution_A, distribution_B, std);
-set_initial_legend(svg, y_max);
+set_initial_legend(svg, y_max, height);
 
 //update distributions and axis
 let bcr = document.getElementById('bcr');

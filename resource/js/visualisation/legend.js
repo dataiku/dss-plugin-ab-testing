@@ -1,5 +1,5 @@
-function set_initial_legend(svg, y_max){
-    const x_legend = 0
+function set_initial_legend(svg, y_max, height){
+    const x_legend = height;
     const y_legend = y_max - 25
     plot_legend(svg, x_legend, y_legend, "Statistical significance", "#4393c3", $("#sig_level").val(), "label_sig_level");
     plot_legend(svg, x_legend, y_legend + 20, "Power", "#fdae61", $("#power").val(), "label_power");
