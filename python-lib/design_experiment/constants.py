@@ -23,12 +23,3 @@ class Parameters(Enum):
     SIG_LEVEL = "sig_level"
     BCR = "bcr"
     REACH = "reach"
-
-
-class Group(Enum):
-    A = "A"
-    B = "B"
-
-
-class Column(Enum):
-    AB_GROUP = "dku_ab_group"

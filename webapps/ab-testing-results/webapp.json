@@ -21,8 +21,7 @@
             "selectChoices": [ 
                 {
                     "value": "input_dataset",
-                    "label": "an input dataset"
-                },
+                    "label": "an input dataset"                },
                 {
                     "value": "manual",
                     "label": "this web app"
@@ -34,7 +33,7 @@
             "name": "statistics_dataset",
             "type": "DATASET",
             "label": "Dataset",
-            "description": "output of the recipe AB statistics",
+            "description": "It should be the output of the recipe AB statistics of the AB testing plugin. Otherwise, use the manual mode.",
             "mandatory": false,
             "visibilityCondition": "model.statistics_entry == 'input_dataset'"
         }

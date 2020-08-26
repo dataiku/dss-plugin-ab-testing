@@ -1,6 +1,7 @@
 import pandas as pd
 
-from design_experiment.constants import Group
+from global_constants import Group
+from results.constants import StatisticsColumns
 
 
 class AbStatistics(object):
@@ -45,7 +46,7 @@ class AbStatistics(object):
     def statistic_per_group(self, group, aggregation):
         group_aggregation = aggregation.loc[group]
         size = group_aggregation[self.user_reference_column]
-        row = {"group": group, "conversion_rate": self.conversion_rate(group_aggregation, size), "size": size}
+        row = {StatisticsColumns.AB_GROUP: group, StatisticsColumns.SUCCESS_RATE: self.conversion_rate(group_aggregation, size), StatisticsColumns.SIZE: size}
         return row
 
     def conversion_rate(self, group_aggregation, size):

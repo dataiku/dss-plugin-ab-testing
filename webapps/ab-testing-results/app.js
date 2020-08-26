@@ -6,30 +6,51 @@ explain("sig_level");
 
 // default values
 document.getElementById("sig_level").defaultValue = "95";
+document.getElementById("size_A").defaultValue = "1000";
+document.getElementById("size_B").defaultValue = "1000";
+document.getElementById("success_rate_A").defaultValue = "10";
+document.getElementById("success_rate_B").defaultValue = "15";
 
-let stat_entry = dataiku.getWebAppConfig()['statistics_entry'];
-if (stat_entry === "manual") {
-    document.getElementById("size_A").defaultValue = "1000";
-    document.getElementById("size_B").defaultValue = "1000";
-    document.getElementById("success_rate_A").defaultValue = "10";
-    document.getElementById("success_rate_B").defaultValue = "15";
+let config = dataiku.getWebAppConfig()
+let stat_entry = config["statistics_entry"];
+let dataset_name = config["statistics_dataset"];
+
+if (stat_entry === undefined && dataset_name === undefined) {
+    alert("Please define how you want to input your statistics from the settings tab. After definining them, please click on the button Save and view web app. By default, manual setting is on.");
+}
+else if (stat_entry === undefined && dataset_name != undefined) {
+    load_values_from_df(dataset_name);
+}
+else if (stat_entry === "manual") {
+    console.log("manual entry");
 } else if (stat_entry === "input_dataset") {
-    let dataset_name = dataiku.getWebAppConfig()['statistics_dataset'];
+    if (dataset_name === undefined) {
+        alert("Please, specify the input dataset containing the statistics. It should be the output of the AB statistics recipe from the AB testing plugin.");
+    }
+    else {
+        load_values_from_df(dataset_name);
+    }
+} else {
+    alert("Please check the settings of the web ap")
+}
+
+
+//retrieve values from dataframe
+function load_values_from_df(dataset_name) {
     dataiku.fetch(dataset_name, {
         sampling: 'head',
         limit: 2
     },
         function (dataFrame) {
             let rows = dataFrame.getRows();
-            document.getElementById("size_A").defaultValue = rows[0][2];
-            document.getElementById("size_B").defaultValue = rows[1][2];
-            document.getElementById("success_rate_A").defaultValue = rows[0][0];
-            document.getElementById("success_rate_B").defaultValue = rows[1][0];
+            let A_values = rows[0];
+            let B_values = rows[1];
+            document.getElementById("size_A").defaultValue = A_values[1];
+            document.getElementById("size_B").defaultValue = B_values[1];
+            document.getElementById("success_rate_A").defaultValue = A_values[2];
+            document.getElementById("success_rate_B").defaultValue = B_values[2];
         });
 }
-
-//retrieve values from dataframe
-
 
 
 // check size input
@@ -41,6 +62,7 @@ size_B_form.addEventListener("change", function () { alert_value_too_small("size
 //submit form
 function analyse_results() {
     let formData = new FormData(document.getElementById('form_data'));
+    console.log(formData.values);
     const data = new URLSearchParams(formData);
     let headers = new Headers();
     let init = {
