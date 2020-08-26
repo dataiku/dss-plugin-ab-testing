@@ -31,10 +31,5 @@
       "visibilityCondition": "model.output_managed_folder == 'create_new_folder'"
     }
   ],
-  "roles": [
-    {
-      "type": "DATASET",
-      "targetParamsKey": "input_dataset"
-    }
-  ]
+  "roles": []
 }
