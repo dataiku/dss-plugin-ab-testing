@@ -61,6 +61,8 @@ p {
 
 label {
     font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #718093;
 }
 
 .alert {
@@ -92,6 +94,7 @@ ul {
     font-size: 20px;
 }
 
+
 #A_header {
     color: rgb(54, 163, 158);
 }
@@ -100,14 +103,9 @@ ul {
     color: #ff7979;
 }
 
-#more {
-    margin-top: 30px;
-    margin-bottom: 20px;
-}
 
 #submit_button {
     padding: 11px 28px;
-    margin-top: 20px;
 }
 
 .btn {
@@ -202,4 +200,12 @@ ul {
 
 .bib {
     font-style: italic;
+}
+
+.field{
+    text-align: left;
+}
+
+.table_fields{
+    border: none;
 }
