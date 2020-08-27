@@ -79,6 +79,7 @@ label {
 
 .alert {
     color: #ff7979;
+    font-size: 13px;
 }
 
 #alert_size {
