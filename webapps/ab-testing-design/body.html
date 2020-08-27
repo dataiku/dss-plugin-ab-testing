@@ -36,8 +36,8 @@
 
 <title>Sample size estimator</title>
 
-<header class="navbar bd-navbar bg-light">
-    <a class="navbar-brand" href="#">
+<header class="navbar bd-navbar bg-light background no-margin">
+    <a class="navbar-brand" id=href="#">
         <img src="https://www.dataiku.com/static/img/theme/logo/page.png" width="180" height="64" alt=""> </img>
     </a>
     <div class="d-flex justify-content-between">
@@ -47,482 +47,503 @@
     </div>
 </header>
 
-<div class="container">
-    <div class="row">
-        <div class="col-xl">
-            <h1>Frequentist AB Testing - Sample size estimator </h1>
-            <a class="anchorjs-link " href="#overview" aria-label="Anchor" data-anchorjs-icon="#"
-                style="padding-left: 0.375em;"></a>
-            <h2>Compare two proportions : conversion rate, click through rate.</h2>
-            <p class="explanations">
-                The average conversion rates of two independent samples A and B are compared. A is the control group
-                while B is the experiment group. We assume that the two samples follow binomial distributions.
+<body>
+    <div class="background">
+        <div class="container white-background title-padding">
+            <div class="row">
+                <div class="col-xl">
+                    <h1>Frequentist AB Testing - Sample size estimator </h1>
+                    
+                    <a class="anchorjs-link " href="#overview" aria-label="Anchor" data-anchorjs-icon="#"
+                        style="padding-left: 0.375em;"></a>
+                    <h2>Compare two proportions : conversion rate, click through rate.</h2>
+                    <p class="explanations">
+                        The average conversion rates of two independent samples A and B are compared. A is the control
+                        group
+                        while B is the experiment group. We assume that the two samples follow binomial distributions.
 
-            </p>
-
-        </div>
-
-    </div>
-    <hr>
-    </hr>
-    <div class="row">
-        <div class="col-4">
-            <form id="form_data">
-                <table class="table_fields">
-                    <tr>
-                        <td class="field">
-                            <label for="bcr">Baseline conversion rate (%)
-                                <button id="info_bcr" type="button" class="btn btn-link"> [Info] </button>
-                            </label>
-                            <span id="explanation_bcr" class="d-none">
-                                <div class="spacing">
-                                    <div class="explanation_text">
-                                        The baseline conversion rate defines the current conversion rate of the
-                                        campaign
-                                        or the
-                                        page.
-                                        This is the conversion rate of the control group A.
-                                        It equals to the number of conversions divided by the reach.
-                                    </div>
-                                </div>
-                            </span>
-                            <input type="number" name="bcr" placeholder="BCR" id="bcr" />
-                            <span id="alert_bcr" class="alert"> </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="field">
-                            <label for="mde"> Minimal detectable effect (%)
-                                <button id="info_mde" type="button" class="btn btn-link"> [Info] </button>
-                            </label>
-                            <span id="explanation_mde" class="d-none">
-                                <div class="spacing">
-                                    <div class="explanation_text">
-                                        The minimum detectable effect is the minimal variation of the baseline
-                                        conversion rate
-                                        that you need to detect a statistically significant change.
-                                    </div>
-                                </div>
-                            </span>
-                            <input type="number" name="mde" placeholder="MDE" id="mde" />
-                            <span id="alert_mde" class="alert"> </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="field">
-                            <label for="traffic">Daily number of people exposed to a variant <span class="optional">
-                                    [optional]
-                                </span>
-                            </label>
-                            <input type="number" name="traffic" placeholder="Daily traffic" id="traffic" />
-                            <span id="alert_traffic" class="alert"> </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="field">
-                            <label for="reach"> Percentage of the traffic affected by the experiment<span
-                                    class="optional">
-                                    [optional]
-                                </span>
-                            </label>
-                            <input type="number" name="reach" placeholder="Reach" id="reach" />
-                            <span id="alert_reach" class="alert"> </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="field">
-                            <button id="more" class="btn btn-outline-info btn-rounded waves-effect  btn-block">
-                                Advanced parameters
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-                <table class="table_fields d-none" id="optional_fields">
-                    <tr>
-                        <td class="field">
-                            <label for="sig_level"> Statistical significance (%)
-                                <button id="info_sig_level" type="button" class="btn btn-link"> [Info] </button>
-                            </label>
-                            <span id="explanation_sig_level" class="d-none">
-                                <div class="spacing">
-                                    <div class="explanation_text">
-                                        The statistical significance is the probability to find that the two samples
-                                        have
-                                        the same
-                                        conversion rate (H0), when this is the case. It is therefore the minimum
-                                        threshold
-                                        of the true
-                                        positive probability.
-                                        It equals to \(1-\alpha\), with \(\alpha\), the type I error.
-                                        The most common values for the statistical significance are 95% and
-                                        90%. When it is set too low, the test may detect a non existent
-                                        change, while if it is too high, it is less likely to detect a variation when
-                                        there
-                                        is one.
-                                    </div>
-                                </div>
-                            </span>
-                            <input type="number" name="sig_level" placeholder="1-alpha" id="sig_level" />
-                            <span id="alert_sig_level" class="alert"> </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="field">
-                            <label for="power"> Power (%)
-                                <button id="info_power" type="button" class="btn btn-link"> [Info] </button>
-                            </label>
-                            <span id="explanation_power" class="d-none">
-                                <div class="spacing">
-                                    <div class="explanation_text">
-                                        The power is the probability to find that the two samples have a different
-                                        conversion rates (H1) when this
-                                        is the case. It is therefore the minimum threshold of the true negative
-                                        probability.
-                                        It equals to \(1-\beta\), with \(\beta\) the type II error.
-                                        The most common value for power is 80%.
-                                    </div>
-                                </div>
-                            </span>
-                            <input type="number" name="power" placeholder="power" id="power" />
-                            <span id="alert_power" class="alert"> </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="field">
-                            <label for="ratio"> Size ratio (%)
-                                <button id="info_ratio" type="button" class="btn btn-link"> [Info] </button>
-                            </label>
-                            <span id="explanation_ratio" class="d-none">
-                                <div class="spacing">
-                                    <div class="explanation_text">
-                                        The ratio between the size of group B and the size of group A, given that A
-                                        outnumbers B.
-                                        It is especially useful when you want that to reduce the size of the B group, so
-                                        that fewer people
-                                        are impacted by the changes. If \(n_A\) is the size of group A, \(n_B\), the
-                                        size of
-                                        B,
-                                        and \(r\) the size ratio, with \(n_A \geq n_B\) then we have :
-                                        \(r = \frac{n_B}{n_A} \)
-                                    </div>
-                                </div>
-                            </span>
-                            <input type="number" name="ratio" placeholder="ratio" id="ratio" />
-                            <span id="alert_ratio" class="alert"> </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="field">
-                            <label id="tail_label" for="tail">Two tailed test
-                                <button id="info_tail" type="button" class="btn btn-link"> [Info] </button>
-                            </label>
-                            <span id="explanation_tail" class="d-none">
-
-                                <div class="spacing">
-                                    <div class="explanation_text">
-                                        Are you willing to test for an increase in conversion rate, a decrease, or even
-                                        both?
-                                    </div>
-                                    <div class="explanation_text">
-                                        If you only want to determine if there is any difference between the two groups,
-                                        you
-                                        should use a
-                                        two-tailed test. It means that you are testing both for positive and negative
-                                        differences.
-                                    </div>
-                                    <div class="explanation_text">
-                                        However, if you only test in one direction, to find out for instance, whether
-                                        the
-                                        conversion rate is
-                                        higher
-                                        for B, you may want to use a one-tailed distribution. For example, if you test a
-                                        new
-                                        email template,
-                                        your major concern is whether it leads to more conversion.
-                                        A two-tailed test is not necessary since you are only interested in positive
-                                        changes.
-                                    </div>
-                                </div>
-                            </span>
-                            <select name="tail" id="tail">
-                                <option value="false" class="alert">False</option>
-                                <option value="true">True</option>
-                            </select>
-                        </td>
-                    </tr>
-                </table>
-                <div class="text-center">
-                    <a id="submit_button" type="submit" class="btn btn-outline-info btn-rounded waves-effect  btn-lg">
-                        Compute size</a>
-                </div>
-            </form>
-        </div>
-        <div class="col-xl">
-            <div class="plot"> </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-xl">
-            <h2> Sample size </h2>
-            <hr>
-            </hr>
-        </div>
-    </div>
-</div>
-</div>
-
-
-<div class="container" id="less_margin">
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            <table>
-                <thead>
-                    <tr>
-                        <th id="A_header">A</th>
-                        <th id="B_header">B</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td id="sample_size_A">1085</td>
-                        <td id="sample_size_B">1085</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="text-center">
-                <div id="duration" class="d-none">
-                    <div>
-                        This experiment should run for
-                    </div>
-                    <span id="nb_of_days">
-                    </span>
-                    <div>
-                        days
-                    </div>
+                    </p>
                 </div>
             </div>
-            <div class="text-center">
-                <a id="attribution_button" type="button" class="btn btn-outline-info btn-rounded waves-effect  btn-lg">
-                    Save sizes in the folder</a>
-            </div>
-        </div>
-    </div>
+            <div class="row border-top-custom">
+                <div class="col-4 border-custom">
+                    <form id="form_data">
+                        <table class="table_fields">
+                            <tr>
+                                <td class="field">
+                                    <label for="bcr">Baseline conversion rate (%)
+                                        <button id="info_bcr" type="button" class="btn btn-link"> [Info] </button>
+                                    </label>
+                                    <span id="explanation_bcr" class="d-none">
+                                        <div class="spacing">
+                                            <div class="explanation_text">
+                                                The baseline conversion rate defines the current conversion rate of the
+                                                campaign
+                                                or the
+                                                page.
+                                                This is the conversion rate of the control group A.
+                                                It equals to the number of conversions divided by the reach.
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <input type="number" name="bcr" placeholder="BCR" id="bcr" />
+                                    <span id="alert_bcr" class="alert"> </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field">
+                                    <label for="mde"> Minimal detectable effect (%)
+                                        <button id="info_mde" type="button" class="btn btn-link"> [Info] </button>
+                                    </label>
+                                    <span id="explanation_mde" class="d-none">
+                                        <div class="spacing">
+                                            <div class="explanation_text">
+                                                The minimum detectable effect is the minimal variation of the baseline
+                                                conversion rate
+                                                that you need to detect a statistically significant change.
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <input type="number" name="mde" placeholder="MDE" id="mde" />
+                                    <span id="alert_mde" class="alert"> </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field">
+                                    <label for="traffic">Daily number of people exposed to a variant
+                                    </label>
+                                    <input type="number" name="traffic" placeholder="Optional" id="traffic" />
+                                    <span id="alert_traffic" class="alert"> </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field">
+                                    <label for="reach"> Percentage of the traffic affected by the experiment
+                                    </label>
+                                    <input type="number" name="reach" placeholder="Optional" id="reach" />
+                                    <span id="alert_reach" class="alert"> </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field">
+                                    <button id="more" class="btn btn-outline-info btn-rounded waves-effect  btn-block">
+                                        Advanced parameters
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_fields d-none" id="optional_fields">
+                            <tr>
+                                <td class="field">
+                                    <label for="sig_level"> Statistical significance (%)
+                                        <button id="info_sig_level" type="button" class="btn btn-link"> [Info] </button>
+                                    </label>
+                                    <span id="explanation_sig_level" class="d-none">
+                                        <div class="spacing">
+                                            <div class="explanation_text">
+                                                The statistical significance is the probability to find that the two
+                                                samples
+                                                have
+                                                the same
+                                                conversion rate (H0), when this is the case. It is therefore the minimum
+                                                threshold
+                                                of the true
+                                                positive probability.
+                                                It equals to \(1-\alpha\), with \(\alpha\), the type I error.
+                                                The most common values for the statistical significance are 95% and
+                                                90%. When it is set too low, the test may detect a non existent
+                                                change, while if it is too high, it is less likely to detect a variation
+                                                when
+                                                there
+                                                is one.
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <input type="number" name="sig_level" placeholder="1-alpha" id="sig_level" />
+                                    <span id="alert_sig_level" class="alert"> </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field">
+                                    <label for="power"> Power (%)
+                                        <button id="info_power" type="button" class="btn btn-link"> [Info] </button>
+                                    </label>
+                                    <span id="explanation_power" class="d-none">
+                                        <div class="spacing">
+                                            <div class="explanation_text">
+                                                The power is the probability to find that the two samples have a
+                                                different
+                                                conversion rates (H1) when this
+                                                is the case. It is therefore the minimum threshold of the true negative
+                                                probability.
+                                                It equals to \(1-\beta\), with \(\beta\) the type II error.
+                                                The most common value for power is 80%.
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <input type="number" name="power" placeholder="power" id="power" />
+                                    <span id="alert_power" class="alert"> </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field">
+                                    <label for="ratio"> Size ratio (%)
+                                        <button id="info_ratio" type="button" class="btn btn-link"> [Info] </button>
+                                    </label>
+                                    <span id="explanation_ratio" class="d-none">
+                                        <div class="spacing">
+                                            <div class="explanation_text">
+                                                The ratio between the size of group B and the size of group A, given
+                                                that A
+                                                outnumbers B.
+                                                It is especially useful when you want that to reduce the size of the B
+                                                group, so
+                                                that fewer people
+                                                are impacted by the changes. If \(n_A\) is the size of group A, \(n_B\),
+                                                the
+                                                size of
+                                                B,
+                                                and \(r\) the size ratio, with \(n_A \geq n_B\) then we have :
+                                                \(r = \frac{n_B}{n_A} \)
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <input type="number" name="ratio" placeholder="ratio" id="ratio" />
+                                    <span id="alert_ratio" class="alert"> </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="field">
+                                    <label id="tail_label" for="tail">Two tailed test
+                                        <button id="info_tail" type="button" class="btn btn-link"> [Info] </button>
+                                    </label>
+                                    <span id="explanation_tail" class="d-none">
 
-    <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col-md-auto">
-                <div class="text-center">
-                    <div class="d-none alert_recipe" id="attribution_alert">
-                        <div>
-                            The sizes were saved!
+                                        <div class="spacing">
+                                            <div class="explanation_text">
+                                                Are you willing to test for an increase in conversion rate, a decrease,
+                                                or
+                                                even
+                                                both?
+                                            </div>
+                                            <div class="explanation_text">
+                                                If you only want to determine if there is any difference between the two
+                                                groups,
+                                                you
+                                                should use a
+                                                two-tailed test. It means that you are testing both for positive and
+                                                negative
+                                                differences.
+                                            </div>
+                                            <div class="explanation_text">
+                                                However, if you only test in one direction, to find out for instance,
+                                                whether
+                                                the
+                                                conversion rate is
+                                                higher
+                                                for B, you may want to use a one-tailed distribution. For example, if
+                                                you
+                                                test a
+                                                new
+                                                email template,
+                                                your major concern is whether it leads to more conversion.
+                                                A two-tailed test is not necessary since you are only interested in
+                                                positive
+                                                changes.
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <select name="tail" id="tail">
+                                        <option value="false" class="alert">False</option>
+                                        <option value="true">True</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="text-center">
+                            <a id="submit_button" type="submit"
+                                class="btn btn-outline-info btn-rounded waves-effect  btn-lg">
+                                Compute size</a>
                         </div>
-                        <div>
-                            You can create an AB split recipe from the AB testing plugin. It will use the sample sizes
-                            computed above.
+                    </form>
+                </div>
+                <div class="col-xl">
+                    <div class="plot"> </div>
+                    <h2 class="text-center"> Sample sizes </h2>
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-auto">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th id="A_header">A</th>
+                                        <th id="B_header">B</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="sample_size_A">1085</td>
+                                        <td id="sample_size_B">1085</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                <div id="duration" class="d-none">
+                                    <div>
+                                        This experiment should run for
+                                    </div>
+                                    <span id="nb_of_days">
+                                    </span>
+                                    <div>
+                                        days
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <a id="attribution_button" type="button"
+                                    class="btn btn-outline-info btn-rounded waves-effect  btn-lg">
+                                    Save sizes in the folder</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-auto">
+                            <div class="d-none alert_recipe text-center" id="attribution_alert">
+                                <div>
+                                    The sizes were saved!
+                                </div>
+                                <div>
+                                    You can create an AB split recipe from the AB testing plugin. It will use the sample
+                                    sizes
+                                    computed above.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="container">
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            <div class="plot"> </div>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-xl">
-            <h2> Confusion matrix </h2>
-            <hr>
-            </hr>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row justify-content-md-center">
-        <div class="col-md-auto">
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Predicted : No changes</th>
-                        <th>Predicted : Significant changes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="confusion_header">Actual : No changes</td>
-                        <td>1 - \( \alpha = \) stat significance </td>
-                        <td> \( \alpha = \) false positive probability </td>
-                    </tr>
-                    <tr>
-                        <td class="confusion_header">Actual : Significant changes</td>
-                        <td>\( \beta\) = false negative probability</td>
-                        <td>1-\( \beta = \) power</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-xl">
-            <div class="text-center">
-                <button id="size_derivation" type="button" class="btn btn-link">
-                    <div class='extra'> How is the sample size computed? </div>
-                </button>
+        <div class="container white-background">
+            <div class="row border-top-custom title-padding">
+                <div class="col-xl">
+                    <h2> Confusion matrix </h2>
+                </div>
             </div>
-            <div class="d-none" id="derivation_text">
-                <h2 class="derivation_headers"> References </h2>
-                <div class="derivation">
-                    <ul>
-                        <li> S. Holmes.
-                            <a href="http://statweb.stanford.edu/~susan/courses/s141/hopower.pdf" target="_blank"> POWER
-                                and SAMPLE SIZE </a> <span class="bib"> Introduction to
-                                Statistics for Biology and Biostatistics </span> (2004)
-                            </a>
-                        </li>
-                        <li>
-                            E. L. Lehmann and J.P. Romano. <span class="bib">Testing statistical hypotheses.</span>
-                            Springer Science & Business Media (2006)
-                        </li>
-                        <li>
-                            V. Spokoiny and T. Dickhaus. <span class="bib">Basics of modern mathematical
-                                statistics</span> Springer (2015)
-                        </li>
-                    </ul>
-                </div>
-                <h2 class="derivation_headers"> Test definition </h2>
-                <div class="derivation">
-                    Let's define two groups, A and B. \(n_A\) samples are drawn from A, \(n_B\) samples are drawn from
-                    B.
-                </div>
-                <div class="derivation">
-                    \(X_i^A \sim B(p_A)\) is a random variable representing a sample from group A
-                </div>
-                <div class="derivation">
-                    \(X_i^B\sim B(p_B)\) is a random variable representing a sample from group B
-                </div>
-                <div class="derivation">
-                    Our goal is to compare \(p_A\) and \(p_B\). Depending on your use case, please choose one of these
-                    two simple hypothesis tests :
-                    <ul>
-                        <li>
-                            <span class="derivation">
-                                A two-tailed test : \(H_0\) : \(p_A = p_B \), \(H_1\) : \(p_A \neq p_B \)
-                            </span>
-                        </li>
-                        <li>
-                            <span class="derivation">
-                                A one-tailed test : \(H_0\) : \(p_A = p_B \), \(H_1\) : \(p_A < p_B \) </span>
-                        </li>
-                    </ul>
-                    We assume that all samples are independent so : $$T^A = \sum_{i=1}^{n_{A}} X_i^A \sim B(n_A,p_A) $$
-                    $$ T^B = \sum_{i=1}^{n_{B}} X_i^A \sim B(n_B,p_B) $$ We assume that \(T_A\) and \(T_B\) are
-                    independent and \(n_A\) and \(n_B\) are large enough for the
-                    theorem central limit theorem to apply.
-                </div>
-                <div class="derivation">
-                    According to the theorem central limit, \(T^A \sim N(p_A,n_Ap_A(1-p_A))\) and \(T^B \sim
-                    N(p_B,n_Bp_B(1-p_B))\)
-
-                </div>
-                <div class="derivation">
-                    \(\frac{T^A}{n_A}\) and \(\frac{T^B}{n_B}\) are minimum variance unbiased estimator for \(p_A\) and
-                    \(p_B\). If we want to test \(H_0\) : \(p_A = p_B \), it makes sense to choose a rejection region
-                    \(W = \{ |\frac{t^B}{n_B} - \frac{t^A}{n_A} | > t \}\)
-                    for a two-tailed test and \(W' = \{ \frac{t^B}{n_B} - \frac{t^A}{n_A} > t \}\) for a one-tailed
-                    test.
-                </div>
-                <div class="derivation">
-                    As \(T^A\) and \(T^B\) are independent: $$ \frac{T^B}{n_B} - \frac{T^A}{n_A} \sim N(p_B-p_A,
-                    \frac{p_A(1-p_A)}{n_A} + \frac{p_B(1-p_B)}{n_B} )$$ Under \(H_0\), \(p_A = p_B = p\), so : $$
-                    \frac{\frac{T^B}{n_B} - \frac{T^A}{n_A}}{\sqrt{p(1-p)(\frac{1}{n_A}
-                    + \frac{1}{n_B})}} \sim N(0,1) $$ \(p\) is unknown. However, under \(H_0\), \(\hat{p}=
-                    \frac{T_A+T_B}{n_A+n_B} \) is minimum variance unbiased estimator for \(p\). So this result is still
-                    valid when \(p\) is replaced with \(\hat{p}\).
-                </div>
-                <div class="derivation">
-                    Therefore, the test is built using the random variables \(U_0\) and \(U_1\). Under \(H_0\) : $$ U_0
-                    = \frac{\frac{T^B}{n_B} - \frac{T^B}{n_B}}{\sqrt{\frac{T_A+T_B}{n_A+n_B}(1-\frac{T_A+T_B}{n_A +
-                    n_B})(\frac{1}{n_A} + \frac{1}{n_B})}} \sim N(0,1) $$ Under
-                    \(H_1\), the variance of \(U_1\) is the same as under \(H_0\) given the test definition. So :
-                    $$\frac{T^B}{n_B} - \frac{T^A}{n_A} \sim N(p_B-p_A,p(1-p)(\frac{1}{n_A} + \frac{1}{n_B}))$$ $$U_1 =
-                    \frac{\frac{T^B}{n_B} - \frac{T^A}{n_A}
-                    - (p_B-p_A)}{\sqrt{\frac{T_A+T_B}{n_A+n_B}(1-\frac{T_A+T_B}{n_A + n_B})(\frac{1}{n_A} +
-                    \frac{1}{n_B})}} \sim N(0,1)$$
-                </div>
-                <h2 class="derivation_headers"> Sample size computation </h2>
-
-                <div class="derivation">
-                    Let's define the random variable D : $$D = \frac{T^B}{n_B} - \frac{T^A}{n_A} $$
-
-                </div>
-                <div class="derivation">
-                    During the design of the experiment, you set minimum values for the statistical significance and the
-                    power, respectively \(1-\alpha\) and \(1-\beta\). The sample size is derived from these two
-                    constraints. For a two tailed test, let's find the threshold
-                    value t for the rejection region \(W = \{ |d| > t \}\), given that : $$ \left\{ \begin{array}{ll}
-                    P_{H_{0}}(|D| \leq t) = 1-\alpha & (1) \\ P_{H_{1}}(|D| \leq t) = \beta & (2) \end{array} \right. $$
-                    Let's derive (1):
-                </div>
-                <div class="derivation">
-                    We want to find \(t\) such that \(P(|D| \leq t) = 1 - \alpha\ \).
-                </div>
-                <div class="derivation">
-
-                    \(U_0\ \sim N(0,1) \), \( \phi \) is the cumulative distribution function of a standard normal
-                    distribution. \(\forall x \in R, \) $$P(|U_0| \leq x) = 1 - \alpha$$ $$ \Leftrightarrow P(U_0\leq x)
-                    - P(U_0 \leq -x) = \phi(x) - (1-\phi(-x)) = 1-\alpha $$
-                    \( \phi \) is symetric so: $$ \Leftrightarrow 2\phi(x)-1= 1- \alpha $$ $$\Leftrightarrow \phi(x) =
-                    1- \frac{\alpha}{2}$$ $$ \Leftrightarrow x = \phi ^{-1}(1- \frac{\alpha}{2}) =
-                    z_{1-\frac{\alpha}{2}} $$ As a consequence : $$ P(|U_0|\leq
-                    z_{1-\frac{\alpha}{2}} ) = 1 - \alpha $$ As, \(U_0 = \frac{D}{\sigma _p} \), $$ \Leftrightarrow
-                    P(|D| \leq z_{1-\frac{\alpha}{2}} \times \sigma_p ) = 1- \alpha $$ with \( \sigma _p^2 =
-                    \frac{p_A(1-p_A)}{n_A} + \frac{p_B(1-p_B)}{n_B}
-                    = \frac{p_A+p_B}{n_A+n_B}(1-\frac{p_A+p_B}{n_A + n_B})(\frac{1}{n_A} + \frac{1}{n_B}) \)
-                </div>
-                <div class="derivation">
-                    Given (1), $$ \Leftrightarrow t = z_{1-\frac{\alpha}{2}} \times \sigma_p $$
-                </div>
-                <div class="derivation">
-                    Consequently, $$(2) \Leftrightarrow P_{H_1}(|D| \leq z_{1-\frac{\alpha}{2}} \sigma_p ) = \beta $$ As
-                    \(U_1 = \frac{D - (p_B-p_A)}{\sigma _p}\) $$\Leftrightarrow P(U_1 \leq z_{1-\frac{\alpha}{2}} -
-                    \frac{(p_B-p_A)}{\sigma _p}) - P(U_1 \leq - z_{1-\frac{\alpha}{2}}
-                    - \frac{(p_B-p_A)}{\sigma _p}) = \beta $$ If we assume that \(\frac{p_B-p_A}{\sigma_p} \geq 1\),
-                    then : $$ P(U_1\leq - z_{1-\frac{\alpha}{2}}- \frac{(p_B-p_A)}{\sigma_p}) \leq \phi(-1 -
-                    z_{1-\frac{\alpha}{2}}) \simeq 0 $$ So : $$ P(U_1
-                    \leq z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) = \beta $$ Besides : \(\forall x \in R,
-                    \) $$ P(U_1 \leq x) = \beta\ $$ $$ \Leftrightarrow x = \phi ^{-1}(\beta) = z_{\beta} = -z_{1-\beta}
-                    $$ Hence, $$ z_{1-\frac{\alpha}{2}}
-                    - \frac{p_B - p_A}{\sigma _p} = z_{\beta} \quad (a) $$ Let's consider \( \sigma\ \), such as
-                    \(\sigma^2 = p(1-p) \) with \(p = \frac{p_A+p_B}{n_A+n_B} \), and r, the size ratio : \(r =
-                    \frac{n_B}{n_A}\) with \(n_B \leq n_A\) $$\sigma
-                    _p = \sqrt{p(1-p)(\frac{1}{n_A} + \frac{1}{n_B})} = \sqrt{\sigma^2 (\frac{1}{n_A} + \frac{1}{rn_A})
-                    } \quad (b) $$ Let's note \(\delta \), the minimum detectable effect, \(\delta = p_B-p_A \)
-                </div>
-                <div class="derivation">
-                    By combining \((a)\) and \((b)\), we obtain the following result for a two tailed test : $$ n_A =
-                    \frac{r+1}{r} \frac{\sigma^2(z_{1-\frac{ \alpha}{2}}+ z_{1-\beta})^2}{\delta^2}$$ For a one tailed
-                    test : $$ n_A = \frac{r+1}{r} \frac{\sigma^2(z_{1-\alpha}+
-                    z_{1-\beta})^2}{\delta^2}$$
-
+            <div class="row justify-content-md-center">
+                <div class="col-md-auto confusion-matrix">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Predicted : No changes</th>
+                                <th>Predicted : Significant changes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="confusion_header">Actual : No changes</td>
+                                <td>1 - \( \alpha = \) stat significance </td>
+                                <td> \( \alpha = \) false positive probability </td>
+                            </tr>
+                            <tr>
+                                <td class="confusion_header">Actual : Significant changes</td>
+                                <td>\( \beta\) = false negative probability</td>
+                                <td>1-\( \beta = \) power</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
+
+        <div class="container white-background"">
+            <div class="row border-top-custom title-padding ">
+                <div class="col-xl">
+                    <div class="text-center">
+                        <button id="size_derivation" type="button" class="btn btn-link">
+                            <div class='extra'> How is the sample size computed? </div>
+                        </button>
+                    </div>
+                    <div class="d-none" id="derivation_text">
+                        <h2 class="derivation_headers"> References </h2>
+                        <div class="derivation">
+                            <ul>
+                                <li> S. Holmes.
+                                    <a href="http://statweb.stanford.edu/~susan/courses/s141/hopower.pdf"
+                                        target="_blank">
+                                        POWER
+                                        and SAMPLE SIZE </a> <span class="bib"> Introduction to
+                                        Statistics for Biology and Biostatistics </span> (2004)
+                                    </a>
+                                </li>
+                                <li>
+                                    E. L. Lehmann and J.P. Romano. <span class="bib">Testing statistical
+                                        hypotheses.</span>
+                                    Springer Science & Business Media (2006)
+                                </li>
+                                <li>
+                                    V. Spokoiny and T. Dickhaus. <span class="bib">Basics of modern mathematical
+                                        statistics</span> Springer (2015)
+                                </li>
+                            </ul>
+                        </div>
+                        <h2 class="derivation_headers"> Test definition </h2>
+                        <div class="derivation">
+                            Let's define two groups, A and B. \(n_A\) samples are drawn from A, \(n_B\) samples are
+                            drawn
+                            from
+                            B.
+                        </div>
+                        <div class="derivation">
+                            \(X_i^A \sim B(p_A)\) is a random variable representing a sample from group A
+                        </div>
+                        <div class="derivation">
+                            \(X_i^B\sim B(p_B)\) is a random variable representing a sample from group B
+                        </div>
+                        <div class="derivation">
+                            Our goal is to compare \(p_A\) and \(p_B\). Depending on your use case, please choose one of
+                            these
+                            two simple hypothesis tests :
+                            <ul>
+                                <li>
+                                    <span class="derivation">
+                                        A two-tailed test : \(H_0\) : \(p_A = p_B \), \(H_1\) : \(p_A \neq p_B \)
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="derivation">
+                                        A one-tailed test : \(H_0\) : \(p_A = p_B \), \(H_1\) : \(p_A < p_B \) </span>
+                                </li>
+                            </ul>
+                            We assume that all samples are independent so : $$T^A = \sum_{i=1}^{n_{A}} X_i^A \sim
+                            B(n_A,p_A)
+                            $$
+                            $$ T^B = \sum_{i=1}^{n_{B}} X_i^A \sim B(n_B,p_B) $$ We assume that \(T_A\) and \(T_B\) are
+                            independent and \(n_A\) and \(n_B\) are large enough for the
+                            theorem central limit theorem to apply.
+                        </div>
+                        <div class="derivation">
+                            According to the theorem central limit, \(T^A \sim N(p_A,n_Ap_A(1-p_A))\) and \(T^B \sim
+                            N(p_B,n_Bp_B(1-p_B))\)
+
+                        </div>
+                        <div class="derivation">
+                            \(\frac{T^A}{n_A}\) and \(\frac{T^B}{n_B}\) are minimum variance unbiased estimator for
+                            \(p_A\)
+                            and
+                            \(p_B\). If we want to test \(H_0\) : \(p_A = p_B \), it makes sense to choose a rejection
+                            region
+                            \(W = \{ |\frac{t^B}{n_B} - \frac{t^A}{n_A} | > t \}\)
+                            for a two-tailed test and \(W' = \{ \frac{t^B}{n_B} - \frac{t^A}{n_A} > t \}\) for a
+                            one-tailed
+                            test.
+                        </div>
+                        <div class="derivation">
+                            As \(T^A\) and \(T^B\) are independent: $$ \frac{T^B}{n_B} - \frac{T^A}{n_A} \sim N(p_B-p_A,
+                            \frac{p_A(1-p_A)}{n_A} + \frac{p_B(1-p_B)}{n_B} )$$ Under \(H_0\), \(p_A = p_B = p\), so :
+                            $$
+                            \frac{\frac{T^B}{n_B} - \frac{T^A}{n_A}}{\sqrt{p(1-p)(\frac{1}{n_A}
+                            + \frac{1}{n_B})}} \sim N(0,1) $$ \(p\) is unknown. However, under \(H_0\), \(\hat{p}=
+                            \frac{T_A+T_B}{n_A+n_B} \) is minimum variance unbiased estimator for \(p\). So this result
+                            is
+                            still
+                            valid when \(p\) is replaced with \(\hat{p}\).
+                        </div>
+                        <div class="derivation">
+                            Therefore, the test is built using the random variables \(U_0\) and \(U_1\). Under \(H_0\) :
+                            $$
+                            U_0
+                            = \frac{\frac{T^B}{n_B} -
+                            \frac{T^B}{n_B}}{\sqrt{\frac{T_A+T_B}{n_A+n_B}(1-\frac{T_A+T_B}{n_A +
+                            n_B})(\frac{1}{n_A} + \frac{1}{n_B})}} \sim N(0,1) $$ Under
+                            \(H_1\), the variance of \(U_1\) is the same as under \(H_0\) given the test definition. So
+                            :
+                            $$\frac{T^B}{n_B} - \frac{T^A}{n_A} \sim N(p_B-p_A,p(1-p)(\frac{1}{n_A} + \frac{1}{n_B}))$$
+                            $$U_1 =
+                            \frac{\frac{T^B}{n_B} - \frac{T^A}{n_A}
+                            - (p_B-p_A)}{\sqrt{\frac{T_A+T_B}{n_A+n_B}(1-\frac{T_A+T_B}{n_A + n_B})(\frac{1}{n_A} +
+                            \frac{1}{n_B})}} \sim N(0,1)$$
+                        </div>
+                        <h2 class="derivation_headers"> Sample size computation </h2>
+
+                        <div class="derivation">
+                            Let's define the random variable D : $$D = \frac{T^B}{n_B} - \frac{T^A}{n_A} $$
+
+                        </div>
+                        <div class="derivation">
+                            During the design of the experiment, you set minimum values for the statistical significance
+                            and
+                            the
+                            power, respectively \(1-\alpha\) and \(1-\beta\). The sample size is derived from these two
+                            constraints. For a two tailed test, let's find the threshold
+                            value t for the rejection region \(W = \{ |d| > t \}\), given that : $$ \left\{
+                            \begin{array}{ll}
+                            P_{H_{0}}(|D| \leq t) = 1-\alpha & (1) \\ P_{H_{1}}(|D| \leq t) = \beta & (2) \end{array}
+                            \right. $$
+                            Let's derive (1):
+                        </div>
+                        <div class="derivation">
+                            We want to find \(t\) such that \(P(|D| \leq t) = 1 - \alpha\ \).
+                        </div>
+                        <div class="derivation">
+
+                            \(U_0\ \sim N(0,1) \), \( \phi \) is the cumulative distribution function of a standard
+                            normal
+                            distribution. \(\forall x \in R, \) $$P(|U_0| \leq x) = 1 - \alpha$$ $$ \Leftrightarrow
+                            P(U_0\leq x)
+                            - P(U_0 \leq -x) = \phi(x) - (1-\phi(-x)) = 1-\alpha $$
+                            \( \phi \) is symetric so: $$ \Leftrightarrow 2\phi(x)-1= 1- \alpha $$ $$\Leftrightarrow
+                            \phi(x)
+                            =
+                            1- \frac{\alpha}{2}$$ $$ \Leftrightarrow x = \phi ^{-1}(1- \frac{\alpha}{2}) =
+                            z_{1-\frac{\alpha}{2}} $$ As a consequence : $$ P(|U_0|\leq
+                            z_{1-\frac{\alpha}{2}} ) = 1 - \alpha $$ As, \(U_0 = \frac{D}{\sigma _p} \), $$
+                            \Leftrightarrow
+                            P(|D| \leq z_{1-\frac{\alpha}{2}} \times \sigma_p ) = 1- \alpha $$ with \( \sigma _p^2 =
+                            \frac{p_A(1-p_A)}{n_A} + \frac{p_B(1-p_B)}{n_B}
+                            = \frac{p_A+p_B}{n_A+n_B}(1-\frac{p_A+p_B}{n_A + n_B})(\frac{1}{n_A} + \frac{1}{n_B}) \)
+                        </div>
+                        <div class="derivation">
+                            Given (1), $$ \Leftrightarrow t = z_{1-\frac{\alpha}{2}} \times \sigma_p $$
+                        </div>
+                        <div class="derivation">
+                            Consequently, $$(2) \Leftrightarrow P_{H_1}(|D| \leq z_{1-\frac{\alpha}{2}} \sigma_p ) =
+                            \beta
+                            $$ As
+                            \(U_1 = \frac{D - (p_B-p_A)}{\sigma _p}\) $$\Leftrightarrow P(U_1 \leq
+                            z_{1-\frac{\alpha}{2}} -
+                            \frac{(p_B-p_A)}{\sigma _p}) - P(U_1 \leq - z_{1-\frac{\alpha}{2}}
+                            - \frac{(p_B-p_A)}{\sigma _p}) = \beta $$ If we assume that \(\frac{p_B-p_A}{\sigma_p} \geq
+                            1\),
+                            then : $$ P(U_1\leq - z_{1-\frac{\alpha}{2}}- \frac{(p_B-p_A)}{\sigma_p}) \leq \phi(-1 -
+                            z_{1-\frac{\alpha}{2}}) \simeq 0 $$ So : $$ P(U_1
+                            \leq z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) = \beta $$ Besides : \(\forall x
+                            \in
+                            R,
+                            \) $$ P(U_1 \leq x) = \beta\ $$ $$ \Leftrightarrow x = \phi ^{-1}(\beta) = z_{\beta} =
+                            -z_{1-\beta}
+                            $$ Hence, $$ z_{1-\frac{\alpha}{2}}
+                            - \frac{p_B - p_A}{\sigma _p} = z_{\beta} \quad (a) $$ Let's consider \( \sigma\ \), such as
+                            \(\sigma^2 = p(1-p) \) with \(p = \frac{p_A+p_B}{n_A+n_B} \), and r, the size ratio : \(r =
+                            \frac{n_B}{n_A}\) with \(n_B \leq n_A\) $$\sigma
+                            _p = \sqrt{p(1-p)(\frac{1}{n_A} + \frac{1}{n_B})} = \sqrt{\sigma^2 (\frac{1}{n_A} +
+                            \frac{1}{rn_A})
+                            } \quad (b) $$ Let's note \(\delta \), the minimum detectable effect, \(\delta = p_B-p_A \)
+                        </div>
+                        <div class="derivation">
+                            By combining \((a)\) and \((b)\), we obtain the following result for a two tailed test : $$
+                            n_A
+                            =
+                            \frac{r+1}{r} \frac{\sigma^2(z_{1-\frac{ \alpha}{2}}+ z_{1-\beta})^2}{\delta^2}$$ For a one
+                            tailed
+                            test : $$ n_A = \frac{r+1}{r} \frac{\sigma^2(z_{1-\alpha}+
+                            z_{1-\beta})^2}{\delta^2}$$
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</body>
