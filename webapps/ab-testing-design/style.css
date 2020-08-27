@@ -213,6 +213,10 @@ table, thead, tr, tbody, th {
     border: none;
 }
 
+.decrease-padding{
+    padding-bottom: 0;
+}
+
 .plot {
     margin-bottom: 80px;
 }
@@ -224,4 +228,8 @@ table, thead, tr, tbody, th {
 .confusion-matrix{
     padding-top: 25px;
     padding-bottom: 20px;
+}
+
+#save-button{
+    padding-bottom:20px;
 }
