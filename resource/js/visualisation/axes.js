@@ -59,8 +59,8 @@ function Random_normal_Dist(mean, sd) {
         let x_coordinate = i
         let y_coordinate = jStat.normal.pdf(i, mean, sd);
         let arr = {
-            "x_coordinate": x_coordinate,
-            "y_coordinate": y_coordinate
+            x: x_coordinate,
+            y: y_coordinate
         }
         data.push(arr);
     };

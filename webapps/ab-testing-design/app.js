@@ -44,60 +44,6 @@ let std = get_std();
 let distribution_A = Random_normal_Dist(0, std);
 let distribution_B = Random_normal_Dist(mde_val, std);
 
-//init axes
-let x = build_x_axis(distribution_A, distribution_B, width);
-let y_max = get_ymax(distribution_A, distribution_B);
-let y = build_y_axis(distribution_A, distribution_B, height);
-
-// init plots
-draw_initial_x_axis(svg, x, height);
-draw_initial_IC(svg, x, y, y_max);
-draw_initial_plots(svg, x, y, std, mde_val);
-draw_initial_area(svg, x, y, distribution_A, distribution_B, std);
-set_initial_legend(svg, y_max, height);
-
-//update distributions and axis
-let bcr = document.getElementById('bcr');
-bcr.addEventListener('change', function () {
-    let mde = parseFloat($('#mde').val()) / 100;
-    let std = get_std();
-    let y_max = get_ymax(Random_normal_Dist(0, std), Random_normal_Dist(mde, std));
-    let new_axes = update_axes(svg, height, width, std);
-
-    update_plots_with_new_sd(svg, new_axes, std, y_max);
-    update_rejection_zone(svg, std, y_max, height, width);
-});
-
-let mde = document.getElementById('mde');
-mde.addEventListener('change', function () {
-    let mde = parseFloat(this.value) / 100;
-    let new_axes = update_axes(svg, height, width, get_std());
-    let new_x = new_axes[0];
-    let new_y = new_axes[1];
-    let std = get_std();
-    let y_max = get_ymax(Random_normal_Dist(0, std), Random_normal_Dist(mde, std));
-
-    update_distribution(svg, 0, "A", new_x, new_y, std);
-    update_distribution(svg, mde, "B", new_x, new_y, std);
-    update_rejection_zone(svg, std, y_max, height, width);
-});
-
-const sig_level = document.getElementById('sig_level');
-sig_level.addEventListener('change', function (event) {
-    let mde = parseFloat($('#mde').val()) / 100;
-    let std = get_std();
-    let y_max = get_ymax(Random_normal_Dist(0, std), Random_normal_Dist(mde, std));
-
-    update_legend(svg, "Significance level", parseFloat(this.value), "label_sig_level", true);
-    update_legend(svg, "Power", "compute size", "label_power", false);
-    update_rejection_zone(svg, std, y_max, height, width);
-});
-
-// update legend
-const power = document.getElementById('power');
-power.addEventListener('change', function () {
-    update_legend(svg, "Power", "compute size", "label_power", false);
-});
 
 // save parameters in the managed folder
 let hide_attribution = true;
@@ -113,3 +59,57 @@ attribution.addEventListener("click", function (event) {
     event.preventDefault();
 })
 
+
+// Line chart
+let z_value = update_z_value(std);
+//let y_max = get_ymax(distribution_A, distribution_B);
+let y_max = 20;
+let IC_line = [
+    {
+        x : z_value,
+        y : 0
+    },
+    {
+        x : z_value,
+        y : y_max
+    }
+];
+
+Chart.defaults.scale.gridLines.drawOnChartArea = false;
+
+new Chart(document.getElementById("chart"), {
+    type: 'line',
+    data: {
+        datasets: [{
+            data: distribution_A,
+            borderColor: "rgb(54,163,158)",
+            fill: false
+        },
+        {
+            data: distribution_B,
+            borderColor: "#ff7979",
+            fill: false
+        },
+        {
+            data:IC_line,
+            borderColor: "grey",
+            fill:false
+        }
+        ]
+    },
+    "options": {
+        elements: {
+            point: {
+                radius: 0
+            }
+        },
+        legend: {
+            display: false
+        },
+        scales: {
+            xAxes: [{
+                type: 'linear'
+            }]
+        }
+    }
+});
