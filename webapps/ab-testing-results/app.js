@@ -126,6 +126,8 @@ formButton.addEventListener("click", function (event) {
                 let uplift = Math.round(Math.abs(parseFloat($("#success_rate_A").val()) - parseFloat($("#success_rate_B").val())));
                 update_results_table(uplift, Z_score, p_value);
                 test_outcome(p_value, svg);
+                let save_section = $("#save-section");
+                save_section.removeClass("d-none");
                 let new_z = update_z_value(1)
                 update_IC(svg, new_z, x, y, y_max);
                 //update area
