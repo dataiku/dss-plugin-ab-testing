@@ -25,11 +25,6 @@ computation.addEventListener('click', function (event) {
 const formButton = document.getElementById('submit_button');
 let hide_duration = true;
 
-//formButton.addEventListener('click', function (event, hide_duration) {
-//    manage_size_computation(event, hide_duration);
-//}
-//);
-
 // save parameters in the managed folder
 let hide_attribution = true;
 const attribution = document.getElementById('attribution_button');
@@ -44,93 +39,6 @@ attribution.addEventListener("click", function (event) {
     event.preventDefault();
 })
 
-// visualization
-
-// init distributions
-let mde_val = parseFloat($("#mde").val()) / 100;
-let std = get_std();
-let distribution_A = Random_normal_Dist(0, std);
-let distribution_B = Random_normal_Dist(mde_val, std);
-
-
-// Line chart
-let z_value = update_z_value(std);
-let y_max = get_ymax(distribution_A, distribution_B);
-let IC_line = [
-    {
-        x: z_value,
-        y: 0
-    },
-    {
-        x: z_value,
-        y: y_max
-    }
-];
-
-function get_CI(distribution_A, distribution_B, z_value, std){
-    let y_max = get_ymax(distribution_A, distribution_B);
-    let CI_line = [
-        {
-            x: z_value,
-            y: 0
-        },
-        {
-            x: z_value,
-            y: y_max
-        }
-    ];
-    return CI_line;
-}
-
-function get_datasets(bcr, mde, sig_level, tail, sample_size_A, sample_size_B) {
-    bcr = bcr / 100;
-    mde = mde / 100;
-    sig_level = sig_level / 100;
-    let std = Math.sqrt(bcr * (1 - bcr) * (1 / sample_size_A + 1 / sample_size_B));
-    let distribution_A = Random_normal_Dist(0, std);
-    let distribution_B = Random_normal_Dist(mde, std);
-    let z_value = update_z_value(std, 1 - sig_level, tail);
-
-    let CI_line = get_CI(distribution_A, distribution_B, z_value, std)
-    let area_boundary_A = draw_area(distribution_A, z_value, 0, std);
-    let area_boundary_B = draw_area(distribution_B, z_value, mde, std);
-
-    chart_datasets = [{
-        data: distribution_A,
-        borderColor: "rgba(47, 53, 66,1.0)",
-        fill: false,
-        label: "H0"
-    },
-    {
-        data: distribution_B,
-        borderColor: "#ffc845",
-        fill: false,
-        label: "H1"
-    },
-    {
-        data: CI_line,
-        borderColor: "grey",
-        fill: false,
-        borderDash: [6],
-        borderWidth: 1,
-        label: "Confidence interval"
-    },
-    {
-        data: area_boundary_A,
-        fill: true,
-        borderWidth: 0,
-        backgroundColor: "rgba(6, 82, 221,0.2)",
-        label: "Significance level"
-    },
-    {
-        data: area_boundary_B,
-        fill: true,
-        borderWidth: 0,
-        backgroundColor: "rgba(236, 204, 104,0.2)",
-        label: "Power"
-    }]
-    return chart_datasets
-}
 
 // compute size
 var app = angular.module("abApp", []);
@@ -146,28 +54,7 @@ app.controller("SizeController", function ($scope, $http) {
     $scope.sample_size_B = 1085;
     $scope.tail = "false";
 
-    Chart.defaults.scale.gridLines.drawOnChartArea = false;
-    $scope.chart = new Chart(document.getElementById("chart"), {
-        type: 'line',
-        data: {
-            datasets: get_datasets($scope.bcr, $scope.mde, $scope.sig_level, $scope.tail, $scope.sample_size_A, $scope.sample_size_B)
-        },
-        "options": {
-            elements: {
-                point: {
-                    radius: 0
-                }
-            },
-            legend: {
-                display: true
-            },
-            scales: {
-                xAxes: [{
-                    type: 'linear'
-                }]
-            }
-        }
-    });
+    $scope.chart = plot_chart($scope);
 
     $scope.computeSize = function () {
         let formData = { bcr: $scope.bcr, mde: $scope.mde, sig_level: $scope.sig_level, power: $scope.power, ratio: $scope.ratio, reach: $scope.reach, tail: $scope.tail }
@@ -176,15 +63,12 @@ app.controller("SizeController", function ($scope, $http) {
                 let response_data = response.data
                 $scope.sample_size_A = response_data.sample_size_A;
                 $scope.sample_size_B = response_data.sample_size_B;
+                update_chart($scope);
             });
     };
 
     // viz
     $scope.updatePlot = function () {
-        $scope.chart.config.data.datasets = get_datasets($scope.bcr, $scope.mde, $scope.sig_level, $scope.tail, $scope.sample_size_A, $scope.sample_size_B);
-        $scope.chart.update(0);
+        update_chart($scope);
     }
-
-    // Line chart
-
 });

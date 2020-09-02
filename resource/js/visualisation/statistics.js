@@ -1,11 +1,3 @@
-function get_std() {
-    let bcr = parseFloat($('#bcr').val()) / 100;
-    let new_size_A = parseFloat($("#sample_size_A").html());
-    let new_size_B = parseFloat($("#sample_size_B").html());
-    let std = Math.sqrt(bcr * (1 - bcr) * (1 / new_size_A + 1 / new_size_B));
-    return std;
-}
-
 function Random_normal_Dist(mean, sd) {
     let data = [];
     for (var i = mean - 4 * sd; i < mean + 4 * sd; i += 1 / 1000) {
@@ -20,7 +12,7 @@ function Random_normal_Dist(mean, sd) {
     return data;
 }
 
-function update_z_value(std, alpha, tail) {
+function compute_z_value(std, alpha, tail) {
     let two_tailed = (tail == "true");
     if (two_tailed) {
         var p = 1 - alpha / 2;
