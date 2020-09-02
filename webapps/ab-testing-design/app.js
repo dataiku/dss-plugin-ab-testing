@@ -25,10 +25,10 @@ computation.addEventListener('click', function (event) {
 const formButton = document.getElementById('submit_button');
 let hide_duration = true;
 
-formButton.addEventListener('click', function (event, hide_duration) {
-    manage_size_computation(event, hide_duration);
-}
-);
+//formButton.addEventListener('click', function (event, hide_duration) {
+//    manage_size_computation(event, hide_duration);
+//}
+//);
 
 // save parameters in the managed folder
 let hide_attribution = true;
@@ -67,67 +67,124 @@ let IC_line = [
     }
 ];
 
-// area
-let x_max_A = get_x_max(distribution_A);
-let x_max_B = get_x_max(distribution_B);
-let area_boundary_A = draw_area(x_max_A, z_value, 0, std);
-let area_boundary_B = draw_area(x_max_B, z_value, mde_val, std);
-
-Chart.defaults.scale.gridLines.drawOnChartArea = false;
-new Chart(document.getElementById("chart"), {
-    type: 'line',
-    data: {
-        datasets: [
+function get_CI(distribution_A, distribution_B, z_value, std){
+    let y_max = get_ymax(distribution_A, distribution_B);
+    let CI_line = [
         {
-            data: distribution_A,
-            borderColor: "rgba(47, 53, 66,1.0)",
-            fill: false,
-            label: "H0"
+            x: z_value,
+            y: 0
         },
         {
-            data: distribution_B,
-            borderColor: "#ffc845",
-            fill: false,
-            label: "H1"
-        },
-        {
-            data: IC_line,
-            borderColor: "grey",
-            fill: false,
-            borderDash: [6],
-            borderWidth: 1,
-            label:"Confidence interval"
-        },
-        {
-            data: area_boundary_A, 
-            fill:true,
-            borderWidth: 0,
-            backgroundColor: "rgba(6, 82, 221,0.2)",
-            label: "Significance level",
-
-        },
-        {
-            data: area_boundary_B, 
-            fill:true,
-            borderWidth: 0,
-            backgroundColor: "rgba(236, 204, 104,0.2)",
-            label:"Power"
+            x: z_value,
+            y: y_max
         }
-        ]
+    ];
+    return CI_line;
+}
+
+function get_datasets(bcr, mde, sig_level, tail, sample_size_A, sample_size_B) {
+    bcr = bcr / 100;
+    mde = mde / 100;
+    sig_level = sig_level / 100;
+    let std = Math.sqrt(bcr * (1 - bcr) * (1 / sample_size_A + 1 / sample_size_B));
+    let distribution_A = Random_normal_Dist(0, std);
+    let distribution_B = Random_normal_Dist(mde, std);
+    let z_value = update_z_value(std, 1 - sig_level, tail);
+
+    let CI_line = get_CI(distribution_A, distribution_B, z_value, std)
+    let area_boundary_A = draw_area(distribution_A, z_value, 0, std);
+    let area_boundary_B = draw_area(distribution_B, z_value, mde, std);
+
+    chart_datasets = [{
+        data: distribution_A,
+        borderColor: "rgba(47, 53, 66,1.0)",
+        fill: false,
+        label: "H0"
     },
-    "options": {
-        elements: {
-            point: {
-                radius: 0
+    {
+        data: distribution_B,
+        borderColor: "#ffc845",
+        fill: false,
+        label: "H1"
+    },
+    {
+        data: CI_line,
+        borderColor: "grey",
+        fill: false,
+        borderDash: [6],
+        borderWidth: 1,
+        label: "Confidence interval"
+    },
+    {
+        data: area_boundary_A,
+        fill: true,
+        borderWidth: 0,
+        backgroundColor: "rgba(6, 82, 221,0.2)",
+        label: "Significance level"
+    },
+    {
+        data: area_boundary_B,
+        fill: true,
+        borderWidth: 0,
+        backgroundColor: "rgba(236, 204, 104,0.2)",
+        label: "Power"
+    }]
+    return chart_datasets
+}
+
+// compute size
+var app = angular.module("abApp", []);
+
+app.controller("SizeController", function ($scope, $http) {
+    $scope.bcr = 30;
+    $scope.mde = 5;
+    $scope.sig_level = 95;
+    $scope.power = 80;
+    $scope.ratio = 100;
+    $scope.reach = 100;
+    $scope.sample_size_A = 1085;
+    $scope.sample_size_B = 1085;
+    $scope.tail = "false";
+
+    Chart.defaults.scale.gridLines.drawOnChartArea = false;
+    $scope.chart = new Chart(document.getElementById("chart"), {
+        type: 'line',
+        data: {
+            datasets: get_datasets($scope.bcr, $scope.mde, $scope.sig_level, $scope.tail, $scope.sample_size_A, $scope.sample_size_B)
+        },
+        "options": {
+            elements: {
+                point: {
+                    radius: 0
+                }
+            },
+            legend: {
+                display: true
+            },
+            scales: {
+                xAxes: [{
+                    type: 'linear'
+                }]
             }
-        },
-        legend: {
-            display: true
-        },
-        scales: {
-            xAxes: [{
-                type: 'linear'
-            }]
         }
+    });
+
+    $scope.computeSize = function () {
+        let formData = { bcr: $scope.bcr, mde: $scope.mde, sig_level: $scope.sig_level, power: $scope.power, ratio: $scope.ratio, reach: $scope.reach, tail: $scope.tail }
+        $http.post(getWebAppBackendUrl("sample_size"), formData)
+            .then(function (response) {
+                let response_data = response.data
+                $scope.sample_size_A = response_data.sample_size_A;
+                $scope.sample_size_B = response_data.sample_size_B;
+            });
+    };
+
+    // viz
+    $scope.updatePlot = function () {
+        $scope.chart.config.data.datasets = get_datasets($scope.bcr, $scope.mde, $scope.sig_level, $scope.tail, $scope.sample_size_A, $scope.sample_size_B);
+        $scope.chart.update(0);
     }
+
+    // Line chart
+
 });

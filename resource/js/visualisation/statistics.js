@@ -20,9 +20,8 @@ function Random_normal_Dist(mean, sd) {
     return data;
 }
 
-function update_z_value(std) {
-    let alpha = 1 - parseFloat($("#sig_level").val()) / 100;
-    let two_tailed = ($("#tail").val() == "true");
+function update_z_value(std, alpha, tail) {
+    let two_tailed = (tail == "true");
     if (two_tailed) {
         var p = 1 - alpha / 2;
     } else {
