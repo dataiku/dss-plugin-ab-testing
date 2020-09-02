@@ -26,24 +26,9 @@ const formButton = document.getElementById('submit_button');
 let hide_duration = true;
 
 formButton.addEventListener('click', function (event, hide_duration) {
-    manage_size_computation(event, svg, height, width, hide_duration);
+    manage_size_computation(event, hide_duration);
 }
 );
-
-// visualization
-
-// set up canvas 
-const margin = { top: 20, right: 30, bottom: 30, left: 40 },
-    width = 700 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-let svg = set_up_canvas(margin, width, height);
-
-// init distributions
-let mde_val = parseFloat($("#mde").val()) / 100;
-let std = get_std();
-let distribution_A = Random_normal_Dist(0, std);
-let distribution_B = Random_normal_Dist(mde_val, std);
-
 
 // save parameters in the managed folder
 let hide_attribution = true;
@@ -58,6 +43,14 @@ attribution.addEventListener("click", function (event) {
     display(hide_attribution, "attribution_button", "attribution_alert", false)
     event.preventDefault();
 })
+
+// visualization
+
+// init distributions
+let mde_val = parseFloat($("#mde").val()) / 100;
+let std = get_std();
+let distribution_A = Random_normal_Dist(0, std);
+let distribution_B = Random_normal_Dist(mde_val, std);
 
 
 // Line chart

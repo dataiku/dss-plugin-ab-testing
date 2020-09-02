@@ -1,7 +1,7 @@
 
 // Compute the sample sizes and display them in the app
 
-function manage_size_computation(event, svg, height, width, hide_duration) {
+function manage_size_computation(event, hide_duration) {
     if (missing_values()) {
         alert_sample_size("A field is empty, please fill all of them", "missing value");
     } else if (invalid_form(0, 100)) {
@@ -12,7 +12,6 @@ function manage_size_computation(event, svg, height, width, hide_duration) {
                 manage_response(response)
                     .then(function (json) {
                         update_sample_size(json);
-                        update_canvas(svg, height, width);
                         hide_duration = manage_duration(hide_duration);
                     })
             }).catch(function (error) {
