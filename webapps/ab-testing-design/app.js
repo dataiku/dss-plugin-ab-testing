@@ -1,4 +1,3 @@
-set_form_default_values();
 check_form_inputs();
 
 // show / hide optional parameters 
@@ -19,11 +18,6 @@ computation.addEventListener('click', function (event) {
     hide_derivation = display(hide_derivation, "size_derivation", "derivation_text", true, "<div class='extra'> How is the sample size computed? </div>", "<div class='extra'> Hide </div>");
     event.preventDefault();
 });
-
-
-//Submit form 
-const formButton = document.getElementById('submit_button');
-let hide_duration = true;
 
 // save parameters in the managed folder
 let hide_attribution = true;
@@ -53,6 +47,7 @@ app.controller("SizeController", function ($scope, $http) {
     $scope.sample_size_A = 1085;
     $scope.sample_size_B = 1085;
     $scope.tail = "false";
+    $scope.hide_duration = true;
 
     $scope.chart = plot_chart($scope);
 
@@ -64,6 +59,7 @@ app.controller("SizeController", function ($scope, $http) {
                 $scope.sample_size_A = response_data.sample_size_A;
                 $scope.sample_size_B = response_data.sample_size_B;
                 update_chart($scope);
+                $scope.hide_duration = manage_duration($scope.hide_duration);
             });
     };
 

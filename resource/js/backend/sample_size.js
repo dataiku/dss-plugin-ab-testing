@@ -38,26 +38,3 @@ function alert_sample_size(display_message, log_message) {
     $("#sample_size_B").html("");
     console.log("value error: " + log_message);
 }
-
-function compute_size() {
-    let formData = new FormData(document.getElementById('form_data'));
-    const data = new URLSearchParams(formData);
-    let headers = new Headers();
-    let init = {
-        method: 'POST',
-        headers: headers,
-        body: data
-    };
-    const url = getWebAppBackendUrl('/sample_size');
-    let promise = fetch(url, init);
-    return promise;
-}
-
-
-function update_sample_size(response) {
-    const size_A = parseInt(response.n_A);
-    const size_B = parseInt(response.n_B);
-    $("#sample_size_A").html(size_A);
-    $("#sample_size_B").html(size_B);
-    $("#alert_size").html("");
-}
