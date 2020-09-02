@@ -46,8 +46,8 @@ function build_y_axis(distribution_A, distribution_B, height) {
 
 
 function get_ymax(distribution_A, distribution_B) {
-    let y_A = d3.max(distribution_A, function (distribution) { return distribution.y_coordinate; });
-    let y_B = d3.max(distribution_B, function (distribution) { return distribution.y_coordinate; });
+    let y_A = d3.max(distribution_A, function (distribution) { return distribution.y; });
+    let y_B = d3.max(distribution_B, function (distribution) { return distribution.y; });
     let y_max = d3.max([y_A, y_B]);
     return y_max;
 }

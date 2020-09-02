@@ -62,8 +62,7 @@ attribution.addEventListener("click", function (event) {
 
 // Line chart
 let z_value = update_z_value(std);
-//let y_max = get_ymax(distribution_A, distribution_B);
-let y_max = 20;
+let y_max = get_ymax(distribution_A, distribution_B);
 let IC_line = [
     {
         x : z_value,
@@ -93,7 +92,9 @@ new Chart(document.getElementById("chart"), {
         {
             data:IC_line,
             borderColor: "grey",
-            fill:false
+            fill:false,
+            borderDash: [6],
+            borderWidth: 1
         }
         ]
     },
