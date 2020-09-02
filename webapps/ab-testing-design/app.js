@@ -65,21 +65,27 @@ let z_value = update_z_value(std);
 let y_max = get_ymax(distribution_A, distribution_B);
 let IC_line = [
     {
-        x : z_value,
-        y : 0
+        x: z_value,
+        y: 0
     },
     {
-        x : z_value,
-        y : y_max
+        x: z_value,
+        y: y_max
     }
 ];
 
-Chart.defaults.scale.gridLines.drawOnChartArea = false;
+// area
+let x_max_A = get_x_max(distribution_A);
+let x_max_B = get_x_max(distribution_B);
+let area_boundary_A = draw_area(x_max_A, z_value, 0, std);
+let area_boundary_B = draw_area(x_max_B, z_value, mde_val, std);
 
+Chart.defaults.scale.gridLines.drawOnChartArea = false;
 new Chart(document.getElementById("chart"), {
     type: 'line',
     data: {
-        datasets: [{
+        datasets: [
+        {
             data: distribution_A,
             borderColor: "rgb(54,163,158)",
             fill: false
@@ -90,11 +96,24 @@ new Chart(document.getElementById("chart"), {
             fill: false
         },
         {
-            data:IC_line,
+            data: IC_line,
             borderColor: "grey",
-            fill:false,
+            fill: false,
             borderDash: [6],
             borderWidth: 1
+        },
+        {
+            data: area_boundary_A, 
+            fill:true,
+            borderWidth: 0,
+            backgroundColor: "rgba(129, 236, 236,0.4)"
+
+        },
+        {
+            data: area_boundary_B, 
+            fill:true,
+            borderWidth: 0,
+            backgroundColor: "rgba(250, 177, 160,0.4)"
         }
         ]
     },
