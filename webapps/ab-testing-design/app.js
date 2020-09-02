@@ -87,33 +87,38 @@ new Chart(document.getElementById("chart"), {
         datasets: [
         {
             data: distribution_A,
-            borderColor: "rgb(54,163,158)",
-            fill: false
+            borderColor: "rgba(47, 53, 66,1.0)",
+            fill: false,
+            label: "H0"
         },
         {
             data: distribution_B,
-            borderColor: "#ff7979",
-            fill: false
+            borderColor: "#ffc845",
+            fill: false,
+            label: "H1"
         },
         {
             data: IC_line,
             borderColor: "grey",
             fill: false,
             borderDash: [6],
-            borderWidth: 1
+            borderWidth: 1,
+            label:"Confidence interval"
         },
         {
             data: area_boundary_A, 
             fill:true,
             borderWidth: 0,
-            backgroundColor: "rgba(129, 236, 236,0.4)"
+            backgroundColor: "rgba(6, 82, 221,0.2)",
+            label: "Significance level",
 
         },
         {
             data: area_boundary_B, 
             fill:true,
             borderWidth: 0,
-            backgroundColor: "rgba(250, 177, 160,0.4)"
+            backgroundColor: "rgba(236, 204, 104,0.2)",
+            label:"Power"
         }
         ]
     },
@@ -124,7 +129,7 @@ new Chart(document.getElementById("chart"), {
             }
         },
         legend: {
-            display: false
+            display: true
         },
         scales: {
             xAxes: [{
