@@ -1,6 +1,7 @@
 function check_form_inputs($scope) {
     let lower_bound = 0;
     let upper_bound = 100;
+    $("#alert_size").addClass('d-none');
     alert_invalid_value("bcr", $scope, lower_bound, upper_bound);
     alert_invalid_value("mde", $scope, lower_bound, upper_bound);
     alert_invalid_value("sig_level", $scope, lower_bound, upper_bound);
