@@ -59,7 +59,7 @@ app.controller("SizeController", function ($scope, $http) {
                 $scope.sample_size_A = response_data.sample_size_A;
                 $scope.sample_size_B = response_data.sample_size_B;
                 update_chart($scope);
-                $scope.hide_duration = manage_duration($scope.hide_duration);
+                manage_duration($scope);
             });
     };
 

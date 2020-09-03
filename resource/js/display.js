@@ -50,3 +50,8 @@ function display(hide, button_id, text_id, change_button, default_text, replacem
     };
     return hide;
 }
+
+function hide_field(text_id){
+    let optional_text = $("#" + text_id);
+    optional_text.addClass('d-none');
+}

@@ -1,4 +1,4 @@
-function set_form_default_values(){
+function set_form_default_values() {
     document.getElementById("bcr").defaultValue = "30";
     document.getElementById("mde").defaultValue = "5";
     document.getElementById("sig_level").defaultValue = "95";
@@ -24,7 +24,7 @@ function invalid_form(lower_bound, upper_bound) {
     return invalid_output
 }
 
-function check_form_inputs(){
+function check_form_inputs() {
     check_form_input("bcr");
     check_form_input("mde");
     check_form_input("sig_level");
@@ -54,20 +54,18 @@ function out_of_bound(value, lower_bound, upper_bound) {
 }
 
 // compute duration
-function manage_duration(hide_duration) {
-    let traffic = $("#traffic").val();
-    if (traffic) {
-        if (too_small(traffic, 0)) {
-            hide_duration = display(hide_duration, "submit_button", "duration", false);
+function manage_duration($scope) {
+    if ($scope.traffic != undefined) {
+        if (too_small($scope.traffic, 0)) {
+            hide_field("duration");
             $("#" + "alert_traffic").html("Please enter a positive number")
         } else {
-            display_experiment_duration(hide_duration);
+            display_experiment_duration($scope.hide_duration);
             $("#alert_traffic").html("");
         }
     } else {
-        hide_duration = display(hide_duration, "submit_button", "duration", false);
-    }
-    return hide_duration;
+        hide_field("duration");
+    };
 }
 
 
