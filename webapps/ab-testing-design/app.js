@@ -1,5 +1,3 @@
-check_form_inputs();
-
 // show / hide optional parameters 
 let hide_parameters = true;
 const advancedButton = document.getElementById('more');
@@ -52,20 +50,33 @@ app.controller("SizeController", function ($scope, $http) {
     $scope.chart = plot_chart($scope);
 
     $scope.computeSize = function () {
-        let formData = { bcr: $scope.bcr, mde: $scope.mde, sig_level: $scope.sig_level, power: $scope.power, ratio: $scope.ratio, reach: $scope.reach, tail: $scope.tail }
-        $http.post(getWebAppBackendUrl("sample_size"), formData)
-            .then(function (response) {
-                let response_data = response.data
-                $scope.sample_size_A = response_data.sample_size_A;
-                $scope.sample_size_B = response_data.sample_size_B;
-                update_chart($scope);
-                manage_duration($scope);
-                hide_field("attribution_alert");
-            });
+        $("#alert_size").addClass('d-none');
+        console.log($scope.bcr);
+        if (missing_values($scope)) {
+            alert_sample_size("A mandatory field is empty, please fill all of them", "missing value");
+            erase_chart($scope);
+        } else if (invalid_form($scope, 0, 100)) {
+            alert_sample_size("Invalid input, please check the values defined above", "invalid input");
+            erase_chart($scope);
+        } else {
+            let formData = { bcr: $scope.bcr, mde: $scope.mde, sig_level: $scope.sig_level, power: $scope.power, ratio: $scope.ratio, reach: $scope.reach, tail: $scope.tail }
+            $http.post(getWebAppBackendUrl("sample_size"), formData)
+                .then(function (response) {
+                    let response_data = response.data
+                    $scope.sample_size_A = response_data.sample_size_A;
+                    $scope.sample_size_B = response_data.sample_size_B;
+                    update_chart($scope);
+                    manage_duration($scope);
+                    hide_field("attribution_alert");
+                }).catch(function (error) {
+                    alert_sample_size("Issue with the fetch operation. Please, check back end and back end logs. ", "There was an issue with the fetch operation " + error.message)
+                });
+        }
     };
 
     // viz
     $scope.updatePlot = function () {
         update_chart($scope);
+        check_form_inputs($scope);
     }
 });

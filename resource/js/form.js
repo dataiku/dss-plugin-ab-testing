@@ -1,56 +1,48 @@
-function set_form_default_values() {
-    document.getElementById("bcr").defaultValue = "30";
-    document.getElementById("mde").defaultValue = "5";
-    document.getElementById("sig_level").defaultValue = "95";
-    document.getElementById("power").defaultValue = "80";
-    document.getElementById("ratio").defaultValue = "100";
-    document.getElementById("reach").defaultValue = "100";
+function check_form_inputs($scope) {
+    let lower_bound = 0;
+    let upper_bound = 100;
+    alert_invalid_value("bcr", $scope, lower_bound, upper_bound);
+    alert_invalid_value("mde", $scope, lower_bound, upper_bound);
+    alert_invalid_value("sig_level", $scope, lower_bound, upper_bound);
+    alert_invalid_value("power",$scope, lower_bound, upper_bound);
+    alert_invalid_value("ratio", $scope, lower_bound, upper_bound);
+    alert_invalid_value("reach", $scope, lower_bound, upper_bound);
 }
 
-// alert if values are invalid
-
-function invalid_form(lower_bound, upper_bound) {
-    let bcr = $("#bcr").val();
-    let mde = $("#mde").val();
-    let sig_level = $("#sig_level").val();
-    let power = $("#power").val();
-    let ratio = $("#ratio").val();
-    let reach = $("#reach").val();
-    if (reach) {
-        var invalid_output = (out_of_bound(bcr, lower_bound, upper_bound) || out_of_bound(mde, lower_bound, upper_bound) || out_of_bound(sig_level, lower_bound, upper_bound) || out_of_bound(power, lower_bound, upper_bound) || out_of_bound(ratio, lower_bound, upper_bound) || out_of_bound(reach, lower_bound, upper_bound));
+function invalid_form($scope, lower_bound, upper_bound) {
+    if ($scope.reach) {
+        var invalid_output = (out_of_bound($scope.bcr, lower_bound, upper_bound) || out_of_bound($scope.mde, lower_bound, upper_bound) || out_of_bound($scope.sig_level, lower_bound, upper_bound) || out_of_bound($scope.power, lower_bound, upper_bound) || out_of_bound($scope.ratio, lower_bound, upper_bound) || out_of_bound($scope.reach, lower_bound, upper_bound));
     } else {
-        var invalid_output = (out_of_bound(bcr, lower_bound, upper_bound) || out_of_bound(mde, lower_bound, upper_bound) || out_of_bound(sig_level, lower_bound, upper_bound) || out_of_bound(power, lower_bound, upper_bound) || out_of_bound(ratio, lower_bound, upper_bound));
+        var invalid_output = (out_of_bound($scope.bcr, lower_bound, upper_bound) || out_of_bound($scope.mde, lower_bound, upper_bound) || out_of_bound($scope.sig_level, lower_bound, upper_bound) || out_of_bound($scope.power, lower_bound, upper_bound) || out_of_bound($scope.ratio, lower_bound, upper_bound));
     }
     return invalid_output
 }
 
-function check_form_inputs() {
-    check_form_input("bcr");
-    check_form_input("mde");
-    check_form_input("sig_level");
-    check_form_input("power");
-    check_form_input("ratio");
-    check_form_input("reach");
-}
-
-function check_form_input(form_field) {
-    let form_element = document.getElementById(form_field);
-    form_element.addEventListener("change", function () { alert_invalid_value(form_field, form_element.value, 0, 100); });
-}
-
-
-function alert_invalid_value(form_field, value, lower_bound, upper_bound) {
+function alert_invalid_value(form_field, $scope, lower_bound, upper_bound) {
+    let value = $("#"+form_field).val();
     if (out_of_bound(value, lower_bound, upper_bound)) {
-        $("#" + "alert_" + form_field).html("Please enter a value between 0 and 100")
+        $("#" + "alert_" + form_field).html("Please enter a value between 0 and 100");
+        erase_chart($scope);
     } else {
         $("#" + "alert_" + form_field).html("")
     }
 }
 
-
 function out_of_bound(value, lower_bound, upper_bound) {
     const input = parseFloat(value);
     return (input > upper_bound || input < lower_bound);
+}
+
+function missing_values($scope) {
+    return ($scope.bcr === null || $scope.mde === null || $scope.sig_level === null || $scope.power === null || $scope.ratio === null);
+}
+
+function alert_sample_size(display_message, log_message) {
+    $("#alert_size").html(display_message);
+    $("#alert_size").removeClass('d-none');
+    $("#sample_size_A").html("");
+    $("#sample_size_B").html("");
+    console.log("value error: " + log_message);
 }
 
 // compute duration

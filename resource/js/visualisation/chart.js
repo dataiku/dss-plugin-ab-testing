@@ -29,6 +29,11 @@ function update_chart($scope) {
     $scope.chart.update(0);
 }
 
+function erase_chart($scope){
+    $scope.chart.config.data.datasets =[];
+    $scope.chart.update(0);
+}
+
 function get_datasets($scope) {
     let bcr = $scope.bcr / 100;
     let mde = $scope.mde / 100;

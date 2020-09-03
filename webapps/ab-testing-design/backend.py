@@ -16,7 +16,6 @@ project = client.get_project(project_key)
 
 output_folder = get_output_folder(config, project, project_key)
 
-
 @app.route('/sample_size', methods=['POST'])
 def get_sample_size():
     config = json.loads(request.data)

@@ -21,20 +21,3 @@ function manage_size_computation(event, hide_duration) {
     event.preventDefault();
 }
 
-
-// check if input values are present
-function missing_values() {
-    const bcr = $("#bcr").val();
-    const mde = $("#mde").val();
-    const sig_level = $("#sig_level").val();
-    const power = $("#power").val();
-    const ratio = $("#ratio").val();
-    return (bcr === "" || mde === "" || sig_level === "" || power === "" || ratio === "");
-}
-
-function alert_sample_size(display_message, log_message) {
-    $("#alert_size").html(display_message);
-    $("#sample_size_A").html("");
-    $("#sample_size_B").html("");
-    console.log("value error: " + log_message);
-}
