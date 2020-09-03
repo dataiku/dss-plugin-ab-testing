@@ -15,3 +15,11 @@ function store_parameters() {
     let promise = fetch(url, init);
     return promise;
 }
+
+function manage_response(response) {
+    if (response.ok) {
+        return response.json();
+    } else {
+        console.log('Invalid response from the network');
+    }
+}
