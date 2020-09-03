@@ -18,8 +18,12 @@ function store_parameters() {
 
 function manage_response(response) {
     if (response.ok) {
+        $("#error_save_button").addClass("d-none");
         return response.json();
     } else {
         console.log('Invalid response from the network');
+        $("#attribution_alert").addClass("d-none");
+        $("#error_save_button").removeClass("d-none");
+
     }
 }
