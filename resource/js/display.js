@@ -15,7 +15,7 @@ function explain(parameter) {
     const info_button = document.getElementById('info_' + parameter);
     let hide = true;
     info_button.addEventListener('click', function (event) {
-        hide = display(hide, "info_" + parameter, "explanation_" + parameter, true, "[Info]", "[Hide]");
+        hide = display(hide, "info_" + parameter, "explanation_" + parameter, true, "[?]", "[-]");
         event.preventDefault();
     });
 }
