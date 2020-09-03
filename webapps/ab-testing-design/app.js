@@ -60,6 +60,7 @@ app.controller("SizeController", function ($scope, $http) {
                 $scope.sample_size_B = response_data.sample_size_B;
                 update_chart($scope);
                 manage_duration($scope);
+                hide_field("attribution_alert");
             });
     };
 
