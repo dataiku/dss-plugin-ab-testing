@@ -1,3 +1,7 @@
+$(function () {   
+    $('[data-toggle="popover"]').popover() 
+  });
+
 // show / hide optional parameters 
 let hide_parameters = true;
 const advancedButton = document.getElementById('more');
@@ -5,9 +9,6 @@ advancedButton.addEventListener('click', function (event) {
     hide_parameters = display(hide_parameters, "more", "optional_fields", true, "Advanced parameters", "Less parameters");
     event.preventDefault();
 });
-
-// show / hide explanations of the different fields
-explain_form_fields();
 
 // show/ hide maths derivations
 let hide_derivation = true;

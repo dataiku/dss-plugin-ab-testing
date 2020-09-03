@@ -8,9 +8,7 @@
   "hasBackend": "true",
   "noJSSecurity": "true",
   "standardWebAppLibraries": [
-    "jquery",
     "dataiku",
-    "bootstrap",
     "d3"
   ],
   "kind": "PYTHON",

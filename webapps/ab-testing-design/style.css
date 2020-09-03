@@ -61,9 +61,16 @@ h4 {
     font-size: 16px;
     color: #718093
 }
+h1 {
+    font-size: 2rem !important;
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Open Sans', sans-serif;
+}
+
+h2 {
+    font-size: 1.5rem !important;
 }
 
 p {
@@ -137,7 +144,7 @@ table, thead, tr, tbody, th {
 }
 
 .extra {
-    font-size: 2rem;
+    font-size: 0.9rem;
     color: rgb(54, 163, 158);
     margin-bottom: 20px;
 }
@@ -234,4 +241,16 @@ table, thead, tr, tbody, th {
 .header_margin{
     margin-top: 25px;
     margin-bottom: 10px
+}
+
+.btn-lg{
+    font-size: 0.8rem !important;
+}
+
+.btn{
+    font-size: 0.8rem !important;
+}
+
+.btn-link{
+    font-size: 0.6rem !important;
 }
