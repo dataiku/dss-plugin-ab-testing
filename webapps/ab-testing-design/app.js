@@ -27,6 +27,8 @@ attribution.addEventListener("click", function (event) {
             manage_response(response);
         }).catch(function (error) {
             console.log('There was an issue with the fetch operation ' + error.message);
+            $("#attribution_alert").addClass("d-none");
+            $("#error_save_button").removeClass("d-none");
         });
     display(hide_attribution, "attribution_button", "attribution_alert", false)
     event.preventDefault();
