@@ -1,26 +1,3 @@
-// Display or hide elements (fields, explanations...)
-
-function explain_form_fields(){
-    explain("bcr");
-    explain("mde");
-    explain("sig_level");
-    explain("power");
-    explain("ratio");
-    explain("tail");
-}
-
-
-//show descriptions of the input fields
-function explain(parameter) {
-    const info_button = document.getElementById('info_' + parameter);
-    let hide = true;
-    info_button.addEventListener('click', function (event) {
-        hide = display(hide, "info_" + parameter, "explanation_" + parameter, true, "[Info]", "[Hide]");
-        event.preventDefault();
-    });
-}
-
-
 /**
  * Display or hide a given text when you click on a button.
  * Eventually, the text displayed on the button may change.
@@ -49,4 +26,9 @@ function display(hide, button_id, text_id, change_button, default_text, replacem
         hide = true
     };
     return hide;
+}
+
+function hide_field(text_id){
+    let optional_text = $("#" + text_id);
+    optional_text.addClass('d-none');
 }

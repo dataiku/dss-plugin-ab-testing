@@ -1,16 +1,14 @@
-set_form_default_values();
-check_form_inputs();
+$(function () {   
+    $('[data-toggle="popover"]').popover() 
+  });
 
 // show / hide optional parameters 
 let hide_parameters = true;
 const advancedButton = document.getElementById('more');
 advancedButton.addEventListener('click', function (event) {
-    hide_parameters = display(hide_parameters, "more", "optional_fields", true, "More parameters", "Less parameters");
+    hide_parameters = display(hide_parameters, "more", "optional_fields", true, "Advanced parameters", "Less parameters");
     event.preventDefault();
 });
-
-// show / hide explanations of the different fields
-explain_form_fields();
 
 // show/ hide maths derivations
 let hide_derivation = true;
@@ -18,85 +16,6 @@ const computation = document.getElementById('size_derivation');
 computation.addEventListener('click', function (event) {
     hide_derivation = display(hide_derivation, "size_derivation", "derivation_text", true, "<div class='extra'> How is the sample size computed? </div>", "<div class='extra'> Hide </div>");
     event.preventDefault();
-});
-
-
-//Submit form 
-const formButton = document.getElementById("submit_button");
-let hide_duration = true;
-
-formButton.addEventListener("click", function (event, hide_duration) {
-    manage_size_computation(event, svg, height, width, hide_duration);
-}
-);
-
-// visualization
-
-// set up canvas 
-const margin = { top: 20, right: 30, bottom: 30, left: 40 },
-    width = 700 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-let svg = set_up_canvas(margin, width, height);
-
-// init distributions
-let mde_val = parseFloat($("#mde").val()) / 100;
-let std = get_std();
-let distribution_A = Random_normal_Dist(0, std);
-let distribution_B = Random_normal_Dist(mde_val, std);
-
-//init axes
-let x = build_x_axis(distribution_A, distribution_B, width);
-let y_max = get_ymax(distribution_A, distribution_B);
-let y = build_y_axis(distribution_A, distribution_B, height);
-
-// init plots
-draw_initial_x_axis(svg, x, height);
-draw_initial_IC(svg, x, y, y_max);
-draw_initial_plots(svg, x, y, std, mde_val);
-draw_initial_area(svg,  0.034, x, y, distribution_A, distribution_B, std);
-set_initial_legend(svg, y_max);
-
-//update distributions and axis
-let bcr = document.getElementById('bcr');
-bcr.addEventListener('change', function () {
-    let mde = parseFloat($('#mde').val()) / 100;
-    let std = get_std();
-    let y_max = get_ymax(Random_normal_Dist(0, std), Random_normal_Dist(mde, std));
-    let new_axes = update_axes(svg, height, width, std);
-
-    update_plots_with_new_sd(svg, new_axes, std, y_max);
-    update_rejection_zone(svg, std, y_max, height, width);
-});
-
-let mde = document.getElementById('mde');
-mde.addEventListener('change', function () {
-    let mde = parseFloat(this.value) / 100;
-    let new_axes = update_axes(svg, height, width, get_std());
-    let new_x = new_axes[0];
-    let new_y = new_axes[1];
-    let std = get_std();
-    let y_max = get_ymax(Random_normal_Dist(0, std), Random_normal_Dist(mde, std));
-
-    update_distribution(svg, 0, "A", new_x, new_y, std);
-    update_distribution(svg, mde, "B", new_x, new_y, std);
-    update_rejection_zone(svg, std, y_max, height, width);
-});
-
-const sig_level = document.getElementById('sig_level');
-sig_level.addEventListener('change', function (event) {
-    let mde = parseFloat($('#mde').val()) / 100;
-    let std = get_std();
-    let y_max = get_ymax(Random_normal_Dist(0, std), Random_normal_Dist(mde, std));
-
-    update_legend(svg, "Significance level", parseFloat(this.value), "label_sig_level", true);
-    update_legend(svg, "Power", "compute size", "label_power", false);
-    update_rejection_zone(svg, std, y_max, height, width);
-});
-
-// update legend
-const power = document.getElementById('power');
-power.addEventListener('change', function () {
-    update_legend(svg, "Power", "compute size", "label_power", false);
 });
 
 // save parameters in the managed folder
@@ -108,8 +27,59 @@ attribution.addEventListener("click", function (event) {
             manage_response(response);
         }).catch(function (error) {
             console.log('There was an issue with the fetch operation ' + error.message);
+            $("#attribution_alert").addClass("d-none");
+            $("#error_save_button").removeClass("d-none");
         });
     display(hide_attribution, "attribution_button", "attribution_alert", false)
     event.preventDefault();
 })
 
+
+// compute size
+var app = angular.module("abApp", []);
+
+app.controller("SizeController", function ($scope, $http) {
+    $scope.bcr = 30;
+    $scope.mde = 5;
+    $scope.sig_level = 95;
+    $scope.power = 80;
+    $scope.ratio = 100;
+    $scope.reach = 100;
+    $scope.sample_size_A = 1085;
+    $scope.sample_size_B = 1085;
+    $scope.tail = "false";
+    $scope.hide_duration = true;
+
+    $scope.chart = plot_chart($scope);
+
+    $scope.computeSize = function () {
+        $("#alert_size").addClass('d-none');
+        console.log($scope.bcr);
+        if (missing_values($scope)) {
+            alert_sample_size("A mandatory field is empty, please fill all of them", "missing value");
+            erase_chart($scope);
+        } else if (invalid_form($scope, 0, 100)) {
+            alert_sample_size("Invalid input, please check the values defined above", "invalid input");
+            erase_chart($scope);
+        } else {
+            let formData = { bcr: $scope.bcr, mde: $scope.mde, sig_level: $scope.sig_level, power: $scope.power, ratio: $scope.ratio, reach: $scope.reach, tail: $scope.tail }
+            $http.post(getWebAppBackendUrl("sample_size"), formData)
+                .then(function (response) {
+                    let response_data = response.data
+                    $scope.sample_size_A = response_data.sample_size_A;
+                    $scope.sample_size_B = response_data.sample_size_B;
+                    update_chart($scope);
+                    manage_duration($scope);
+                    hide_field("attribution_alert");
+                }).catch(function (error) {
+                    alert_sample_size("Issue with the fetch operation. Please, check back end and back end logs. ", "There was an issue with the fetch operation " + error.message)
+                });
+        }
+    };
+
+    // viz
+    $scope.updatePlot = function () {
+        update_chart($scope);
+        check_form_inputs($scope);
+    }
+});

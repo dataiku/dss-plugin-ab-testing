@@ -8,9 +8,7 @@
   "hasBackend": "true",
   "noJSSecurity": "true",
   "standardWebAppLibraries": [
-    "jquery",
     "dataiku",
-    "bootstrap",
     "d3"
   ],
   "kind": "PYTHON",
@@ -31,10 +29,5 @@
       "visibilityCondition": "model.output_managed_folder == 'create_new_folder'"
     }
   ],
-  "roles": [
-    {
-      "type": "DATASET",
-      "targetParamsKey": "input_dataset"
-    }
-  ]
+  "roles": []
 }

@@ -16,27 +16,27 @@ project = client.get_project(project_key)
 
 output_folder = get_output_folder(config, project, project_key)
 
-
 @app.route('/sample_size', methods=['POST'])
 def get_sample_size():
-    baseline_conversion_rate = float(request.form.get(Parameters.BCR.value))/100
-    minimum_detectable_effect = float(request.form.get(Parameters.MDE.value))/100
-    alpha = 1-float(request.form.get(Parameters.SIG_LEVEL.value))/100
-    power = float(request.form.get(Parameters.POWER.value))/100
-    ratio = float(request.form.get(Parameters.RATIO.value))/100
-    reach = float(request.form.get(Parameters.REACH.value))/100
-    two_tailed = strtobool(request.form.get(Parameters.TAIL.value))
-    n_A, n_B = min_sample_size(baseline_conversion_rate, minimum_detectable_effect, alpha, power, ratio, two_tailed)
-    n_A = n_A / reach
-    n_B = n_B / reach
-    return json.dumps({"n_A": n_A, "n_B": n_B})
+    config = json.loads(request.data)
+    baseline_conversion_rate = float(config.get(Parameters.BCR.value))/100
+    minimum_detectable_effect = float(config.get(Parameters.MDE.value))/100
+    alpha = 1-float(config.get(Parameters.SIG_LEVEL.value))/100
+    power = float(config.get(Parameters.POWER.value))/100
+    ratio = float(config.get(Parameters.RATIO.value))/100
+    reach = float(config.get(Parameters.REACH.value))/100
+    two_tailed = strtobool(config.get(Parameters.TAIL.value))
+    sample_size_A, sample_size_B = min_sample_size(baseline_conversion_rate, minimum_detectable_effect, alpha, power, ratio, two_tailed)
+    sample_size_A = round(sample_size_A / reach)
+    sample_size_B = round(sample_size_B / reach)
+    return json.dumps({"sample_size_A": sample_size_A, "sample_size_B": sample_size_B})
 
 
 @app.route('/z_value', methods=['POST'])
 def get_z_value():
-    alpha = 1-float(request.form.get(Parameters.SIG_LEVEL.value))/100
-    two_tailed = strtobool(request.form.get(Parameters.TAIL.value))
-    std = float(request.form.get("std"))
+    alpha = 1-float(config.get(Parameters.SIG_LEVEL.value))/100
+    two_tailed = strtobool(config.get(Parameters.TAIL.value))
+    std = float(config.get("std"))
     z = std*z_value(alpha, two_tailed)
     return json.dumps({"z": z})
 
