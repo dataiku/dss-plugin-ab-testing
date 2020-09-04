@@ -34,16 +34,3 @@ function get_ymax(distribution_A, distribution_B) {
     return y_max;
 }
 
-function Random_normal_Dist(mean, sd) {
-    let data = [];
-    for (var i = mean - 4 * sd; i < mean + 4 * sd; i += 1 / 1000) {
-        let x_coordinate = i
-        let y_coordinate = jStat.normal.pdf(i, mean, sd);
-        let arr = {
-            "x_coordinate": x_coordinate,
-            "y_coordinate": y_coordinate
-        }
-        data.push(arr);
-    };
-    return data;
-}

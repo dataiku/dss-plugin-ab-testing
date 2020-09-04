@@ -81,7 +81,7 @@ function get_datasets($scope) {
         backgroundColor: "rgba(236, 204, 104,0.2)",
         label: "Power"
     }]
-    return chart_datasets
+    return chart_datasets;
 }
 
 function get_CI(distribution_A, distribution_B, z_value) {
