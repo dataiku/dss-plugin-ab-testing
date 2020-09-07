@@ -1,6 +1,6 @@
 function Random_normal_Dist(mean, sd) {
     let data = [];
-    for (var i = mean - 4 * sd; i < mean + 4 * sd; i += 1 / 1000) {
+    for (var i = mean - 4 * sd; i < mean + 4 * sd; i += 1 / 5000) {
         let x_coordinate = i
         let y_coordinate = jStat.normal.pdf(i, mean, sd);
         let arr = {
