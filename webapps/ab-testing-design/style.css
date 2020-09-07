@@ -62,7 +62,7 @@ h4 {
     color: #718093
 }
 h1 {
-    font-size: 2rem !important;
+    font-size: 1.3rem !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -70,7 +70,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h2 {
-    font-size: 1.5rem !important;
+    font-size: 1em !important;
 }
 
 p {
@@ -244,11 +244,11 @@ table, thead, tr, tbody, th {
 }
 
 .btn-lg{
-    font-size: 0.8rem !important;
+    font-size: 0.65rem !important;
 }
 
 .btn{
-    font-size: 0.8rem !important;
+    font-size: 0.65rem !important;
 }
 
 .btn-link{
