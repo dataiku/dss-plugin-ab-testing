@@ -102,7 +102,7 @@ function get_CI(distribution_A, distribution_B, z_value) {
 function draw_area(distribution, z_value, mean, std) {
     let x_max = get_x_max(distribution);
     var line = new Array();
-    for (var i = x_max; i > z_value; i -= 1 / 1000) {
+    for (var i = x_max; i > z_value; i -= 1 / 5000) {
         line.push({
             x: i,
             y: jStat.normal.pdf(i, mean, std)
