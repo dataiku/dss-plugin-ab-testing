@@ -90,7 +90,7 @@
                                                 [?] </button>
                                         </label>
                                         <input type="number" name="bcr" placeholder="BCR" id="bcr" ng-model="bcr"
-                                            ng-change="updatePlot()" />
+                                            ng-change="computeSize()" />
                                         <span id="alert_bcr" class="alert"> </span>
                                     </td>
                                 </tr>
@@ -104,7 +104,7 @@
                                             that you need to detect a statistically significant change."> [?] </button>
                                         </label>
                                         <input type="number" name="mde" placeholder="MDE" id="mde" ng-model="mde"
-                                            ng-change="updatePlot()" />
+                                            ng-change="computeSize()" />
                                         <span id="alert_mde" class="alert"> </span>
                                     </td>
                                 </tr>
@@ -143,7 +143,7 @@
                                         </label>
 
                                         <input type="number" name="sig_level" placeholder="1-alpha" id="sig_level"
-                                            ng-model="sig_level" ng-change="updatePlot()" />
+                                            ng-model="sig_level" ng-change="computeSize()" />
                                         <span id="alert_sig_level" class="alert"> </span>
                                     </td>
                                 </tr>
@@ -161,7 +161,7 @@
                                             The most common value for power is 80%."> [?] </button>
                                         </label>
                                         <input type="number" name="power" placeholder="power" id="power"
-                                            ng-model="power" ng-change="updatePlot()" />
+                                            ng-model="power" ng-change="computeSize()" />
                                         <span id="alert_power" class="alert"> </span>
                                     </td>
                                 </tr>
@@ -179,7 +179,7 @@
                                             are impacted by the changes."> [?] </button>
                                         </label>
                                         <input type="number" name="ratio" placeholder="ratio" id="ratio"
-                                            ng-model="ratio" ng-change="updatePlot()" />
+                                            ng-model="ratio" ng-change="computeSize()" />
                                         <span id="alert_ratio" class="alert"> </span>
                                     </td>
                                 </tr>
@@ -218,7 +218,7 @@
                                                 positive
                                                 changes.' > [?] </button>
                                         </label>
-                                        <select name="tail" id="tail" ng-model="tail" ng-change="updatePlot()">
+                                        <select name="tail" id="tail" ng-model="tail" ng-change="computeSize()">
                                             <option value="false" class="alert">False</option>
                                             <option value="true">True</option>
                                         </select>
@@ -231,7 +231,7 @@
                                         <label for="traffic">Daily number of people exposed
                                         </label>
                                         <input type="number" name="traffic" placeholder="Optional" id="traffic"
-                                            ng-model="traffic" ng-change="updatePlot()" />
+                                            ng-model="traffic" ng-change="computeSize()" />
                                         <span id="alert_traffic" class="alert"> </span>
                                     </td>
                                 </tr>
@@ -240,17 +240,11 @@
                                         <label for="reach"> Percentage of the traffic affected
                                         </label>
                                         <input type="number" name="reach" placeholder="" id="reach" ng-model="reach"
-                                            ng-change="updatePlot()" />
+                                            ng-change="computeSize()" />
                                         <span id="alert_reach" class="alert"> </span>
                                     </td>
                                 </tr>
                             </table>
-                            <div class="text-center">
-                                <a id="submit_button" type="submit"
-                                    class="btn btn-outline-info btn-rounded waves-effect  btn-lg"
-                                    ng-click="computeSize()">
-                                    Compute size</a>
-                            </div>
                             <div id="alert_size" class="alert d-none"></div>
                         </form>
                     </div>

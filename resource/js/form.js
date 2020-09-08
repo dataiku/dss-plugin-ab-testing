@@ -5,23 +5,23 @@ function check_form_inputs($scope) {
     alert_invalid_value("bcr", $scope, lower_bound, upper_bound);
     alert_invalid_value("mde", $scope, lower_bound, upper_bound);
     alert_invalid_value("sig_level", $scope, lower_bound, upper_bound);
-    alert_invalid_value("power",$scope, lower_bound, upper_bound);
+    alert_invalid_value("power", $scope, lower_bound, upper_bound);
     alert_invalid_value("ratio", $scope, lower_bound, upper_bound);
     alert_invalid_value("reach", $scope, lower_bound, upper_bound);
 }
 
 function invalid_form($scope, lower_bound, upper_bound) {
     if ($scope.reach) {
-        var invalid_output = (out_of_bound($scope.bcr, lower_bound, upper_bound) || out_of_bound($scope.mde, lower_bound, upper_bound) || out_of_bound($scope.sig_level, lower_bound, upper_bound) || out_of_bound($scope.power, lower_bound, upper_bound) || out_of_bound($scope.ratio, lower_bound, upper_bound) || out_of_bound($scope.reach, lower_bound, upper_bound));
+        var invalid_output = (invalid_value($scope.bcr, lower_bound, upper_bound) || invalid_value($scope.mde, lower_bound, upper_bound) || invalid_value($scope.sig_level, lower_bound, upper_bound) || invalid_value($scope.power, lower_bound, upper_bound) || invalid_value($scope.ratio, lower_bound, upper_bound) || invalid_value($scope.reach, lower_bound, upper_bound));
     } else {
-        var invalid_output = (out_of_bound($scope.bcr, lower_bound, upper_bound) || out_of_bound($scope.mde, lower_bound, upper_bound) || out_of_bound($scope.sig_level, lower_bound, upper_bound) || out_of_bound($scope.power, lower_bound, upper_bound) || out_of_bound($scope.ratio, lower_bound, upper_bound));
+        var invalid_output = (invalid_value($scope.bcr, lower_bound, upper_bound) || invalid_value($scope.mde, lower_bound, upper_bound) || invalid_value($scope.sig_level, lower_bound, upper_bound) || invalid_value($scope.power, lower_bound, upper_bound) || invalid_value($scope.ratio, lower_bound, upper_bound));
     }
     return invalid_output
 }
 
 function alert_invalid_value(form_field, $scope, lower_bound, upper_bound) {
-    let value = $("#"+form_field).val();
-    if (out_of_bound(value, lower_bound, upper_bound)) {
+    let value = $("#" + form_field).val();
+    if (invalid_value(value, lower_bound, upper_bound) || (value === null)) {
         $("#" + "alert_" + form_field).html("Please enter a value between 0 and 100");
         erase_chart($scope);
     } else {
@@ -29,20 +29,20 @@ function alert_invalid_value(form_field, $scope, lower_bound, upper_bound) {
     }
 }
 
-function out_of_bound(value, lower_bound, upper_bound) {
+function invalid_value(value, lower_bound, upper_bound) {
     const input = parseFloat(value);
-    return (input > upper_bound || input < lower_bound);
+    return (input > upper_bound || input < lower_bound || Number(input) !== input);
 }
 
 function missing_values($scope) {
     return ($scope.bcr === null || $scope.mde === null || $scope.sig_level === null || $scope.power === null || $scope.ratio === null);
 }
 
-function alert_sample_size(display_message, log_message) {
+function alert_sample_size($scope, display_message, log_message) {
     $("#alert_size").html(display_message);
     $("#alert_size").removeClass('d-none');
-    $("#sample_size_A").html("");
-    $("#sample_size_B").html("");
+    $scope.sample_size_A = "";
+    $scope.sample_size_B = "";
     console.log("value error: " + log_message);
 }
 
