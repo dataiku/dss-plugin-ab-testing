@@ -116,6 +116,15 @@ function test_outcome(p_value, svg) {
 }
 
 //analyse results
+var app = angular.module("abApp", []);
+app.controller("SizeController", function ($scope, $http) {
+    $scope.success_rate_B = 10;
+    $scope.success_rate_A = 15;
+    $scope.size_A = 1000;
+    $scope.size_B = 1000;
+    $scope.sig_level = 85;
+});
+
 const formButton = document.getElementById('submit');
 formButton.addEventListener("click", function (event) {
     analyse_results().then(function (response) {

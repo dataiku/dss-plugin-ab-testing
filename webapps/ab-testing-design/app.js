@@ -54,12 +54,12 @@ app.controller("SizeController", function ($scope, $http) {
 
     $scope.computeSize = function () {
         $("#alert_size").addClass('d-none');
-        console.log($scope.bcr);
+        check_form_inputs($scope);
         if (missing_values($scope)) {
-            alert_sample_size("A mandatory field is empty, please fill all of them", "missing value");
+            alert_sample_size($scope, "A mandatory field is empty, please fill all of them", "missing value");
             erase_chart($scope);
         } else if (invalid_form($scope, 0, 100)) {
-            alert_sample_size("Invalid input, please check the values defined above", "invalid input");
+            alert_sample_size($scope, "Invalid input, please check the values defined above", "invalid input");
             erase_chart($scope);
         } else {
             let formData = { bcr: $scope.bcr, mde: $scope.mde, sig_level: $scope.sig_level, power: $scope.power, ratio: $scope.ratio, reach: $scope.reach, tail: $scope.tail }
@@ -76,10 +76,4 @@ app.controller("SizeController", function ($scope, $http) {
                 });
         }
     };
-
-    // viz
-    $scope.updatePlot = function () {
-        update_chart($scope);
-        check_form_inputs($scope);
-    }
 });
