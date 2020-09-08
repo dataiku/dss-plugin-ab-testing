@@ -11,12 +11,8 @@ function check_form_inputs($scope) {
 }
 
 function invalid_form($scope, lower_bound, upper_bound) {
-    if ($scope.reach) {
-        var invalid_output = (invalid_value($scope.bcr, lower_bound, upper_bound) || invalid_value($scope.mde, lower_bound, upper_bound) || invalid_value($scope.sig_level, lower_bound, upper_bound) || invalid_value($scope.power, lower_bound, upper_bound) || invalid_value($scope.ratio, lower_bound, upper_bound) || invalid_value($scope.reach, lower_bound, upper_bound));
-    } else {
-        var invalid_output = (invalid_value($scope.bcr, lower_bound, upper_bound) || invalid_value($scope.mde, lower_bound, upper_bound) || invalid_value($scope.sig_level, lower_bound, upper_bound) || invalid_value($scope.power, lower_bound, upper_bound) || invalid_value($scope.ratio, lower_bound, upper_bound));
-    }
-    return invalid_output
+    let invalid_output = (invalid_value($scope.bcr, lower_bound, upper_bound) || invalid_value($scope.mde, lower_bound, upper_bound) || invalid_value($scope.sig_level, lower_bound, upper_bound) || invalid_value($scope.power, lower_bound, upper_bound) || invalid_value($scope.ratio, lower_bound, upper_bound) || invalid_value($scope.reach, lower_bound, upper_bound));
+    return invalid_output;
 }
 
 function alert_invalid_value(form_field, $scope, lower_bound, upper_bound) {
@@ -35,7 +31,7 @@ function invalid_value(value, lower_bound, upper_bound) {
 }
 
 function missing_values($scope) {
-    return ($scope.bcr === null || $scope.mde === null || $scope.sig_level === null || $scope.power === null || $scope.ratio === null);
+    return ($scope.bcr === null || $scope.mde === null || $scope.sig_level === null || $scope.power === null || $scope.ratio === null || $scope.reach === null);
 }
 
 function alert_sample_size($scope, display_message, log_message) {
@@ -80,5 +76,5 @@ function compute_duration() {
 
 function too_small(value, lower_bound) {
     const input = parseFloat(value);
-    return (input < lower_bound);
+    return (input < lower_bound || Number(input) !== input);
 }

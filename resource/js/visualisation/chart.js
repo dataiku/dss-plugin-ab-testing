@@ -35,10 +35,10 @@ function erase_chart($scope){
 }
 
 function get_datasets($scope) {
-    let bcr = $scope.bcr / 100;
     let mde = $scope.mde / 100;
     let sig_level = $scope.sig_level / 100;
-    let std = Math.sqrt(bcr * (1 - bcr) * (1 / $scope.sample_size_A + 1 / $scope.sample_size_B));
+    let bcr = $scope.bcr / 100;
+    let std = Math.sqrt(bcr * (1 - bcr) * (1 / $scope.sample_size_A + 1 / $scope.sample_size_B) * 100 / $scope.reach);
     let distribution_A = Random_normal_Dist(0, std);
     let distribution_B = Random_normal_Dist(mde, std);
     let z_value = compute_z_value(std, 1 - sig_level, $scope.tail);
