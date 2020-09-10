@@ -23,13 +23,13 @@ function compute_z_value(std, alpha, tail) {
     return z;
 }
 
-function get_x_max(distribution) {
+function get_xmax(distribution) {
     return d3.max(distribution, function (plot) { return plot.x; });
 }
 
-function get_ymax(distribution_A, distribution_B) {
-    let y_A = d3.max(distribution_A, function (distribution) { return distribution.y; });
-    let y_B = d3.max(distribution_B, function (distribution) { return distribution.y; });
+function get_ymax($scope) {
+    let y_A = d3.max($scope.distribution_A, function (distribution) { return distribution.y; });
+    let y_B = d3.max($scope.distribution_B, function (distribution) { return distribution.y; });
     let y_max = d3.max([y_A, y_B]);
     return y_max;
 }

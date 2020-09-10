@@ -6,7 +6,7 @@ $(function () {
 let hide_parameters = true;
 const advancedButton = document.getElementById('more');
 advancedButton.addEventListener('click', function (event) {
-    hide_parameters = display(hide_parameters, "more", "optional_fields", true, "Advanced parameters", "Less parameters");
+    hide_parameters = display(hide_parameters, "more", "optional_fields", true, "Advanced parameters", "Fewer parameters");
     event.preventDefault();
 });
 
@@ -50,6 +50,9 @@ app.controller("SizeController", function ($scope, $http) {
     $scope.tail = "false";
     $scope.hide_duration = true;
 
+    $scope.std = Math.sqrt($scope.bcr/100 * (1 - $scope.bcr/100) * (1 / $scope.sample_size_A + 1 / $scope.sample_size_B) * 100 / $scope.reach);
+    $scope.distribution_A = Random_normal_Dist(0, $scope.std);
+    $scope.distribution_B = Random_normal_Dist($scope.mde/100, $scope.std);
     $scope.chart = plot_chart($scope);
 
     $scope.computeSize = function () {

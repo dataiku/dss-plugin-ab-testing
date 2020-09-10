@@ -254,3 +254,7 @@ table, thead, tr, tbody, th {
 .btn-link{
     font-size: 0.6rem !important;
 }
+
+.value{
+    font-weight: bold;
+}
