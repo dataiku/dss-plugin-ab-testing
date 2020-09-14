@@ -28,7 +28,17 @@ function display(hide, button_id, text_id, change_button, default_text, replacem
     return hide;
 }
 
-function hide_field(text_id){
+function hide_field(text_id) {
     let optional_text = $("#" + text_id);
     optional_text.addClass('d-none');
+}
+
+//show descriptions of the input fields
+function explain(parameter) {
+    const info_button = document.getElementById('info_' + parameter);
+    let hide = true;
+    info_button.addEventListener('click', function (event) {
+        hide = display(hide, "info_" + parameter, "explanation_" + parameter, true, "[Info]", "[Hide]");
+        event.preventDefault();
+    });
 }

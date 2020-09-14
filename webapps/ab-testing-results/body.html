@@ -26,7 +26,6 @@
 
 
 
-
 <title>AB Testing : Analysis of the results</title>
 
 <header class="navbar bd-navbar bg-light">
@@ -41,7 +40,7 @@
 </header>
 
 <body>
-    <div class="flex-container" ng-app="abApp" ng-controller="SizeController">
+    <div class="flex-container" ng-app="resultApp" ng-controller="ResultController">
         <div class="container">
             <div class="row">
                 <div class="col-xl">
@@ -54,6 +53,7 @@
                         group
                         while B
                         is the experiment group. We assume that the two samples follow binomial distributions.
+                        <i class="icon icon-pencil"></i>
                     </p>
                     <hr>
                     <div class="container">
@@ -106,13 +106,14 @@
                                 </div>
                                 <div class="col-sm">
                                     <div class="field">
-                                        <input type="number" name="size_A" id="size_A" class="textbox_results" ng-model="size_A">
+                                        <input type="number" name="size_A" id="size_A" class="textbox_results"
+                                            ng-model="size_A">
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="field">
                                         <input type="number" name="success_rate_A" placeholder="" id="success_rate_A"
-                                            class="textbox_results" ng-model="success_rate_A"/>
+                                            class="textbox_results" ng-model="success_rate_A" />
                                     </div>
                                 </div>
                             </div>
@@ -131,13 +132,14 @@
                                 </div>
                                 <div class="col-sm">
                                     <div class="field">
-                                        <input type="number" name="size_B" id="size_B" class="textbox_results" ng-model="size_B">
+                                        <input type="number" name="size_B" id="size_B" class="textbox_results"
+                                            ng-model="size_B">
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="field">
                                         <input type="number" name="success_rate_B" placeholder="" id="success_rate_B"
-                                            class="textbox_results"  ng-model="success_rate_A"/>
+                                            class="textbox_results" ng-model="success_rate_B" />
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +239,8 @@
                         <div class="row justify-content-md-center text-center">
                             <div class="col-xl">
                                 <button id="submit" type="submit"
-                                    class="btn btn-outline-info btn-rounded waves-effect  btn-lg" ng-click="getResults()>
+                                    class="btn btn-outline-info btn-rounded waves-effect  btn-lg"
+                                    ng-click="getResults()">
                                     Submit results
                                 </button>
                             </div>
@@ -300,7 +303,7 @@
         <div class="container">
             <div class="row justify-content-md-center">
                 <div class="col-md-auto">
-                    <div class="plot"> </div>
+                    <canvas class="w-100" id="chart"></canvas>
                 </div>
             </div>
         </div>
