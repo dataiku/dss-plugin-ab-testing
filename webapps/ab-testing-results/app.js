@@ -16,12 +16,11 @@ size_A_form.addEventListener("change", function () { alert_value_too_small("size
 let size_B_form = document.getElementById("size_B");
 size_B_form.addEventListener("change", function () { alert_value_too_small("size_B", size_B_form.value); });
 
-function test_outcome(p_value) {
-    let displayed_sig_level = parseFloat($("#sig_level").val());
-    let sig_level = displayed_sig_level / 100;
-    let confidence_level = 1 - p_value;
+function test_outcome($scope) {
+    let sig_level = $scope.sig_level / 100;
+    let confidence_level = 1 - $scope.p_value;
     let displayed_confidence = confidence_level * 100;
-    let difference = parseFloat($("#success_rate_A").val()) / 100 - parseFloat($("#success_rate_B").val()) / 100;
+    let difference = $scope.success_rate_A/ 100 - $scope.success_rate_B / 100;
     let displayed_difference = Math.round(difference * 100);
     let conclusion = $("#result_caption");
     if (difference > 0) {
@@ -31,13 +30,13 @@ function test_outcome(p_value) {
         var message = "<div class='border rounded p-5'> <div> • Variant B is " + displayed_difference + "% better than variant A with a <span id = 'confidence'>" + displayed_confidence + "% confidence level. </span> </div>";
     };
     if (confidence_level >= sig_level) {
-        message += "<div id = 'significance' > • These results are statistically significant within " + displayed_sig_level + "% significance level </div> </div>";
+        message += "<div id = 'significance' > • These results are statistically significant within " + $scope.sig_level + "% significance level </div> </div>";
         conclusion.html(message);
         $("#significance").addClass("green");
         $("#confidence").addClass("green");
         $("#p_value").addClass("green");
     } else {
-        message += "<div id = 'significance' > • These results are not statistically significant within " + displayed_sig_level + "% significance level </div> </div>";
+        message += "<div id = 'significance' > • These results are not statistically significant within " + $scope.sig_level + "% significance level </div> </div>";
         conclusion.html(message);
         $("#significance").addClass("red");
         $("#p_value").removeClass("green");
@@ -104,7 +103,7 @@ app.controller("ResultController", function ($scope, $http) {
                 $scope.z_score = response_data.Z_score;
                 $scope.p_value = response_data.p_value;
                 $scope.uplift = Math.round(Math.abs($scope.success_rate_A - $scope.success_rate_B));
-                test_outcome($scope.p_value);
+                test_outcome($scope);
             }).catch(function (error) {
                 alert("Issue with the fetch operation, please check back end and back end logs.");
             });
