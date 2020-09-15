@@ -16,14 +16,7 @@ size_A_form.addEventListener("change", function () { alert_value_too_small("size
 let size_B_form = document.getElementById("size_B");
 size_B_form.addEventListener("change", function () { alert_value_too_small("size_B", size_B_form.value); });
 
-
-function update_results_table(uplift, Z_score, p_value) {
-    $("#uplift").html(uplift);
-    $("#Z_score").html(Z_score);
-    $("#p_value").html(p_value);
-}
-
-function test_outcome(p_value, svg) {
+function test_outcome(p_value) {
     let displayed_sig_level = parseFloat($("#sig_level").val());
     let sig_level = displayed_sig_level / 100;
     let confidence_level = 1 - p_value;
@@ -43,8 +36,6 @@ function test_outcome(p_value, svg) {
         $("#significance").addClass("green");
         $("#confidence").addClass("green");
         $("#p_value").addClass("green");
-        svg.select("#area_standard")
-            .style("fill", "#009432")
     } else {
         message += "<div id = 'significance' > • These results are not statistically significant within " + displayed_sig_level + "% significance level </div> </div>";
         conclusion.html(message);
@@ -52,71 +43,72 @@ function test_outcome(p_value, svg) {
         $("#p_value").removeClass("green");
         $("#p_value").addClass("red");
         $("#confidence").addClass("red");
-        svg.select("#area_standard")
-            .style("fill", "#EA2027")
     };
 }
 
+function get_inputs($scope, $http) {
+    let config = dataiku.getWebAppConfig()
+    let input_mode = config["statistics_entry"];
+    $scope.dataset_name = config["statistics_dataset"];
 
-const formButton = document.getElementById('submit');
-formButton.addEventListener("click", function (event) {
-    analyse_results().then(function (response) {
-        manage_response(response)
-            .then(function (json) {
-                const Z_score = parseFloat(json.Z_score);
-                const p_value = parseFloat(json.p_value);
-                let uplift = Math.round(Math.abs(parseFloat($("#success_rate_A").val()) - parseFloat($("#success_rate_B").val())));
-                update_results_table(uplift, Z_score, p_value);
-                test_outcome(p_value, svg);
-                let save_section = $("#save-section");
-                save_section.removeClass("d-none");
-            })
-    }).catch(function (error) {
-        console.log('There was an issue with the fetch operation ' + error.message);
-    });
-    event.preventDefault();
+    if (input_mode === undefined && $scope.dataset_name === undefined) {
+        alert("Please define how you want to input your statistics from the settings tab. After definining them, please click on the button Save and view web app. By default, manual setting is on.");
+    }
+    else if (input_mode === undefined && $scope.dataset_name != undefined) {
+        load_values_from_df($scope, $http);
+    }
+    else if (input_mode === "manual") {
+        $scope.size_A = 1000;
+        $scope.size_B = 1000;
+        $scope.success_rate_A = 20;
+        $scope.success_rate_B = 30;
+    } else if (input_mode === "input_dataset") {
+        if ($scope.dataset_name === undefined) {
+            alert("Please, specify the input dataset containing the statistics. It should be the output of the AB statistics recipe from the AB testing plugin.");
+        }
+        else {
+            load_values_from_df($scope, $http);
+        };
+    } else {
+        alert("Please check the settings of the web ap")
+    };
 }
-)
+
+function load_values_from_df($scope, $http) {
+    let formData = { name: $scope.dataset_name };
+    $http.post(getWebAppBackendUrl("statistics"), formData).then(function (response) {
+        let response_data = response.data
+        $scope.size_A = response_data.size_A;
+        $scope.size_B = response_data.size_B;
+        $scope.success_rate_A = response_data.success_rate_A;
+        $scope.success_rate_B = response_data.success_rate_B;
+    });
+}
 
 
 var app = angular.module("resultApp", []);
 
 app.controller("ResultController", function ($scope, $http) {
-    let config = dataiku.getWebAppConfig()
-    let stat_entry = config["statistics_entry"];
-    let dataset_name = config["statistics_dataset"];
+    $scope.sig_level = 95;
+    $scope.tail = "false";
+    $scope.uplift = null;
+    $scope.z_score = null;
+    $scope.p_value = null;
+    get_inputs($scope, $http);
 
-    if (stat_entry === undefined && dataset_name === undefined) {
-        alert("Please define how you want to input your statistics from the settings tab. After definining them, please click on the button Save and view web app. By default, manual setting is on.");
+    $scope.getResults = function () {
+        let formData = { size_A: $scope.size_A, size_B: $scope.size_B, success_rate_A: $scope.success_rate_A, success_rate_B: $scope.success_rate_B, tail: $scope.tail, sig_level: $scope.sig_level};
+        $http.post(getWebAppBackendUrl("ab_calculator"), formData)
+            .then(function (response) {
+                let response_data = response.data;
+                $scope.z_score = response_data.Z_score;
+                $scope.p_value = response_data.p_value;
+                $scope.uplift = Math.round(Math.abs($scope.success_rate_A - $scope.success_rate_B));
+                test_outcome($scope.p_value);
+            }).catch(function (error) {
+                alert("Issue with the fetch operation, please check back end and back end logs.");
+            });
     }
-    else if (stat_entry === undefined && dataset_name != undefined) {
-        //load_values_from_df(dataset_name);
-    }
-    else if (stat_entry === "manual") {
-        $scope.size_A = 1000;
-        $scope.size_B = 1000;
-        $scope.success_rate_A = 20;
-        $scope.success_rate_B = 30;
-    } else if (stat_entry === "input_dataset") {
-        if (dataset_name === undefined) {
-            alert("Please, specify the input dataset containing the statistics. It should be the output of the AB statistics recipe from the AB testing plugin.");
-        }
-        else {
-            let formData = {name: dataset_name};
-            $http.post(getWebAppBackendUrl("statistics"), formData).then(function(response){
-                let response_data = response.data
-                $scope.size_A = response_data.size_A;
-                $scope.size_B = response_data.size_B;
-                $scope.success_rate_A = response_data.success_rate_A;
-                $scope.success_rate_B = response_data.success_rate_B;
-            })
-        };
-    } else {
-        alert("Please check the settings of the web ap")
-    }
-
-
-
 });
 
 

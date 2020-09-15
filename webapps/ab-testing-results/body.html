@@ -184,8 +184,8 @@
                                                     </div>
                                                 </div>
                                             </span>
-                                            <input type="number" name="sig_level" placeholder="1-alpha"
-                                                id="sig_level" />
+                                            <input type="number" name="sig_level" placeholder="1-alpha" id="sig_level"
+                                                ng-model="sig_level" />
                                             <span id="alert_sig_level" class="alert"> </span>
                                         </div>
                                         <label id="tail_label" for="tail">Two tailed test
@@ -228,7 +228,7 @@
                                                 </div>
                                             </div>
                                         </span>
-                                        <select name="tail" id="tail">
+                                        <select name="tail" id="tail" ng-model="tail">
                                             <option value="false" class="alert">False</option>
                                             <option value="true">True</option>
                                         </select>
@@ -269,9 +269,9 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="tab_value" id="uplift"></td>
-                                <td class="tab_value" id="Z_score"></td>
-                                <td class="tab_value" id="p_value"></td>
+                                <td class="tab_value" id="uplift">{{uplift}}</td>
+                                <td class="tab_value" id="Z_score">{{z_score}}</td>
+                                <td class="tab_value" id="p_value"> {{p_value}}</td>
                             </tr>
                         </tbody>
                     </table>
