@@ -6,7 +6,7 @@ function plot_chart($scope) {
 
     Chart.defaults.scale.gridLines.drawOnChartArea = false;
 
-    chart = new Chart(document.getElementById("chart"), {
+    let chart = new Chart(document.getElementById("chart"), {
         type: 'line',
         data: {
             datasets: get_datasets($scope)
@@ -60,7 +60,8 @@ function get_datasets($scope) {
     let sig_level = $scope.sig_level / 100;
     let z_value = compute_z_value($scope.std, 1 - sig_level, $scope.tail);
 
-    let CI_line = get_CI($scope, z_value);
+    let y_max = get_ymax($scope)
+    let CI_line = get_CI(y_max, z_value);
     let area_boundary_A = draw_area($scope.distribution_A, z_value, 0, $scope.std);
     let area_boundary_B = draw_area($scope.distribution_B, z_value, $scope.mde / 100, $scope.std);
 
@@ -110,8 +111,7 @@ function update_axes_bound($scope) {
     $scope.chart.options.scales.xAxes[0].ticks = { suggestedMax: suggested_max, suggestedMin: -suggested_max + $scope.mde / 100 };
 }
 
-function get_CI($scope, z_value) {
-    let y_max = get_ymax($scope);
+function get_CI(y_max, z_value) {
     let CI_line = [
         {
             x: z_value,
