@@ -68,10 +68,10 @@ function get_results_datasets($scope) {
     let area_boundary = draw_area($scope.distribution, z_value, 0, 1);
 
     if ($scope.test_is_significant) {
-        var area_color = "#009432"
+        var area_color = "rgb(0, 148, 50,0.3)"
     }
     else {
-        var area_color = "#EA2027"
+        var area_color = "rgb(234, 32, 39,0.3)"
     }
 
     let Z_score_point = [{
@@ -101,7 +101,6 @@ function get_results_datasets($scope) {
         fill: true,
         borderWidth: 0,
         backgroundColor: area_color,
-        fillOpacity: 0.1,
         label: "Significance level"
     },
     {
