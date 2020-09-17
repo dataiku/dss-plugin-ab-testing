@@ -29,10 +29,15 @@ function get_inputs($scope, $http) {
 function load_values_from_df($scope, $http) {
     let formData = { name: $scope.dataset_name };
     $http.post(getWebAppBackendUrl("statistics"), formData).then(function (response) {
-        let response_data = response.data
-        $scope.size_A = response_data.size_A;
-        $scope.size_B = response_data.size_B;
-        $scope.success_rate_A = response_data.success_rate_A;
-        $scope.success_rate_B = response_data.success_rate_B;
+        let response_data = response.data;
+        let status = response_data.status;
+        if (status==="ok"){
+            $scope.size_A = parseFloat(response_data.size_A);
+            $scope.size_B = parseFloat(response_data.size_B);
+            $scope.success_rate_A = parseFloat(response_data.success_rate_A);
+            $scope.success_rate_B = parseFloat(response_data.success_rate_B);
+        } else if(status ==="error"){
+            alert(response_data.message);
+        }
     });
 }
