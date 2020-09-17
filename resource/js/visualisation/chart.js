@@ -26,12 +26,20 @@ function plot_chart($scope) {
                     ticks: {
                         suggestedMin: -suggested_x_max + $scope.bcr / 100,
                         suggestedMax: suggested_x_max
-                    }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Values of the difference in success rates = success rate B - success rate A "
+                      }
                 }],
                 yAxes: [{
                     ticks: {
                         suggestedMax: Math.ceil(y_max / 10) * 10
-                    }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: "Likelihood (Probability density)"
+                      }
                 }]
             }
         }

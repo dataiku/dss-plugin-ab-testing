@@ -12,6 +12,7 @@
     href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&amp;display=swap"
     rel="stylesheet">
 </link>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
     crossorigin="anonymous"></script>
@@ -21,7 +22,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 
 
 
@@ -79,14 +79,12 @@
                             <table class="table_fields">
                                 <tr>
                                     <td class="field">
-                                        <label for="bcr">Baseline conversion rate (%)
+                                        <label for="bcr">Baseline success rate (%)
                                             <button id="info_bcr" type="button" class="btn btn-link"
-                                                data-toggle="popover" title="Baseline conversion rate" data-content="The baseline conversion rate defines the current conversion rate of
-                                                the campaign
-                                                or the
-                                                page.
-                                                This is the conversion rate of the control group A.
-                                                It equals to the number of conversions divided by the reach.">
+                                                data-toggle="popover" title="Baseline success rate" data-content="The baseline success rate defines the current success rate of
+                                                the campaign or the page.
+                                                This is the success rate of the control group A.
+                                                It equals to the number of successes divided by the reach.">
                                                 [?] </button>
                                         </label>
                                         <input type="number" name="bcr" placeholder="BCR" id="bcr" ng-model="bcr"
@@ -98,13 +96,12 @@
                                     <td class="field">
                                         <label for="mde"> Minimal detectable effect (%)
                                             <button id="info_mde" type="button" class="btn btn-link"
-                                                data-toggle="popover" title="Minimal detectable effect" data-content="The minimum detectable effect is the minimal variation of the
-                                            baseline
-                                            conversion rate
-                                            that you need to detect a statistically significant change."> [?] </button>
+                                                data-toggle="popover" title="Minimal detectable effect"
+                                                data-content="The minimum detectable effect is the minimal variation of the
+                                            baseline conversion rate that you need to detect a statistically significant change."> [?] </button>
                                         </label>
                                         <input type="number" name="mde" placeholder="MDE" id="mde" ng-model="mde"
-                                            ng-change="computeSize()"  min="0" max="100"  />
+                                            ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_mde" class="alert"> </span>
                                     </td>
                                 </tr>
@@ -143,7 +140,7 @@
                                         </label>
 
                                         <input type="number" name="sig_level" placeholder="1-alpha" id="sig_level"
-                                            ng-model="sig_level" ng-change="computeSize()"  min="0" max="100" />
+                                            ng-model="sig_level" ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_sig_level" class="alert"> </span>
                                     </td>
                                 </tr>
@@ -161,7 +158,7 @@
                                             The most common value for power is 80%."> [?] </button>
                                         </label>
                                         <input type="number" name="power" placeholder="power" id="power"
-                                            ng-model="power" ng-change="computeSize()"  min="0" max="100" />
+                                            ng-model="power" ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_power" class="alert"> </span>
                                     </td>
                                 </tr>
@@ -179,14 +176,15 @@
                                             are impacted by the changes."> [?] </button>
                                         </label>
                                         <input type="number" name="ratio" placeholder="ratio" id="ratio"
-                                            ng-model="ratio" ng-change="computeSize()"  min="0" max="100" />
+                                            ng-model="ratio" ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_ratio" class="alert"> </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="field decrease-padding">
                                         <label id="tail_label" for="tail">Two tailed test
-                                            <button id="info_tail" type="button" class="btn btn-link"  data-toggle="popover" title="Two tailed test" data-content='
+                                            <button id="info_tail" type="button" class="btn btn-link"
+                                                data-toggle="popover" title="Two tailed test" data-content='
                                                 Are you willing to test for an increase in conversion rate, a
                                                 decrease,
                                                 or
@@ -216,7 +214,7 @@
                                                 your major concern is whether it leads to more conversion.
                                                 A two-tailed test is not necessary since you are only interested in
                                                 positive
-                                                changes.' > [?] </button>
+                                                changes.'> [?] </button>
                                         </label>
                                         <select name="tail" id="tail" ng-model="tail" ng-change="computeSize()">
                                             <option value="false" class="alert">False</option>
@@ -231,7 +229,7 @@
                                         <label for="traffic">Daily number of people exposed
                                         </label>
                                         <input type="number" name="traffic" placeholder="Optional" id="traffic"
-                                            ng-model="traffic" ng-change="computeSize()"  min="0" max="100" />
+                                            ng-model="traffic" ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_traffic" class="alert"> </span>
                                     </td>
                                 </tr>
@@ -240,7 +238,7 @@
                                         <label for="reach"> Percentage of the traffic affected
                                         </label>
                                         <input type="number" name="reach" placeholder="" id="reach" ng-model="reach"
-                                            ng-change="computeSize()"  min="0" max="100" />
+                                            ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_reach" class="alert"> </span>
                                     </td>
                                 </tr>
@@ -249,6 +247,16 @@
                         </form>
                     </div>
                     <div class="col-9">
+                        <h2 class="text-center header_margin"> Visualisation of the statistical test
+                            <button id="info_chart" type="button" class="btn btn-link" data-toggle="popover"
+                                data-content="How likely is a change in the success rate? 
+                                To answer this, we define two probability laws that model the likelihood of two potential outcomes or hypothesis called H. H0 represents a zero difference in the success rate.
+                                H1 assumes that the difference is equal to the minimum detectable effect. 
+                                The confidence interval represents a threshold for the observed difference. If the observed difference is above threshold, we accept H1, which means that a change is measured. If below, no change is detected. 
+                                The significance level represents the probability to wrongly measure a change. The power represents the probability to rightly detect a change. 
+                                The computation of the sample size results from a trade-off between the significance level and the power. ">
+                                [?] </button>
+                        </h2>
                         <canvas class="w-100" id="chart"></canvas>
                         <h2 class="text-center header_margin"> Sample sizes </h2>
                         <div class="row justify-content-md-center">
@@ -316,20 +324,23 @@
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th>Predicted : No changes</th>
-                                    <th>Predicted : Significant changes</th>
+                                    <th class="confusion">Predicted : No changes</th>
+                                    <th class="confusion">Predicted : Significant changes</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr class="confusion">
                                     <td class="confusion_header">Actual : No changes</td>
-                                    <td>1 - \( \alpha = \) stat significance = <span class="value" >{{sig_level}}</span>%</td>
-                                    <td> \( \alpha = \) false positive probability </td>
+                                    <td>1 - \( \alpha = \) stat significance = <span class="value">{{sig_level}}</span>%
+                                    </td>
+                                    <td> \( \alpha = \) false positive probability = <span
+                                            class="value">{{100-sig_level}}</span>% </td>
                                 </tr>
-                                <tr>
+                                <tr class="confusion">
                                     <td class="confusion_header">Actual : Significant changes</td>
-                                    <td>\( \beta\) = false negative probability</td>
-                                    <td>1-\( \beta = \) power =<span class="value" >{{power}}</span>% </td>
+                                    <td>\( \beta\) = false negative probability = <span
+                                            class="value">{{100-power}}</span>%</td>
+                                    <td> 1-\( \beta = \) power = <span class="value">{{power}}% </span></td>
                                 </tr>
                             </tbody>
                         </table>

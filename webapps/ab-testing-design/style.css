@@ -258,3 +258,7 @@ table, thead, tr, tbody, th {
 .value{
     font-weight: bold;
 }
+
+.confusion{
+    font-size: 18px !important;
+}
