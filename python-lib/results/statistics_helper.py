@@ -17,7 +17,8 @@ def read_statistics(dataset_name):
         if size_A < 0 or size_B < 0 or success_rate_A < 0 or success_rate_B < 0 or success_rate_A > 100 or success_rate_B > 100:
             response = {"status": "error", "message": "Some values from the statistics dataset are invalid. Make sure it is the output of the AB statistics recipe or edit manually."}
         else:
-            response = {"status": "ok", "size_A": str(size_A), "size_B": str(size_B), "success_rate_A": str(success_rate_A), "success_rate_B": str(success_rate_B)}
+            response = {"status": "ok", "size_A": str(size_A), "size_B": str(
+                size_B), "success_rate_A": str(success_rate_A), "success_rate_B": str(success_rate_B)}
     return json.dumps(response)
 
 
