@@ -1,6 +1,17 @@
 from enum import Enum
 
 
+class Columns(object):
+    AB_GROUP = "dku_ab_group"
+    SUCCESS_RATE = "success_rate"
+    SIZE = "sample_size"
+
+
+class Group(Enum):
+    A = "A"
+    B = "B"
+
+
 class SizeDefinition(Enum):
     WEB_APP = "web_app"
     MANUAL = "manual"

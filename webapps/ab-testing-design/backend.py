@@ -6,7 +6,7 @@ from dataiku.customwebapp import get_webapp_config
 
 from design_experiment.sample_size import min_sample_size, z_value
 from design_experiment.helpers import save_parameters
-from design_experiment.constants import Parameters
+from constants import Parameters
 from dku_tools import get_output_folder
 
 config = get_webapp_config()

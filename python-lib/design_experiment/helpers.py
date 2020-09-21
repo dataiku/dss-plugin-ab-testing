@@ -1,7 +1,7 @@
 from io import StringIO
 from dataiku.core.dkujson import dumps
 import datetime
-from design_experiment.constants import Parameters
+from constants import Parameters
 
 
 def save_parameters(variables, folder):

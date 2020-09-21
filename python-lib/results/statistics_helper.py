@@ -1,7 +1,7 @@
 import dataiku
 import json
 
-from global_constants import Columns, Group
+from constants import Columns, Group
 
 
 def read_statistics(dataset_name):

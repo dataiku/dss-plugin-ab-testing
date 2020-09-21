@@ -2,7 +2,7 @@ from flask import request
 import dataiku
 from distutils.util import strtobool
 import json
-from global_constants import Columns, Group
+from constants import Columns, Group
 from results.ab_calculator import compute_Z_score, compute_p_value
 from results.statistics_helper import read_statistics
 

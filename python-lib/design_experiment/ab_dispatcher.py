@@ -3,8 +3,7 @@ from numpy import random
 import pandas as pd
 import logging
 
-from global_constants import Columns, Group
-from design_experiment.constants import AttributionMethod
+from constants import Columns, Group, AttributionMethod
 
 logger = logging.getLogger()
 logging.basicConfig(level=logging.INFO, format="AB testing plugin %(levelname)s - %(message)s")
