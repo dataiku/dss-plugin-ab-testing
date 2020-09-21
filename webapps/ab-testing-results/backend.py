@@ -2,7 +2,6 @@ from flask import request
 import dataiku
 from distutils.util import strtobool
 import json
-from constants import Columns, Group
 from results.ab_calculator import compute_Z_score, compute_p_value
 from results.statistics_helper import read_statistics
 
@@ -24,5 +23,4 @@ def analyse_results():
 def get_statistics():
     dataset_name = json.loads(request.data).get("name")
     response = read_statistics(dataset_name)
-    print(response)
     return response
