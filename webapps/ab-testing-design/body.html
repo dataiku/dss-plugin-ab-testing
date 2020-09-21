@@ -87,7 +87,7 @@
                                                 It equals to the number of successes divided by the reach.">
                                                 [?] </button>
                                         </label>
-                                        <input type="number" name="bcr" placeholder="BCR" id="bcr" ng-model="bcr"
+                                        <input type="number" name="bcr" placeholder="Enter a value between 0 and 100" id="bcr" ng-model="bcr"
                                             ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_bcr" class="alert"> </span>
                                     </td>
@@ -100,7 +100,7 @@
                                                 data-content="The minimum detectable effect is the minimal variation of the
                                             baseline conversion rate that you need to detect a statistically significant change."> [?] </button>
                                         </label>
-                                        <input type="number" name="mde" placeholder="MDE" id="mde" ng-model="mde"
+                                        <input type="number" name="mde" placeholder="Enter a value between 0 and 100" id="mde" ng-model="mde"
                                             ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_mde" class="alert"> </span>
                                     </td>
@@ -139,7 +139,7 @@
                                             </button>
                                         </label>
 
-                                        <input type="number" name="sig_level" placeholder="1-alpha" id="sig_level"
+                                        <input type="number" name="sig_level" placeholder="Enter a value between 0 and 100" id="sig_level"
                                             ng-model="sig_level" ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_sig_level" class="alert"> </span>
                                     </td>
@@ -157,7 +157,7 @@
                                             It equals to \(1-\beta\), with \(\beta\) the type II error.
                                             The most common value for power is 80%."> [?] </button>
                                         </label>
-                                        <input type="number" name="power" placeholder="power" id="power"
+                                        <input type="number" name="power" placeholder="Enter a value between 0 and 100" id="power"
                                             ng-model="power" ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_power" class="alert"> </span>
                                     </td>
@@ -175,7 +175,7 @@
                                             that fewer people
                                             are impacted by the changes."> [?] </button>
                                         </label>
-                                        <input type="number" name="ratio" placeholder="ratio" id="ratio"
+                                        <input type="number" name="ratio" placeholder="Enter a value between 0 and 100" id="ratio"
                                             ng-model="ratio" ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_ratio" class="alert"> </span>
                                     </td>
@@ -237,7 +237,7 @@
                                     <td class="field">
                                         <label for="reach"> Percentage of the traffic affected
                                         </label>
-                                        <input type="number" name="reach" placeholder="" id="reach" ng-model="reach"
+                                        <input type="number" name="reach" placeholder="Enter a value between 0 and 100" id="reach" ng-model="reach"
                                             ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_reach" class="alert"> </span>
                                     </td>
