@@ -262,3 +262,27 @@ table, thead, tr, tbody, th {
 .confusion{
     font-size: 18px !important;
 }
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #ff7979;
+    font-size: 11px;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #ff7979;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #ff7979;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #ff7979;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #ff7979;
+}
+
+::placeholder { /* Most modern browsers support this now. */
+   color:    #ff7979;
+   font-size: 11px;
+}

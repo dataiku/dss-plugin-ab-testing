@@ -17,9 +17,11 @@ function invalid_form($scope, lower_bound, upper_bound) {
 
 function alert_invalid_value(form_field, $scope, lower_bound, upper_bound) {
     let value = $("#" + form_field).val();
-    if (invalid_value(value, lower_bound, upper_bound) || (value === null)) {
-        $("#" + "alert_" + form_field).html("Please enter a value between 0 and 100");
-        erase_chart($scope);
+    if (invalid_value(value, lower_bound, upper_bound)) {
+        if (value) {
+            $("#" + "alert_" + form_field).html("Please enter a value between 0 and 100");
+            erase_chart($scope);
+        }
     } else {
         $("#" + "alert_" + form_field).html("")
     }
@@ -27,7 +29,7 @@ function alert_invalid_value(form_field, $scope, lower_bound, upper_bound) {
 
 function invalid_value(value, lower_bound, upper_bound) {
     const input = parseFloat(value);
-    return (input > upper_bound || input < lower_bound || Number(input) !== input);
+    return ((input > upper_bound || input < lower_bound || Number(input) !== input));
 }
 
 function missing_values($scope) {
@@ -39,7 +41,6 @@ function alert_sample_size($scope, display_message, log_message) {
     $("#alert_size").removeClass('d-none');
     $scope.sample_size_A = "";
     $scope.sample_size_B = "";
-    console.log("value error: " + log_message);
 }
 
 // compute duration
