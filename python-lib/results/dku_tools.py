@@ -2,7 +2,7 @@ import dataiku
 from dataiku.customrecipe import get_input_names_for_role, get_output_names_for_role
 
 
-def get_input_output() -> tuple:
+def get_results_input_output() -> tuple:
     """Returns input and output datasets after sanity check
 
     :raises: :class:`ValueError`: Missing input or output dataset(s)
@@ -22,7 +22,7 @@ def get_input_output() -> tuple:
     return input_dataset, output_dataset
 
 
-def get_parameters(config: dict) -> tuple:
+def get_results_parameters(config: dict) -> tuple:
     """Returns recipe parameters after sanity check
 
     :param dict config: parameters defined in the recipe settings

@@ -32,6 +32,7 @@ def invalid_format_df(df):
 
 
 def retrieve_statistics(group_df):
+    print(group_df)
     size = group_df["sample_size"].values[0]
     success_rate = group_df["success_rate"].values[0]
     return size, success_rate
