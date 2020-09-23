@@ -13,15 +13,18 @@
         "bootstrap",
         "d3"
     ],
+    "kind": "PYTHON",
+    "paramsPythonSetup": "py/webapp_helper.py",
     "params": [
         {
             "type": "SELECT",
             "name": "statistics_entry",
             "label": "AB statistics entry from : ",
-            "selectChoices": [ 
+            "selectChoices": [
                 {
                     "value": "input_dataset",
-                    "label": "an input dataset"                },
+                    "label": "an input dataset"
+                },
                 {
                     "value": "manual",
                     "label": "this web app"
@@ -36,6 +39,20 @@
             "description": "It should be the output of the recipe AB statistics of the AB testing plugin. Otherwise, use the manual mode.",
             "mandatory": false,
             "visibilityCondition": "model.statistics_entry == 'input_dataset'"
+        },
+        {
+            "name": "output_managed_folder",
+            "label": "Output folder for parameters",
+            "type": "SELECT",
+            "description": "Where do you want to save the results of the experiment?",
+            "getChoicesFromPython": true
+        },
+        {
+            "name": "output_new_folder_name",
+            "label": "Output folder name",
+            "type": "STRING",
+            "mandatory": true,
+            "visibilityCondition": "model.output_managed_folder == 'create_new_folder'"
         }
     ],
     "roles": [

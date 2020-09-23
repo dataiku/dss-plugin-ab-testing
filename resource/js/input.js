@@ -1,4 +1,4 @@
-function get_inputs($scope, $http) {
+ function get_inputs($scope, $http) {
     let config = dataiku.getWebAppConfig()
     let input_mode = config["statistics_entry"];
     $scope.dataset_name = config["statistics_dataset"];

@@ -141,13 +141,20 @@ def get_folder_parameters(folder_ref: str, filename: str):
                 "The parameters' filename is missing. It should point to a json file created from the Web App 'AB testing design'. This web app is a component of the same plugin")
 
 
-def get_output_folder(config, project, project_key):
+def get_output_folder(config, client, project_key):
     output_managed_id = config.get('output_managed_folder', None)
     output_new_folder_name = config.get('output_new_folder_name', None)
+    project = client.get_project(project_key)
 
     if output_managed_id == "create_new_folder":
         if output_new_folder_name:
-            output_folder_dss = project.create_managed_folder(output_new_folder_name)
+            project_managed_folders = client.get_project(project_key).list_managed_folders()
+            managed_folders = {mf["name"]: mf["id"] for mf in project_managed_folders}
+            if output_new_folder_name not in managed_folders:
+                output_folder_dss = project.create_managed_folder(output_new_folder_name)
+            else:
+                output_folder_id = managed_folders[output_new_folder_name]
+                output_folder_dss = project.get_managed_folder(output_folder_id)
         else:
             raise ValueError("The name for the input folder is missing.")
     elif output_managed_id:

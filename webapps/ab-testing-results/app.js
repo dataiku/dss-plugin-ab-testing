@@ -23,6 +23,7 @@ app.controller("ResultController", function ($scope, $http) {
     get_inputs($scope, $http);
     plot_results_chart($scope);
 
+
     $scope.getResults = function () {
         let formData = { size_A: $scope.size_A, size_B: $scope.size_B, success_rate_A: $scope.success_rate_A, success_rate_B: $scope.success_rate_B, tail: $scope.tail, sig_level: $scope.sig_level };
         $http.post(getWebAppBackendUrl("ab_calculator"), formData)
@@ -37,6 +38,11 @@ app.controller("ResultController", function ($scope, $http) {
             }).catch(function (error) {
                 alert("Issue with the fetch operation, please check back end and back end logs.");
             });
+    };
+
+    $scope.saveResults = function () {
+        let formData = { size_A: $scope.size_A, size_B: $scope.size_B, success_rate_A: $scope.success_rate_A, success_rate_B: $scope.success_rate_B, tail: $scope.tail, sig_level: $scope.sig_level, z_score: $scope.Z_score, p_value : $scope.p_value, uplift: $scope.uplift};
+        $http.post(getWebAppBackendUrl("write_parameters"), formData);
     }
 });
 

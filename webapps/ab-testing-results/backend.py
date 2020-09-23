@@ -2,8 +2,18 @@ from flask import request
 import dataiku
 from distutils.util import strtobool
 import json
+from dataiku.customwebapp import get_webapp_config
+
 from results.ab_calculator import compute_Z_score, compute_p_value
 from results.statistics_helper import read_statistics
+from dku_tools import get_output_folder
+from helpers import save_parameters
+
+config = get_webapp_config()
+project_key = dataiku.default_project_key()
+client = dataiku.api_client()
+
+output_folder = get_output_folder(config, client, project_key)
 
 
 @app.route('/ab_calculator', methods=['POST'])
@@ -24,3 +34,11 @@ def get_statistics():
     dataset_name = json.loads(request.data).get("name")
     response = read_statistics(dataset_name)
     return response
+
+
+@app.route('/write_parameters', methods=['POST'])
+def save():
+    data = request.form
+    fields_to_save = ["size_A", "size_B", "success_rate_A", "success_rate_B", "uplift", "p_value", "z_score"]
+    save_parameters(data, output_folder, fields_to_save)
+    return json.dumps({"status": "Parameters saved"})

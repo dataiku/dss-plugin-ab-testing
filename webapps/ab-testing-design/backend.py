@@ -5,16 +5,16 @@ import dataiku
 from dataiku.customwebapp import get_webapp_config
 
 from design_experiment.sample_size import min_sample_size, z_value
-from design_experiment.helpers import save_parameters
+from helpers import save_parameters
 from constants import Parameters
 from dku_tools import get_output_folder
 
 config = get_webapp_config()
 project_key = dataiku.default_project_key()
 client = dataiku.api_client()
-project = client.get_project(project_key)
 
-output_folder = get_output_folder(config, project, project_key)
+output_folder = get_output_folder(config, client, project_key)
+
 
 @app.route('/sample_size', methods=['POST'])
 def get_sample_size():
@@ -44,5 +44,7 @@ def get_z_value():
 @app.route('/write_parameters', methods=['POST'])
 def save():
     data = request.form
-    save_parameters(data, output_folder)
+    fields_to_save = [Parameters.SIZE_A.value, Parameters.SIZE_B.value, Parameters.RATIO.value, Parameters.POWER.value,
+                      Parameters.MDE.value, Parameters.TAIL.value, Parameters.TRAFFIC.value, Parameters.SIG_LEVEL.value, Parameters.BCR.value]
+    save_parameters(data, output_folder, fields_to_save)
     return json.dumps({"status": "Parameters saved"})
