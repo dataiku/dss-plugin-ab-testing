@@ -49,10 +49,6 @@
 }
 
 
-body {
-    font-family: 'Open Sans', sans-serif;
-}
-
 h4 {
     color: "black";
 }
@@ -62,24 +58,18 @@ h4 {
     color: #718093
 }
 h1 {
-    font-size: 1.3rem !important;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Open Sans', sans-serif;
+    font-size: 1.4rem !important;
 }
 
 h2 {
-    font-size: 1em !important;
+    font-size: 1.1em !important;
 }
 
 p {
     font-size: 10px;
-    font-family: 'Open Sans', sans-serif;
 }
 
 label {
-    font-family: 'Open Sans', sans-serif;
     font-size: 12px !important;
     color: #718093;
 }
@@ -118,12 +108,10 @@ table, thead, tr, tbody, th {
 
 .btn {
     font-size: 13px;
-    font-family: 'Open Sans', sans-serif;
     color: rgb(54, 163, 158);
 }
 
 .explanation_text {
-    font-family: 'Open Sans', sans-serif;
     font-size: 12px;
     color: #718093;
 }
@@ -154,7 +142,6 @@ table, thead, tr, tbody, th {
 }
 
 .derivation {
-    font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     color: #34495e;
 }
@@ -177,7 +164,6 @@ table, thead, tr, tbody, th {
 }
 
 .label_legend {
-    font-family: 'Open Sans', sans-serif;
     font-size: 14px;
 }
 
