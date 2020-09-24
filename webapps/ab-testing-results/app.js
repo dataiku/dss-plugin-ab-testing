@@ -36,13 +36,14 @@ app.controller("ResultController", function ($scope, $http) {
                 $scope.chart.config.data.datasets = get_results_datasets($scope);
                 $scope.chart.update(0);
             }).catch(function (error) {
-                alert("Issue with the fetch operation, please check back end and back end logs.");
+                alert("Issue with the fetch operation, please check back end and back end logs." + error);
             });
     };
 
     $scope.saveResults = function () {
-        let formData = { size_A: $scope.size_A, size_B: $scope.size_B, success_rate_A: $scope.success_rate_A, success_rate_B: $scope.success_rate_B, tail: $scope.tail, sig_level: $scope.sig_level, z_score: $scope.Z_score, p_value : $scope.p_value, uplift: $scope.uplift};
-        $http.post(getWebAppBackendUrl("write_parameters"), formData);
+        let results = { size_A: $scope.size_A, size_B: $scope.size_B, success_rate_A: $scope.success_rate_A, success_rate_B: $scope.success_rate_B, tail: $scope.tail, sig_level: $scope.sig_level, z_score: $scope.z_score, p_value : $scope.p_value, uplift: $scope.uplift};
+        $http.post(getWebAppBackendUrl("write_parameters"), results);
+        $("#save-caption").removeClass("d-none");
     }
 });
 

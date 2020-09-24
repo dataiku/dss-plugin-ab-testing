@@ -119,3 +119,8 @@ h1, h2, h3, h4, h5, h6 {
 #save-section{
     margin-bottom: 20px;
 }
+
+#save-caption{
+    font-size: 1.8rem;
+    color: #36a39e;
+}

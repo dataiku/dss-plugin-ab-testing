@@ -27,6 +27,8 @@ function test_outcome($scope) {
         $("#confidence").addClass("red");
         var is_significant = false;
     };
+    $("#save-section").removeClass("d-none");
+    $("#save-caption").addClass("d-none");
     return is_significant;
 }
 

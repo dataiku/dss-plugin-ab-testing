@@ -38,7 +38,7 @@ def get_statistics():
 
 @app.route('/write_parameters', methods=['POST'])
 def save():
-    data = request.form
+    data = json.loads(request.data)
     fields_to_save = ["size_A", "size_B", "success_rate_A", "success_rate_B", "uplift", "p_value", "z_score"]
     save_parameters(data, output_folder, fields_to_save)
     return json.dumps({"status": "Parameters saved"})

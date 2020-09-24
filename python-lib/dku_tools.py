@@ -149,9 +149,10 @@ def get_output_folder(config, client, project_key):
     if output_managed_id == "create_new_folder":
         if output_new_folder_name:
             project_managed_folders = client.get_project(project_key).list_managed_folders()
-            managed_folders = [mf["name"] for mf in project_managed_folders]
+            managed_folders = {mf["name"]: mf["id"] for mf in project_managed_folders}
             if output_new_folder_name in managed_folders:
-                raise ValueError("The managed folder '{}' already exists. Please rename it.".format(output_new_folder_name))
+                output_folder_dss = project.get_managed_folder(managed_folders[output_new_folder_name])
+                #raise ValueError("The managed folder '{}' already exists. Please rename it.".format(output_new_folder_name))
             else:
                 output_folder_dss = project.create_managed_folder(output_new_folder_name)
         else:
