@@ -32,7 +32,6 @@ class AbStatistics(object):
         invalid_conversion = valid_rows[(valid_rows[self.conversion_column] != 0) & (valid_rows[self.conversion_column] != 1)]
         if not invalid_conversion.empty:
             raise ValueError("The success indicator should be either 0 or 1")
-        return valid_rows
 
     def aggregate_by_group(self, result_df):
         aggregation = result_df.groupby([self.group_column]).agg({self.user_reference_column: "nunique", self.conversion_column: "sum"})
