@@ -10,7 +10,7 @@
         {
             "name": "results",
             "label": "Experiment results",
-            "description": "This dataset should contain  the experiment's results at a user level. There should be group column and a conversion column.",
+            "description": "This dataset should contain the experiment's results at a user level. There should be group column and a conversion column.",
             "arity": "UNARY",
             "required": true,
             "acceptsDataset": true

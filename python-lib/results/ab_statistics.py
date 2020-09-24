@@ -9,16 +9,20 @@ class AbStatistics(object):
         self.group_column = group_column
         self.conversion_column = conversion_column
 
-    def compute(self, results_df):
-        results_df = self.check_results_df(results_df)
+    def compute(self, results):
+        results_df = self.filter_results_df(results)
+        self.check_results_df(results_df)
         aggregation = self.aggregate_by_group(results_df)
         statistics_df = self.format_statistics(aggregation)
         return statistics_df
 
-    def check_results_df(self, result_df):
-        valid_rows = result_df[[self.user_reference_column, self.group_column, self.conversion_column]].dropna()
+    def filter_results_df(self, df):
+        valid_rows = df[[self.user_reference_column, self.group_column, self.conversion_column]].dropna()
+        return valid_rows
+
+    def check_results_df(self, valid_rows):
         not_empty_rows_nb = valid_rows.shape[0]
-        if not result_df[self.user_reference_column].is_unique:
+        if not valid_rows[self.user_reference_column].is_unique:
             raise ValueError("There should be only one row per user in the input dataset")
         if not_empty_rows_nb < 2:
             raise ValueError("The input dataset should contain at least 2 users with conversion and group references")
@@ -27,7 +31,7 @@ class AbStatistics(object):
             raise ValueError("The group indicator should be either 'A' or 'B'")
         invalid_conversion = valid_rows[(valid_rows[self.conversion_column] != 0) & (valid_rows[self.conversion_column] != 1)]
         if not invalid_conversion.empty:
-            raise ValueError("The group indicator should be either 0 or 1")
+            raise ValueError("The success indicator should be either 0 or 1")
         return valid_rows
 
     def aggregate_by_group(self, result_df):
