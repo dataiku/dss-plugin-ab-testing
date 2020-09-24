@@ -1,6 +1,10 @@
 import pandas as pd
+import logging
 
 from constants import Group, Columns
+
+logger = logging.getLogger()
+logging.basicConfig(level=logging.INFO, format="AB testing plugin %(levelname)s - %(message)s")
 
 
 class AbStatistics(object):
@@ -22,6 +26,7 @@ class AbStatistics(object):
 
     def check_results_df(self, valid_rows):
         not_empty_rows_nb = valid_rows.shape[0]
+        logger.info("{} rows are used to compute the results of the experiment.".format(not_empty_rows_nb))
         if not valid_rows[self.user_reference_column].is_unique:
             raise ValueError("There should be only one row per user in the input dataset")
         if not_empty_rows_nb < 2:
