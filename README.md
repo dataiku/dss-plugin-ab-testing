@@ -79,11 +79,11 @@ From the results of your experiment, this recipe computes the statistics require
 
 From the `AB testing statistics` dataset, this web app gives a clear answer to the statistical test. Make sure to **refresh** the settings page when you open it.  
 
-### Input
+#### Input
 
 * `AB testing statistics` : Statistics required to answer the statistical test
 
-### Parameters
+#### Parameters
 
 * **AB statistics entry from** : do you want to retrieve statistics from the `AB testing statistics` dataset or just enter the values manually?
 * **Dataset** : It should be the output of the recipe AB statistics of the AB testing plugin. Otherwise, use the manual mode
