@@ -23,7 +23,6 @@ app.controller("ResultController", function ($scope, $http) {
     get_inputs($scope, $http);
     plot_results_chart($scope);
 
-
     $scope.getResults = function () {
         let formData = { size_A: $scope.size_A, size_B: $scope.size_B, success_rate_A: $scope.success_rate_A, success_rate_B: $scope.success_rate_B, tail: $scope.tail, sig_level: $scope.sig_level };
         $http.post(getWebAppBackendUrl("ab_calculator"), formData)
@@ -41,7 +40,7 @@ app.controller("ResultController", function ($scope, $http) {
     };
 
     $scope.saveResults = function () {
-        let results = { size_A: $scope.size_A, size_B: $scope.size_B, success_rate_A: $scope.success_rate_A, success_rate_B: $scope.success_rate_B, tail: $scope.tail, sig_level: $scope.sig_level, z_score: $scope.z_score, p_value : $scope.p_value, uplift: $scope.uplift};
+        let results = { size_A: $scope.size_A, size_B: $scope.size_B, success_rate_A: $scope.success_rate_A, success_rate_B: $scope.success_rate_B, tail: $scope.tail, sig_level: $scope.sig_level, z_score: $scope.z_score, p_value: $scope.p_value, uplift: $scope.uplift };
         $http.post(getWebAppBackendUrl("write_parameters"), results);
         $("#save-caption").removeClass("d-none");
     }

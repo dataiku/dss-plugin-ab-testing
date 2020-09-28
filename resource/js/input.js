@@ -37,6 +37,7 @@ function load_values_from_df($scope, $http) {
             $scope.size_B = parseFloat(response_data.size_B);
             $scope.success_rate_A = parseFloat(response_data.success_rate_A);
             $scope.success_rate_B = parseFloat(response_data.success_rate_B);
+            $scope.getResults();
         } else if(status ==="error"){
             alert(response_data.message);
         }

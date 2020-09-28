@@ -33,7 +33,7 @@
 
 <title>AB Testing : Analysis of the results</title>
 
-<header class="navbar bd-navbar bg-light">
+<header class="navbar bd-navbar bg-light no-margin">
     <a class="navbar-brand" href="#">
         <img src="https://www.dataiku.com/static/img/theme/logo/page.png" width="180" height="64" alt=""> </img>
     </a>
@@ -44,210 +44,277 @@
     </div>
 </header>
 
-<body>
+<body class="background">
     <div class="flex-container" ng-app="resultApp" ng-controller="ResultController">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl">
-                    <h1>Frequentist AB Testing - Analysis of the results</h1>
-                    <a class="anchorjs-link " href="#overview" aria-label="Anchor" data-anchorjs-icon="#"
-                        style="padding-left: 0.375em;"></a>
-                    <h2>Compare two proportions : success rate, click through rate.</h2>
-                    <p class="explanations">
-                        The average success rates of two independent samples A and B are compared. A is the control
-                        group
-                        while B
-                        is the experiment group. We assume that the two samples follow binomial distributions.
-                        <i class="icon icon-pencil"></i>
-                    </p>
-                    <hr>
+        <div class="background">
+            <div class="container white-background title-padding">
+                <div class="row">
+                    <div class="col-xl">
+                        <h1>Frequentist AB Testing - Analysis of the results</h1>
+                        <a class="anchorjs-link " href="#overview" aria-label="Anchor" data-anchorjs-icon="#"
+                            style="padding-left: 0.375em;"></a>
+                        <h2>Compare two proportions : success rate, click through rate.</h2>
+                        <p class="explanations">
+                            The average success rates of two independent samples A and B are compared. A is the
+                            control
+                            group
+                            while B
+                            is the experiment group. We assume that the two samples follow binomial distributions.
+                        </p>
+                    </div>
                     <div class="container">
-                        <form id="form_data">
-                            <div class="row align-items-start">
-                                <div class="col-1 corner ">
-                                </div>
-                                <div class="col-sm headers text-center">
-                                    Size
-                                </div>
-                                <div class="col-sm headers text-center">
-                                    Success rate (%)
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-1 corner ">
-                                </div>
-                                <div class="col-sm headers text-center">
-                                    <button id="info_size" type="button" class="btn btn-link"> [Info] </button>
-                                </div>
-                                <div class="col-sm headers text-center">
-                                    <button id="info_success_rate" type="button" class="btn btn-link"> [Info] </button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-1 corner ">
-                                </div>
-                                <div class="col-sm text-center">
-                                    <span id="explanation_size" class="d-none">
-                                        <div class="spacing">
-                                            <div class="explanation_text">
-                                                How many people are there in each group?
-                                            </div>
+                        <div class="row border-top-custom">
+                            <div class="col-3 border-custom">
+                                <form id="form_data">
+                                    <div class="row align-items-start">
+                                        <div class="col-1 corner ">
                                         </div>
-                                    </span>
-                                </div>
-                                <div class="col-sm headers text-center">
-                                    <span id="explanation_success_rate" class="d-none">
-                                        <div class="spacing">
-                                            <div class="explanation_text">
-                                                What is the percentage of success per group?
-                                            </div>
+                                        <div class="col-sm headers">
+                                            Size
+                                            <button id="info_size" type="button" class="btn btn-link"> [Info]
+                                            </button>
                                         </div>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="row align-items-center">
-                                <div class="col-1 group text-center" id="A_header">
-                                    A
-                                </div>
-                                <div class="col-sm">
-                                    <div class="field">
-                                        <input type="number" name="size_A" id="size_A" class="textbox_results"
-                                            ng-model="size_A">
                                     </div>
-                                </div>
-                                <div class="col-sm">
-                                    <div class="field">
-                                        <input type="number" name="success_rate_A" placeholder="" id="success_rate_A"
-                                            class="textbox_results" ng-model="success_rate_A" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-1 corner ">
-                                </div>
-                                <div class="col-sm text-center">
-                                    <span id="alert_size_A" class="alert"> </span>
-                                </div>
-                                <div class="col-sm headers text-center">
-                                </div>
-                            </div>
-                            <div class="row align-items-end">
-                                <div class="col-1 group text-center" id="B_header">
-                                    B
-                                </div>
-                                <div class="col-sm">
-                                    <div class="field">
-                                        <input type="number" name="size_B" id="size_B" class="textbox_results"
-                                            ng-model="size_B">
-                                    </div>
-                                </div>
-                                <div class="col-sm">
-                                    <div class="field">
-                                        <input type="number" name="success_rate_B" placeholder="" id="success_rate_B"
-                                            class="textbox_results" ng-model="success_rate_B" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-1 corner ">
-                                </div>
-                                <div class="col-sm text-center">
-                                    <span id="alert_size_B" class="alert"> </span>
-                                </div>
-                                <div class="col-sm headers text-center">
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row justify-content-md-center">
-                                <div class="col-xl">
-                                    <div class="field">
-                                        <div class="field">
-                                            <label for="sig_level"> Desired statistical significance (%)
-                                                <button id="info_sig_level" type="button" class="btn btn-link"> [Info]
-                                                </button>
-                                            </label>
-                                            <span id="explanation_sig_level" class="d-none">
-                                                <div class="spacing explanation_text">
-                                                    <div class="explanation_smaller">
-                                                        The statistical significance is the probability to find that the
-                                                        two
-                                                        samples have
-                                                        the same
-                                                        success rate (H0), when this is the case. It is therefore the
-                                                        minimum
-                                                        threshold
-                                                        of the true
-                                                        positive probability.
-                                                        It equals to \(1-\alpha\), with \(\alpha\), the type I error.
-                                                        The most common values for the statistical significance are 95%
-                                                        and
-                                                        90%. When it is set too low, the test may detect a non existent
-                                                        change, while if it is too high, it is less likely to detect a
-                                                        variation
-                                                        when there
-                                                        is one.
+                                    <div class="row">
+                                        <div class="col-1 corner ">
+                                        </div>
+                                        <div class="col-sm text-center">
+                                            <span id="explanation_size" class="d-none">
+                                                <div class="spacing">
+                                                    <div class="explanation_text">
+                                                        How many people are there in each group?
                                                     </div>
                                                 </div>
                                             </span>
-                                            <input type="number" name="sig_level" placeholder="1-alpha" id="sig_level"
-                                                ng-model="sig_level" />
-                                            <span id="alert_sig_level" class="alert"> </span>
                                         </div>
-                                        <label id="tail_label" for="tail">Two tailed test
-                                            <button id="info_tail" type="button" class="btn btn-link"> [Info] </button>
-                                        </label>
-                                        <span id="explanation_tail" class="d-none">
-                                            <div class="spacing explanation_text">
-                                                <div class="explanation_smaller">
-                                                    Are you willing to test for an increase in success rate, a decrease,
-                                                    or
-                                                    even
-                                                    both?
-                                                </div>
-                                                <div class="explanation_smaller">
-                                                    If you only want to determine if there is any difference between the
-                                                    two
-                                                    groups,
-                                                    you
-                                                    should use a
-                                                    two-tailed test. It means that you are testing both for positive and
-                                                    negative
-                                                    differences.
-                                                </div>
-                                                <div class="explanation_smaller">
-                                                    However, if you only test in one direction, to find out for
-                                                    instance,
-                                                    whether
-                                                    the
-                                                    success rate is
-                                                    higher
-                                                    for B, you may want to use a one-tailed distribution. For example,
-                                                    if you
-                                                    test a
-                                                    new
-                                                    email template,
-                                                    your major concern is whether it leads to more conversion.
-                                                    A two-tailed test is not necessary since you are only interested in
-                                                    positive
-                                                    changes.
-                                                </div>
-                                            </div>
-                                        </span>
-                                        <select name="tail" id="tail" ng-model="tail">
-                                            <option value="false" class="alert">False</option>
-                                            <option value="true">True</option>
-                                        </select>
                                     </div>
-                                </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-1 group text-center" id="A_header">
+                                            A
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="field">
+                                                <input type="number" name="size_A" id="size_A" class="textbox_results"
+                                                    ng-model="size_A" ng-change="getResults()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1 corner ">
+                                        </div>
+                                        <div class="col-sm text-center">
+                                            <span id="alert_size_A" class="alert"> </span>
+                                        </div>
+                                        <div class="col-sm headers text-center">
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-end">
+                                        <div class="col-1 group text-center" id="B_header">
+                                            B
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="field">
+                                                <input type="number" name="size_B" id="size_B" class="textbox_results"
+                                                    ng-model="size_B" ng-change="getResults()">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1 corner "> 
+                                        </div>
+                                        <div class="col-sm text-center">
+                                            <span id="alert_size_B" class="alert"> </span>
+                                        </div>
+                                        <div class="col-sm headers text-center">
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-start">
+                                        <div class="col-1 corner ">
+                                        </div>
+                                        <div class="col-sm headers">
+                                            Success rate (%)
+                                            <button id="info_success_rate" type="button" class="btn btn-link">
+                                                [Info]
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm text-center">
+                                            <span id="explanation_success_rate" class="d-none">
+                                                <div class="spacing">
+                                                    <div class="explanation_text">
+                                                        What is the percentage of success per group?
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-1 group text-center" id="A_header">
+                                            A
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="field">
+                                                <input type="number" name="success_rate_A" placeholder=""
+                                                    id="success_rate_A" class="textbox_results"
+                                                    ng-model="success_rate_A" ng-change="getResults()" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1 corner ">
+                                        </div>
+                                        <div class="col-sm text-center">
+                                            <span id="alert_success_rate_A" class="alert"> </span>
+                                        </div>
+                                        <div class="col-sm headers text-center">
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-end">
+                                        <div class="col-1 group text-center" id="B_header">
+                                            B
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="field">
+                                                <input type="number" name="success_rate_B" placeholder=""
+                                                    id="success_rate_B" class="textbox_results"
+                                                    ng-model="success_rate_B" ng-change="getResults()" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1 corner ">
+                                        </div>
+                                        <div class="col-sm text-center">
+                                            <span id="alert_success_rate_A" class="alert"> </span>
+                                        </div>
+                                        <div class="col-sm headers text-center">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row justify-content-md-center">
+                                        <div class="col-xl">
+                                            <div class="field">
+                                                <div class="field">
+                                                    <label for="sig_level"> Desired statistical significance (%)
+                                                        <button id="info_sig_level" type="button" class="btn btn-link">
+                                                            [Info]
+                                                        </button>
+                                                    </label>
+                                                    <span id="explanation_sig_level" class="d-none">
+                                                        <div class="spacing explanation_text">
+                                                            <div class="explanation_smaller">
+                                                                The statistical significance is the probability
+                                                                to
+                                                                find
+                                                                that the
+                                                                two
+                                                                samples have
+                                                                the same
+                                                                success rate (H0), when this is the case. It is
+                                                                therefore the
+                                                                minimum
+                                                                threshold
+                                                                of the true
+                                                                positive probability.
+                                                                It equals to \(1-\alpha\), with \(\alpha\), the
+                                                                type
+                                                                I
+                                                                error.
+                                                                The most common values for the statistical
+                                                                significance
+                                                                are 95%
+                                                                and
+                                                                90%. When it is set too low, the test may detect
+                                                                a
+                                                                non
+                                                                existent
+                                                                change, while if it is too high, it is less
+                                                                likely
+                                                                to
+                                                                detect a
+                                                                variation
+                                                                when there
+                                                                is one.
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                    <input type="number" name="sig_level" placeholder="1-alpha"
+                                                        id="sig_level" ng-model="sig_level" ng-change="getResults()" />
+                                                    <span id="alert_sig_level" class="alert"> </span>
+                                                </div>
+                                                <label id="tail_label" for="tail">Two tailed test
+                                                    <button id="info_tail" type="button" class="btn btn-link">
+                                                        [Info]
+                                                    </button>
+                                                </label>
+                                                <span id="explanation_tail" class="d-none">
+                                                    <div class="spacing explanation_text">
+                                                        <div class="explanation_smaller">
+                                                            Are you willing to test for an increase in success
+                                                            rate,
+                                                            a
+                                                            decrease,
+                                                            or
+                                                            even
+                                                            both?
+                                                        </div>
+                                                        <div class="explanation_smaller">
+                                                            If you only want to determine if there is any
+                                                            difference
+                                                            between the
+                                                            two
+                                                            groups,
+                                                            you
+                                                            should use a
+                                                            two-tailed test. It means that you are testing both
+                                                            for
+                                                            positive and
+                                                            negative
+                                                            differences.
+                                                        </div>
+                                                        <div class="explanation_smaller">
+                                                            However, if you only test in one direction, to find
+                                                            out
+                                                            for
+                                                            instance,
+                                                            whether
+                                                            the
+                                                            success rate is
+                                                            higher
+                                                            for B, you may want to use a one-tailed
+                                                            distribution.
+                                                            For
+                                                            example,
+                                                            if you
+                                                            test a
+                                                            new
+                                                            email template,
+                                                            your major concern is whether it leads to more
+                                                            conversion.
+                                                            A two-tailed test is not necessary since you are
+                                                            only
+                                                            interested in
+                                                            positive
+                                                            changes.
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                                <select name="tail" id="tail" ng-model="tail" ng-change="getResults()">
+                                                    <option value="false" class="alert">False</option>
+                                                    <option value="true">True</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
-                        <div class="row justify-content-md-center text-center">
-                            <div class="col-xl">
-                                <button id="submit" type="submit"
-                                    class="btn btn-outline-info btn-rounded waves-effect  btn-lg"
-                                    ng-click="getResults()">
-                                    Submit results
-                                </button>
+
+                            <div class="col-9">
+                                <p class="question text-center">
+                                    What are the chances I would see these results if there was no difference?
+                                </p>
+                                <canvas class="h-250 w-100" id="chart"></canvas>
                             </div>
                         </div>
                     </div>
@@ -255,8 +322,8 @@
             </div>
         </div>
 
-        <div class="container">
-            <div class="row justify-content-md-center">
+        <div class="container white-background">
+            <div class="row justify-content-md-center row border-top-custom">
                 <div class="col-md-auto">
                     <div id="result_caption">
                     </div>
@@ -285,29 +352,12 @@
             <div class="row justify-content-md-center">
                 <div class="col-md-auto text-center">
                     <div id="save-section" class="text-center d-none">
-                        <a id="save-button" type="button" class="btn btn-outline-info btn-rounded waves-effect  btn-lg" ng-click="saveResults()">
+                        <a id="save-button" type="button" class="btn btn-outline-info btn-rounded waves-effect  btn-lg"
+                            ng-click="saveResults()">
                             Save results</a>
                     </div>
                     <div id="save-caption" class="d-none">
                         Results were saved!
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-xl">
-                    <h2> Visualisation </h2>
-                    <hr>
-                    </hr>
-                    <p class="question text-center">
-                        What are the chances I would see these results if there was no difference?
-                    </p>
-                    <div class="row justify-content-md-center">
-                        <div class="col-9">
-                            <canvas class="h-150 w-100" id="chart"></canvas>
-                        </div>
                     </div>
                 </div>
             </div>

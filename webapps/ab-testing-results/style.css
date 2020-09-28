@@ -23,20 +23,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .group {
-    font-size: 35px;
+    font-size: 25px;
     justify-content: center;
     font-family: 'Open Sans', sans-serif;
 }
 
 .textbox_results {
-    height: 50px;
+    height: 38px;
 }
 
 .headers {
-    font-size: 18px;
-    margin-left: 10px;
-    justify-content: center;
-    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
 }
 
 .corner {
@@ -123,4 +120,28 @@ h1, h2, h3, h4, h5, h6 {
 #save-caption{
     font-size: 1.8rem;
     color: #36a39e;
+}
+
+.background {
+    background-color: #f8f9fa;
+}
+
+.white-background{
+    background-color: white;
+}
+
+.title-padding{
+    padding-top:20px;
+}
+
+.navbar{
+    margin-bottom: 0px !important;
+}
+
+.border-top-custom{
+    border-top: 30px solid #f8f9fa;
+}
+
+.border-custom{
+    border-right: 3px solid #f8f9fa;
 }
