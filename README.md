@@ -6,7 +6,7 @@ This plugin provides features to design AB testing and analyses their outcome in
 
 A web app computes the minimum sample sizes needed in the experiment while providing insightful visualisations of the distributions (Z test). A custom recipe can then use these estimated figures to split the input dataset containing the email addresses of the experiment population into two groups, A and B. 
 
-Here is the more detailled description of these two main components : 
+Here is a more detailled description of these two main components : 
 
 ### 1- AB testing design (custom web app)
 
