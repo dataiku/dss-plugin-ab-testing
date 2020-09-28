@@ -29,7 +29,7 @@ From these values, a minimum sample size is computed and illustrated thanks to t
 
 #### Output
 
-There is no output, but where you click on the button save parameters, the parameters and the samples sizes are saved in the folder `Parameters` .
+There is no output, but when you click on the button save parameters, the parameters and the samples sizes are saved in the folder `Parameters` .
 
 ### 2- AB testing split (custom recipe)
 
@@ -92,4 +92,4 @@ From the `AB testing statistics` dataset, this web app gives a clear answer to t
 
 #### Output
 
-There is no output, but where you click on the button save results, the results are saved in the output folder. 
+There is no output, but when you click on the button save results, the results are saved in the output folder. 
