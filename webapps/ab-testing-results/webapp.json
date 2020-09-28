@@ -45,11 +45,12 @@
             "type": "DATASET_COLUMN",
             "label": "AB group column",
             "datasetParamName": "statistics_dataset",
-            "description": "Column indicating to which group a user belongs (A or B)"
+            "description": "Column indicating to which group a user belongs (A or B)",
+            "visibilityCondition": "model.statistics_entry == 'input_dataset'"
         },
         {
             "name": "output_managed_folder",
-            "label": "Output folder for parameters",
+            "label": "Output folder for results",
             "type": "SELECT",
             "description": "Where do you want to save the results of the experiment?",
             "getChoicesFromPython": true
