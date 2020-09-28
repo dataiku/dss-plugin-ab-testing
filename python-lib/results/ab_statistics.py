@@ -30,7 +30,6 @@ class AbStatistics(object):
         logger.info("{} rows are used to compute the results of the experiment.".format(not_empty_rows_nb))
         if not_empty_rows_nb < 2:
             raise ValueError("The input dataset should contain at least 2 users with conversion and group references")
-        print(valid_rows)
         if not valid_rows[self.user_reference_column].is_unique:
             raise ValueError("There should be only one row per user in the input dataset")
         if len(groups) != 2:
