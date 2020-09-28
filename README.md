@@ -49,7 +49,7 @@ This recipe splits the users enrolled in the experiment into two groups, usually
 * **Sample size for variation B** : Minimum sample size for the B group
 * **Deal with leftover users** :  If the population is greater than the sample size, this field specifies in which group the leftover users should go.
 
-#### Parameters
+#### Output
 
 * `Experiment dataset` : Input dataset with an extra column containing the group indicators used for the AB test (A or B)
 
