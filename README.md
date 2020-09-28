@@ -60,7 +60,7 @@ From the results of your experiment, this recipe computes the statistics require
 - `AB testing statistics`: Statistics required to answer the statistical test
 
 ### 4- AB testing results (custom web app)
-From the `AB testing statistics`dataset, this web app gives a clear answer to the statistical test. Make sure to **refresh** the setting page when you open it.  
+From the `AB testing statistics`dataset, this web app gives a clear answer to the statistical test. Make sure to **refresh** the settings page when you open it.  
 
 ### Input
 - `AB testing statistics`: Statistics required to answer the statistical test
