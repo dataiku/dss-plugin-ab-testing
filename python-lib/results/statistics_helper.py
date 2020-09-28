@@ -13,7 +13,6 @@ def read_statistics(dataset_name,  group_column):
         B_df = df[df[group_column] == groups[1]]
         size_A, success_rate_A = retrieve_statistics(A_df)
         size_B, success_rate_B = retrieve_statistics(B_df)
-        p_value = 
         if size_A < 0 or size_B < 0 or success_rate_A < 0 or success_rate_B < 0 or success_rate_A > 100 or success_rate_B > 100:
             response = {"status": "error", "message": "Some values from the statistics dataset are invalid. Make sure it is the output of the AB statistics recipe or edit manually."}
         else:
