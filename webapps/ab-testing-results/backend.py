@@ -31,8 +31,9 @@ def analyse_results():
 
 @app.route("/statistics", methods=["POST"])
 def get_statistics():
-    dataset_name = json.loads(request.data).get("name")
-    response = read_statistics(dataset_name)
+    dataset_name = json.loads(request.data).get("dataset_name")
+    column_name = json.loads(request.data).get("column_name")
+    response = read_statistics(dataset_name, column_name)
     return response
 
 

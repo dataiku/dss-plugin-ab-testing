@@ -41,6 +41,13 @@
             "visibilityCondition": "model.statistics_entry == 'input_dataset'"
         },
         {
+            "name": "group_column",
+            "type": "DATASET_COLUMN",
+            "label": "AB group column",
+            "datasetParamName": "statistics_dataset",
+            "description": "Column indicating to which group a user belongs (A or B)"
+        },
+        {
             "name": "output_managed_folder",
             "label": "Output folder for parameters",
             "type": "SELECT",

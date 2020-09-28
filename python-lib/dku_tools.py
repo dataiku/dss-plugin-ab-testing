@@ -145,7 +145,6 @@ def get_output_folder(config, client, project_key):
     output_managed_id = config.get('output_managed_folder', None)
     output_new_folder_name = config.get('output_new_folder_name', None)
     project = client.get_project(project_key)
-
     if output_managed_id == "create_new_folder":
         if output_new_folder_name:
             project_managed_folders = client.get_project(project_key).list_managed_folders()

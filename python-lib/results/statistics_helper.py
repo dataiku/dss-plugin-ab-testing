@@ -1,17 +1,16 @@
 import dataiku
 import json
 
-from constants import Columns, Group
 
-
-def read_statistics(dataset_name):
+def read_statistics(dataset_name,  group_column):
     dataset = dataiku.Dataset(dataset_name)
     df = dataset.get_dataframe()
-    if invalid_format_df(df):
+    if invalid_format_df(df, group_column):
         response = {"status": "error", "message": "The format of the statistics dataset is invalid. Make sure it is the output of the AB statistics custom recipe or edit values manually."}
     else:
-        A_df = df[df[Columns.AB_GROUP] == Group.A.value]
-        B_df = df[df[Columns.AB_GROUP] == Group.B.value]
+        groups = df[group_column].values
+        A_df = df[df[group_column] == groups[0]]
+        B_df = df[df[group_column] == groups[1]]
         size_A, success_rate_A = retrieve_statistics(A_df)
         size_B, success_rate_B = retrieve_statistics(B_df)
         if size_A < 0 or size_B < 0 or success_rate_A < 0 or success_rate_B < 0 or success_rate_A > 100 or success_rate_B > 100:
@@ -22,11 +21,11 @@ def read_statistics(dataset_name):
     return json.dumps(response)
 
 
-def invalid_format_df(df):
+def invalid_format_df(df, column_name):
     invalid_format = False
     if df.shape != (2, 3):
         invalid_format = True
-    elif not (df.columns == [u'dku_ab_group', u'sample_size', u'success_rate']).all():
+    elif not (df.columns == [column_name, u'sample_size', u'success_rate']).all():
         invalid_format = True
     return invalid_format
 

@@ -2,6 +2,7 @@
     let config = dataiku.getWebAppConfig()
     let input_mode = config["statistics_entry"];
     $scope.dataset_name = config["statistics_dataset"];
+    $scope.column_name = config["group_column"]
 
     if (input_mode === undefined && $scope.dataset_name === undefined) {
         alert("Please define how you want to input your statistics from the settings tab. After definining them, please click on the button Save and view web app. By default, manual setting is on.");
@@ -27,7 +28,7 @@
 }
 
 function load_values_from_df($scope, $http) {
-    let formData = { name: $scope.dataset_name };
+    let formData = { dataset_name: $scope.dataset_name, column_name: $scope.column_name };
     $http.post(getWebAppBackendUrl("statistics"), formData).then(function (response) {
         let response_data = response.data;
         let status = response_data.status;
