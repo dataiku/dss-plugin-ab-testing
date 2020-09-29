@@ -6,7 +6,7 @@ This plugin provides features to design AB testing and analyses their outcome in
 
 A web app computes the minimum sample sizes needed in the experiment while providing insightful visualisations of the distributions (Z test). A custom recipe can then use these estimated figures to split the input dataset containing the email addresses of the experiment population into two groups, A and B. 
 
-Here is the more detailled description of these two main components : 
+Here is a more detailled description of these two main components : 
 
 ### 1- AB testing design (custom web app)
 
@@ -29,7 +29,7 @@ From these values, a minimum sample size is computed and illustrated thanks to t
 
 #### Output
 
-There is no output, but where you click on the button save parameters, the parameters and the samples sizes are saved in the folder `Parameters` .
+There is no output, but when you click on the button save parameters, the parameters and the samples sizes are saved in the folder `Parameters` .
 
 ### 2- AB testing split (custom recipe)
 
@@ -49,7 +49,7 @@ This recipe splits the users enrolled in the experiment into two groups, usually
 * **Sample size for variation B** : Minimum sample size for the B group
 * **Deal with leftover users** :  If the population is greater than the sample size, this field specifies in which group the leftover users should go.
 
-#### Parameters
+#### Output
 
 * `Experiment dataset` : Input dataset with an extra column containing the group indicators used for the AB test (A or B)
 
@@ -79,11 +79,11 @@ From the results of your experiment, this recipe computes the statistics require
 
 From the `AB testing statistics` dataset, this web app gives a clear answer to the statistical test. Make sure to **refresh** the settings page when you open it.  
 
-### Input
+#### Input
 
 * `AB testing statistics` : Statistics required to answer the statistical test
 
-### Parameters
+#### Parameters
 
 * **AB statistics entry from** : do you want to retrieve statistics from the `AB testing statistics` dataset or just enter the values manually?
 * **Dataset** : It should be the output of the recipe AB statistics of the AB testing plugin. Otherwise, use the manual mode
@@ -92,4 +92,4 @@ From the `AB testing statistics` dataset, this web app gives a clear answer to t
 
 #### Output
 
-There is no output, but where you click on the button save results, the results are saved in the output folder. 
+There is no output, but when you click on the button save results, the results are saved in the output folder. 
