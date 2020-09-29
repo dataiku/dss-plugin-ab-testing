@@ -239,6 +239,7 @@ table, thead, tr, tbody, th {
 
 .btn-link{
     font-size: 0.6rem !important;
+    padding-left: 0rem !important;
 }
 
 .value{
@@ -272,3 +273,4 @@ table, thead, tr, tbody, th {
    color:    #ff7979;
    font-size: 11px;
 }
+
