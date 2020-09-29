@@ -95,7 +95,7 @@
                                         <div class="col-sm">
                                             <div class="field">
                                                 <input type="number" name="size_A" id="size_A" class="textbox_results"
-                                                    ng-model="size_A" ng-change="getResults()">
+                                                    ng-model="size_A" ng-change="getResults()" min="0">
                                             </div>
                                         </div>
                                     </div>
@@ -115,7 +115,7 @@
                                         <div class="col-sm">
                                             <div class="field">
                                                 <input type="number" name="size_B" id="size_B" class="textbox_results"
-                                                    ng-model="size_B" ng-change="getResults()">
+                                                    ng-model="size_B" ng-change="getResults()" min="0">
                                             </div>
                                         </div>
                                     </div>
@@ -157,7 +157,7 @@
                                             <div class="field">
                                                 <input type="number" name="success_rate_A" placeholder=""
                                                     id="success_rate_A" class="textbox_results"
-                                                    ng-model="success_rate_A" ng-change="getResults()" />
+                                                    ng-model="success_rate_A" ng-change="getResults()"  min="0" max="100"/>
                                             </div>
                                         </div>
                                     </div>
@@ -178,7 +178,7 @@
                                             <div class="field">
                                                 <input type="number" name="success_rate_B" placeholder=""
                                                     id="success_rate_B" class="textbox_results"
-                                                    ng-model="success_rate_B" ng-change="getResults()" />
+                                                    ng-model="success_rate_B" ng-change="getResults()" min="0" max="100"/>
                                             </div>
                                         </div>
                                     </div>
