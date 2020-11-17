@@ -1,10 +1,7 @@
-import dataiku
 import json
 
 
-def read_statistics(dataset_name,  group_column):
-    dataset = dataiku.Dataset(dataset_name)
-    df = dataset.get_dataframe()
+def read_statistics(df,  group_column):
     groups = df[group_column].values
     if invalid_format_df(df, group_column, groups):
         response = {"status": "error", "message": "The format of the statistics dataset is invalid. Make sure it is the output of the AB statistics custom recipe or edit values manually."}

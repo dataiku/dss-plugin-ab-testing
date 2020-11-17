@@ -33,7 +33,9 @@ def analyse_results():
 def get_statistics():
     dataset_name = json.loads(request.data).get("dataset_name")
     column_name = json.loads(request.data).get("column_name")
-    response = read_statistics(dataset_name, column_name)
+    dataset = dataiku.Dataset(dataset_name)
+    df = dataset.get_dataframe()
+    response = read_statistics(df, column_name)
     return response
 
 
