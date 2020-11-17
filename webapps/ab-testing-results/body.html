@@ -44,8 +44,16 @@
     </div>
 </header>
 
+
 <body class="background">
+
     <div class="flex-container" ng-app="resultApp" ng-controller="ResultController">
+        <div ng-if="modal.type"
+         class="modal-background"
+         tabindex=0
+         ng-keyup="$event.keyCode == 27 && removeModal()"
+         ng-click="removeModal($event)">
+        </div>
         <div class="background">
             <div class="container white-background title-padding">
                 <div class="row">

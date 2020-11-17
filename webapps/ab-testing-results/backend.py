@@ -2,6 +2,7 @@ from flask import request
 import dataiku
 from distutils.util import strtobool
 import json
+import traceback
 from dataiku.customwebapp import get_webapp_config
 
 from results.ab_calculator import compute_Z_score, compute_p_value
@@ -18,30 +19,39 @@ output_folder = get_output_folder(config, client, project_key)
 
 @app.route('/ab_calculator', methods=['POST'])
 def analyse_results():
-    form_data = json.loads(request.data)
-    size_A = form_data.get("size_A")
-    size_B = form_data.get("size_B")
-    CR_A = form_data.get("success_rate_A")/100
-    CR_B = form_data.get("success_rate_B")/100
-    two_tailed = strtobool(form_data.get("tail"))
-    Z_score = round(compute_Z_score(size_A, size_B, CR_A, CR_B), 3)
-    p_value = round(compute_p_value(Z_score, two_tailed), 3)
-    return json.dumps({"Z_score": Z_score, "p_value": p_value})
+    try:
+        form_data = json.loads(request.data)
+        size_A = form_data.get("size_A")
+        size_B = form_data.get("size_B")
+        CR_A = form_data.get("success_rate_A")/100
+        CR_B = form_data.get("success_rate_B")/100
+        two_tailed = strtobool(form_data.get("tail"))
+        Z_score = round(compute_Z_score(size_A, size_B, CR_A, CR_B), 3)
+        p_value = round(compute_p_value(Z_score, two_tailed), 3)
+        return json.dumps({"Z_score": Z_score, "p_value": p_value})
+    except:
+        return traceback.format_exc(), 500
 
 
 @app.route("/statistics", methods=["POST"])
 def get_statistics():
-    dataset_name = json.loads(request.data).get("dataset_name")
-    column_name = json.loads(request.data).get("column_name")
-    dataset = dataiku.Dataset(dataset_name)
-    df = dataset.get_dataframe()
-    response = read_statistics(df, column_name)
-    return response
+    try:
+        dataset_name = json.loads(request.data).get("dataset_name")
+        column_name = json.loads(request.data).get("column_name")
+        dataset = dataiku.Dataset(dataset_name)
+        df = dataset.get_dataframe()
+        response = read_statistics(df, column_name)
+        return response
+    except:
+        return traceback.format_exc(), 500
 
 
 @app.route('/write_parameters', methods=['POST'])
 def save():
-    data = json.loads(request.data)
-    fields_to_save = ["size_A", "size_B", "success_rate_A", "success_rate_B", "uplift", "p_value", "z_score"]
-    save_parameters(data, output_folder, fields_to_save)
-    return json.dumps({"status": "Parameters saved"})
+    try:
+        data = json.loads(request.data)
+        fields_to_save = ["size_A", "size_B", "success_rate_A", "success_rate_B", "uplift", "p_value", "z_score"]
+        save_parameters(data, output_folder, fields_to_save)
+        return json.dumps({"status": "Parameters saved"})
+    except:
+        return traceback.format_exc(), 500
