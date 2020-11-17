@@ -54,6 +54,12 @@
 
 <body>
     <div class="flex-container" ng-app="abApp" ng-controller="SizeController">
+        <div ng-if="modal.type"
+         class="modal-background"
+         tabindex=0
+         ng-keyup="$event.keyCode == 27 && removeModal()"
+         ng-click="removeModal($event)">
+        </div>
         <div class="background">
             <div class="container white-background title-padding">
                 <div class="row">

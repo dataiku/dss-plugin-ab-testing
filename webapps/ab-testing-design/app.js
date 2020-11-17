@@ -47,7 +47,16 @@ attribution.addEventListener("click", function (event) {
 // compute size
 var app = angular.module("abApp", []);
 
-app.controller("SizeController", function ($scope, $http) {
+app.controller("SizeController", function ($scope, $http, ModalService) {
+
+    $scope.modal = {};
+    $scope.removeModal = function(event) {
+        if (ModalService.remove($scope.modal)(event)) {
+            angular.element(".template").focus();
+        }
+    };
+    $scope.createModal = ModalService.create($scope.modal);
+
     $scope.bcr = 30;
     $scope.mde = 5;
     $scope.sig_level = 95;
@@ -83,9 +92,81 @@ app.controller("SizeController", function ($scope, $http) {
                     update_chart($scope);
                     manage_duration($scope);
                     hide_field("attribution_alert");
-                }).catch(function (error) {
-                    alert_sample_size("Issue with the fetch operation. Please, check back end and back end logs. ", "There was an issue with the fetch operation " + error.message)
+                }, function(e) {
+                    $scope.createModal.error(e.data);
                 });
         }
     };
+});
+
+
+app.service("ModalService", function() {
+    const remove = function(config) {
+        return function(event) {
+            if (event && !event.target.className.includes("dku-modal-background")) return false;
+            for (const key in config) {
+                delete config[key];
+            }
+            return true;
+        }
+    };
+    return {
+        create: function(config) {
+            return {
+                confirm: function(msg, title, confirmAction) {
+                    Object.assign(config, {
+                        type: "confirm",
+                        msg: msg,
+                        title: title,
+                        confirmAction: confirmAction
+                    });
+                },
+                error: function(msg) {
+                    Object.assign(config, {
+                        type: "error",
+                        msg: msg,
+                        title: "Backend error"
+                    });
+                },
+                alert: function(msg, title) {
+                    Object.assign(config, {
+                        type: "alert",
+                        msg: msg,
+                        title: title
+                    });
+                },
+                prompt: function(inputLabel, confirmAction, res, title, msg, attrs) {
+                    Object.assign(config, {
+                        type: "prompt",
+                        inputLabel: inputLabel,
+                        promptResult: res,
+                        title: title,
+                        msg: msg,
+                        conditions: attrs,
+                        confirmAction: function() {
+                            confirmAction(config.promptResult);
+                        }
+                    });
+                }
+            };
+        },
+        remove: remove
+    }
+});
+
+app.directive("modalBackground", function($compile) {
+    return {
+        scope: true,
+        restrict: "C",
+        templateUrl: "/plugins/ab-testing/resource/templates/modal.html",
+        link: function(scope, element) {
+            if (scope.modal.conditions) {
+                const inputField = element.find("input");
+                for (const attr in scope.modal.conditions) {
+                    inputField.attr(attr, scope.modal.conditions[attr]);
+                }
+                $compile(inputField)(scope);
+            }
+        }
+    }
 });
