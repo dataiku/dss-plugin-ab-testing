@@ -64,9 +64,5 @@
         }
     ],
     "roles": [
-        {
-            "type": "DATASET",
-            "targetParamsKey": "statistics_dataset"
-        }
     ]
 }
