@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="/static/public/styles/1.0.0/dku-styles.css" />
+<link rel="stylesheet" href="/static/public/styles/1.0.0/fonts.css" />
+<link rel="stylesheet" href="/static/public/styles/1.0.0/variables.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-</link>
 <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/assets/css/docs.min.css">
 </link>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css">
@@ -38,61 +38,43 @@
 
 <script src="/plugins/ab-testing/resource/js/visualisation/statistics.js" type="text/javascript"></script>
 <script src="/plugins/ab-testing/resource/js/visualisation/chart.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/plugins/ab-testing/webapps/ab-testing-design/style.css" />
 
-<title>Sample size estimator</title>
 
-<header class="navbar bd-navbar bg-light background no-margin">
-    <a class="navbar-brand" id=href="#">
-        <img src="https://www.dataiku.com/static/img/theme/logo/page.png" width="180" height="64" alt=""> </img>
-    </a>
-    <div class="d-flex justify-content-between">
-        <div>
-            <h2>Sample size estimator</h2>
-        </div>
-    </div>
-</header>
-
-<body>
-    <div class="flex-container" ng-app="abApp" ng-controller="SizeController">
-        <div ng-if="modal.type"
-         class="modal-background"
-         tabindex=0
-         ng-keyup="$event.keyCode == 27 && removeModal()"
-         ng-click="removeModal($event)">
-        </div>
-        <div class="background">
-            <div class="container white-background title-padding">
-                <div class="row">
-                    <div class="col-xl">
-                        <h1>Frequentist AB Testing - Sample size estimator </h1>
-
-                        <a class="anchorjs-link " href="#overview" aria-label="Anchor" data-anchorjs-icon="#"
-                            style="padding-left: 0.375em;"></a>
-                        <h2>Compare two proportions : conversion rate, click through rate.</h2>
-                        <p class="explanations">
-                            The average conversion rates of two independent samples A and B are compared. A is the
-                            control
-                            group
-                            while B is the experiment group. We assume that the two samples follow binomial
-                            distributions.
-
-                        </p>
+<body ng-app="abApp" ng-controller="SizeController">
+    <div class="d-flex justify-content-center dku-background" >
+        <div class="w-75">
+            <div  class="dku-white-form">
+                    <div class="title-sb" style="padding-bottom:8px">
+                        Frequentist AB Testing - Sample size estimator
                     </div>
-                </div>
-                <div class="row border-top-custom">
+
+                    <div class="text">
+                        Compare two proportions : conversion rate, click through rate.
+                        <br>
+                        The average conversion rates of two independent samples A and B are compared. A is the
+                        control group while B is the experiment group.
+                        <br>
+                        We assume that the two samples follow binomial
+                        distributions.
+                    </div>
+            </div>
+
+            <div class="dku-white-form">
+                <div class="row">
                     <div class="col-3 border-custom">
                         <form id="form_data">
                             <table class="table_fields">
                                 <tr>
                                     <td class="field">
-                                        <label for="bcr">Baseline success rate (%)
+                                        <div class="text-r" for="bcr">Baseline success rate (%)
                                             <button id="info_bcr" type="button" class="btn btn-link"
                                                 data-toggle="popover" title="Baseline success rate" data-content="The baseline success rate defines the current success rate of
                                                 the campaign or the page.
                                                 This is the success rate of the control group A.
                                                 It equals to the number of successes divided by the reach.">
                                                 [?] </button>
-                                        </label>
+                                        </div>
                                         <input type="number" name="bcr" placeholder="Enter a value between 0 and 100" id="bcr" ng-model="bcr"
                                             ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_bcr" class="alert"> </span>
@@ -100,12 +82,12 @@
                                 </tr>
                                 <tr>
                                     <td class="field">
-                                        <label for="mde"> Minimal detectable effect (%)
-                                            <button id="info_mde" type="button" class="btn btn-link"
+                                        <div class="text-r" for="mde"> Minimal detectable effect (%)
+                                            <button id="info_mde" type="button" class="btn btn-link text"
                                                 data-toggle="popover" title="Minimal detectable effect"
                                                 data-content="The minimum detectable effect is the minimal variation of the
                                             baseline conversion rate that you need to detect a statistically significant change."> [?] </button>
-                                        </label>
+                                        </div>
                                         <input type="number" name="mde" placeholder="Enter a value between 0 and 100" id="mde" ng-model="mde"
                                             ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_mde" class="alert"> </span>
@@ -113,18 +95,17 @@
                                 </tr>
                                 <tr>
                                     <td class="field decrease-padding">
-                                        <button id="more"
-                                            class="btn btn-outline-info btn-rounded waves-effect  btn-block">
-                                            Advanced parameters
+                                        <button class="text-r" id="more" type="button" style="color:#2D86FB; background:none; border:none; padding: 0; margin: 0; box-shadow: none; text-shadow: none; box-sizing: border-box; outline: 0; cursor: pointer;">
+                                            <span>&#9660</span> Advanced parameters
                                         </button>
                                     </td>
                                 </tr>
                             </table>
                             <table class="table_fields d-none" id="optional_fields">
                                 <tr>
-                                    <td class="field">
-                                        <label for="sig_level"> Statistical significance (%)
-                                            <button id="info_sig_level" type="button" class="btn btn-link"
+                                    <td class="field" style="padding-top:0px;">
+                                        <div class="text-r" for="sig_level"> Statistical significance (%)
+                                            <button id="info_sig_level" type="button" class="btn btn-link text"
                                                 data-toggle="popover" title="Statistical significance" data-content="The statistical significance is the probability to find that the two
                                             samples
                                             have
@@ -143,7 +124,7 @@
                                             there
                                             is one."> [?]
                                             </button>
-                                        </label>
+                                        </div>
 
                                         <input type="number" name="sig_level" placeholder="Enter a value between 0 and 100" id="sig_level"
                                             ng-model="sig_level" ng-change="computeSize()" min="0" max="100" />
@@ -152,8 +133,8 @@
                                 </tr>
                                 <tr>
                                     <td class="field">
-                                        <label for="power"> Power (%)
-                                            <button id="info_power" type="button" class="btn btn-link"
+                                        <div class="text-r" for="power"> Power (%)
+                                            <button id="info_power" type="button" class="btn btn-link text"
                                                 data-toggle="popover" title="Power" data-content="The power is the probability to find that the two samples have a
                                             different
                                             conversion rates (H1) when this
@@ -162,7 +143,7 @@
                                             probability.
                                             It equals to \(1-\beta\), with \(\beta\) the type II error.
                                             The most common value for power is 80%."> [?] </button>
-                                        </label>
+                                        </div>
                                         <input type="number" name="power" placeholder="Enter a value between 0 and 100" id="power"
                                             ng-model="power" ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_power" class="alert"> </span>
@@ -170,8 +151,8 @@
                                 </tr>
                                 <tr>
                                     <td class="field">
-                                        <label for="ratio"> Size ratio (%)
-                                            <button id="info_ratio" type="button" class="btn btn-link"
+                                        <div class="text-r" for="ratio"> Size ratio (%)
+                                            <button id="info_ratio" type="button" class="btn btn-link text"
                                                 data-toggle="popover" title="Ratio" data-content="The ratio between the size of group B and the size of group A, given
                                             that A
                                             outnumbers B.
@@ -180,7 +161,7 @@
                                             group, so
                                             that fewer people
                                             are impacted by the changes."> [?] </button>
-                                        </label>
+                                        </div>
                                         <input type="number" name="ratio" placeholder="Enter a value between 0 and 100" id="ratio"
                                             ng-model="ratio" ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_ratio" class="alert"> </span>
@@ -188,8 +169,8 @@
                                 </tr>
                                 <tr>
                                     <td class="field decrease-padding">
-                                        <label id="tail_label" for="tail">Two tailed test
-                                            <button id="info_tail" type="button" class="btn btn-link"
+                                        <div class="text-r" id="tail_label" for="tail">Two tailed test
+                                            <button id="info_tail" type="button" class="btn btn-link text"
                                                 data-toggle="popover" title="Two tailed test" data-content='
                                                 Are you willing to test for an increase in conversion rate, a
                                                 decrease,
@@ -221,7 +202,7 @@
                                                 A two-tailed test is not necessary since you are only interested in
                                                 positive
                                                 changes.'> [?] </button>
-                                        </label>
+                                        </div>
                                         <select name="tail" id="tail" ng-model="tail" ng-change="computeSize()">
                                             <option value="false" class="alert">False</option>
                                             <option value="true">True</option>
@@ -231,9 +212,9 @@
                             </table>
                             <table class="table_fields">
                                 <tr>
-                                    <td class="field">
-                                        <label for="traffic">Daily number of people exposed
-                                        </label>
+                                    <td class="field" style="padding-top:0px;">
+                                        <div class="text-r" for="traffic">Daily number of people exposed
+                                        </div>
                                         <input type="number" name="traffic" placeholder="Optional" id="traffic"
                                             ng-model="traffic" ng-change="computeSize()" min="0"/>
                                         <span id="alert_traffic" class="alert"> </span>
@@ -241,8 +222,8 @@
                                 </tr>
                                 <tr>
                                     <td class="field">
-                                        <label for="reach"> Percentage of the traffic affected
-                                        </label>
+                                        <div class="text-r" for="reach"> Percentage of the traffic affected
+                                        </div>
                                         <input type="number" name="reach" placeholder="Enter a value between 0 and 100" id="reach" ng-model="reach"
                                             ng-change="computeSize()" min="0" max="100" />
                                         <span id="alert_reach" class="alert"> </span>
@@ -253,20 +234,21 @@
                         </form>
                     </div>
                     <div class="col-9">
-                        <h2 class="text-center header_margin"> Visualisation of the statistical test
-                            <button id="info_chart" type="button" class="btn btn-link" data-toggle="popover"
-                                data-content="How likely is a change in the success rate? 
+                        <div class="small-title-sb"> Visualisation of the statistical test
+                            <button id="info_chart" type="button" class="btn btn-link text" data-toggle="popover"
+                                data-content="How likely is a change in the success rate?
                                 To answer this, we define two probability laws that model the likelihood of two potential outcomes or hypothesis called H. H0 represents a zero difference in the success rate.
-                                H1 assumes that the difference is equal to the minimum detectable effect. 
-                                The confidence interval represents a threshold for the observed difference. If the observed difference is above threshold, we accept H1, which means that a change is measured. If below, no change is detected. 
-                                The significance level represents the probability to wrongly measure a change. The power represents the probability to rightly detect a change. 
+                                H1 assumes that the difference is equal to the minimum detectable effect.
+                                The confidence interval represents a threshold for the observed difference. If the observed difference is above threshold, we accept H1, which means that a change is measured. If below, no change is detected.
+                                The significance level represents the probability to wrongly measure a change. The power represents the probability to rightly detect a change.
                                 The computation of the sample size results from a trade-off between the significance level and the power. ">
                                 [?] </button>
-                        </h2>
+                        </div>
                         <canvas class="w-100" id="chart"></canvas>
-                        <h2 class="text-center header_margin"> Sample sizes </h2>
-                        <div class="row justify-content-md-center">
-                            <div class="col-md-auto">
+                        <br><br>
+                        <div class="row">
+                            <div class="col small-title-sb"> Sample sizes </div>
+                            <div class="col text">
                                 <table>
                                     <thead>
                                         <tr>
@@ -281,7 +263,9 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <div class="text-center">
+                                </div>
+
+                                <div class="col">
                                     <div id="duration" class="d-none">
                                         <div>
                                             This experiment should run for
@@ -292,15 +276,18 @@
                                             days
                                         </div>
                                     </div>
+                                <div class="col" id="save-button">
+                                    <div class="row justify-content-end">
+                                        <button id="attribution_button" type="button" style="background-color:var(--blue); color: #ffffff; border: 1px solid transparent;     font-family: 'SourceSansPro'; text-transform: uppercase; font-size: 13px; font-weight: 500; padding: 3px 8px; margin: 0; line-height: 1.4; background-image: inherit; box-shadow: none; text-shadow: none; box-sizing: border-box; outline: 0; cursor: pointer;
+        height: 26px;">
+                                            Save sizes in the folder
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="text-center" id="save-button">
-                                    <a id="attribution_button" type="button"
-                                        class="btn btn-outline-info btn-rounded waves-effect  btn-lg">
-                                        Save sizes in the folder</a>
-                                </div>
+
                             </div>
                         </div>
-                        <div class="d-none alert_recipe text-center" id="attribution_alert">
+                        <div class="d-none alert_recipe text-center text" id="attribution_alert">
                             <div>
                                 The sizes were saved!
                             </div>
@@ -318,35 +305,29 @@
                 </div>
             </div>
 
-            <div class="container white-background">
-                <div class="row border-top-custom title-padding">
-                    <div class="col-xl">
-                        <h2> Confusion matrix </h2>
-                    </div>
-                </div>
+            <div class="dku-white-form">
+                <div class="small-title-sb"> Confusion matrix </div>
                 <div class="row justify-content-md-center">
                     <div class="col-10 confusion-matrix">
                         <table>
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th class="confusion">Predicted : No changes</th>
-                                    <th class="confusion">Predicted : Significant changes</th>
+                                    <th class="text-sb">Predicted : No changes</th>
+                                    <th class="text-sb">Predicted : Significant changes</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="confusion">
-                                    <td class="confusion_header">Actual : No changes</td>
-                                    <td>1 - \( \alpha = \) stat significance = <span class="value">{{sig_level}}</span>%
+                                    <td class="text-sb">Actual : No changes</td>
+                                    <td class="text">1 - \( \alpha = \) stat significance = <span>{{sig_level}}</span>%
                                     </td>
-                                    <td> \( \alpha = \) false positive probability = <span
-                                            class="value">{{100-sig_level}}</span>% </td>
+                                    <td class="text"> \( \alpha = \) false positive probability = <span>{{100-sig_level}}</span>% </td>
                                 </tr>
                                 <tr class="confusion">
-                                    <td class="confusion_header">Actual : Significant changes</td>
-                                    <td>\( \beta\) = false negative probability = <span
-                                            class="value">{{100-power}}</span>%</td>
-                                    <td> 1-\( \beta = \) power = <span class="value">{{power}}% </span></td>
+                                    <td class="text-sb">Actual : Significant changes</td>
+                                    <td class="text">\( \beta\) = false negative probability = <span>{{100-power}}</span>%</td>
+                                    <td class="text"> 1-\( \beta = \) power = <span>{{power}}% </span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -354,16 +335,12 @@
                 </div>
             </div>
 
-
-            <div class="container white-background"">
-            <div class=" row border-top-custom title-padding ">
-                <div class=" col-xl">
+            <div class="dku-white-form">
                 <div class="text-center">
                     <button id="size_derivation" type="button" class="btn btn-link">
-                        <div class='extra'> How is the sample size computed? </div>
+                        <div class='text extra'> How is the sample size computed? </div>
                     </button>
-                </div>
-                <div class="d-none" id="derivation_text">
+                <div class="d-none text" id="derivation_text">
                     <h2 class="derivation_headers"> References </h2>
                     <div class="derivation">
                         <ul>
@@ -539,6 +516,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+
         </div>
     </div>
 </body>

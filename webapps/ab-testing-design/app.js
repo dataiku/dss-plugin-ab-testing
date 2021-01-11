@@ -15,7 +15,7 @@ $('body').on('click', function (e) {
 let hide_parameters = true;
 const advancedButton = document.getElementById('more');
 advancedButton.addEventListener('click', function (event) {
-    hide_parameters = display(hide_parameters, "more", "optional_fields", true, "Advanced parameters", "Fewer parameters");
+    hide_parameters = display(hide_parameters, "more", "optional_fields", true, "<span>&#9660</span> Advanced parameters", "<span>&#9650</span> Fewer parameters");
     event.preventDefault();
 });
 

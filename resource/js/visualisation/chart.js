@@ -12,13 +12,14 @@ function plot_chart($scope) {
             datasets: get_datasets($scope)
         },
         "options": {
-            elements: {
-                point: {
-                    radius: 0
-                }
-            },
             legend: {
-                display: true
+                display: true,
+                labels:{
+                    usePointStyle: true,
+                    fontSize: 11,
+                    fontColor: "#222222",
+                    fontFamily: "'Source Sans Pro', sans-serif"
+                }
             },
             scales: {
                 xAxes: [{
@@ -29,7 +30,9 @@ function plot_chart($scope) {
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: "Values of the difference in success rates = success rate B - success rate A "
+                        labelString: "Values of the difference in success rates = success rate B - success rate A ",
+                        fontFamily: "'Source Sans Pro', sans-serif",
+                        fontSize: 12
                       }
                 }],
                 yAxes: [{
@@ -38,7 +41,9 @@ function plot_chart($scope) {
                     },
                     scaleLabel: {
                         display: true,
-                        labelString: "Likelihood (Probability density)"
+                        labelString: "Likelihood (Probability density)",
+                        fontFamily: "'Source Sans Pro', sans-serif",
+                        fontSize: 12
                       }
                 }]
             }
@@ -77,13 +82,15 @@ function get_datasets($scope) {
         data: $scope.distribution_A,
         borderColor: "rgba(47, 53, 66,1.0)",
         fill: false,
-        label: "H0"
+        label: "H0",
+        pointStyle: 'line'
     },
     {
         data: $scope.distribution_B,
         borderColor: "#ffc845",
         fill: false,
-        label: "H1"
+        label: "H1",
+        pointStyle: 'line'
     },
     {
         data: CI_line,
@@ -91,21 +98,29 @@ function get_datasets($scope) {
         fill: false,
         borderDash: [6],
         borderWidth: 1,
-        label: "Confidence interval"
+        label: "Confidence interval",
+        pointStyle: 'line'
+
     },
     {
         data: area_boundary_A,
         fill: true,
         borderWidth: 0,
         backgroundColor: "rgba(6, 82, 221,0.2)",
-        label: "Significance level"
+        borderColor: "rgba(6, 82, 221,0.2)",
+        label: "Significance level",
+        pointStyle: 'line',
+        borderWidth: 4
     },
     {
         data: area_boundary_B,
         fill: true,
         borderWidth: 0,
         backgroundColor: "rgba(236, 204, 104,0.2)",
-        label: "Power"
+        borderColor: "rgba(236, 204, 104,0.2)",
+        label: "Power",
+        pointStyle: 'line',
+        borderWidth: 4
     }]
     return chart_datasets;
 }
