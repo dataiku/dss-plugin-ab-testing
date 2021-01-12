@@ -1,6 +1,6 @@
 {
     "meta": {
-        "label": "AB test results",
+        "label": "AB testing results",
         "description": "Analyse the results of an AB test",
         "icon": "icon-dashboard"
     },
@@ -8,9 +8,7 @@
     "hasBackend": "true",
     "noJSSecurity": "false",
     "standardWebAppLibraries": [
-        "jquery",
         "dataiku",
-        "bootstrap",
         "d3"
     ],
     "kind": "PYTHON",

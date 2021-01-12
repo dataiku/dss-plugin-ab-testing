@@ -281,7 +281,7 @@ table, thead, tr, tbody, th {
 }
 
 .alert_recipe {
-    font-size: 14px;
+    font-size: 13px;
     color: rgb(54, 163, 158);
 }
 
@@ -551,4 +551,8 @@ table, thead, tr, tbody, th {
 }
 .dku-btn-primary:active {
     background: #22a4d9;
+}
+
+.dku-box {
+    border: 1px solid green;
 }

@@ -6,20 +6,20 @@ function test_outcome($scope) {
     let displayed_difference = Math.round(difference * 100);
     let conclusion = $("#result_caption");
     if (difference > 0) {
-        var message = "<div class='border rounded p-5'> <div>• Variant A is " + displayed_difference + "% better than variant B with a " + displayed_confidence + "% confidence level.</div> ";
+        var message = "<div class='dku-box p-4 text'> <div>Variant A is " + displayed_difference + "% better than variant B with a <b>" + displayed_confidence + "% confidence level.</b></div> ";
     } else {
         displayed_difference = - displayed_difference
-        var message = "<div class='border rounded p-5'> <div> • Variant B is " + displayed_difference + "% better than variant A with a <span id = 'confidence'>" + displayed_confidence + "% confidence level. </span> </div>";
+        var message = "<div class='dku-box p-4 text'> <div>Variant B is " + displayed_difference + "% better than variant A with a <b>" + displayed_confidence + "% confidence level. </b> </div>";
     };
     if (confidence_level >= sig_level) {
-        message += "<div id = 'significance' > • These results are statistically significant within " + $scope.sig_level + "% significance level </div> </div>";
+        message += "<div id = 'significance' >These results are statistically significant within <b>" + $scope.sig_level + "% significance level</b>.</div></div>";
         conclusion.html(message);
         $("#significance").addClass("green");
         $("#confidence").addClass("green");
         $("#p_value").addClass("green");
         var is_significant = true;
     } else {
-        message += "<div id = 'significance' > • These results are not statistically significant within " + $scope.sig_level + "% significance level </div> </div>";
+        message += "<div id = 'significance' > • These results are not statistically significant within <b>" + $scope.sig_level + "% significance level </b></div></div>";
         conclusion.html(message);
         $("#significance").addClass("red");
         $("#p_value").removeClass("green");
@@ -41,7 +41,8 @@ function plot_results_chart($scope) {
                 data: Random_normal_Dist(0, 1),
                 borderColor: "rgba(47, 53, 66,1.0)",
                 fill: false,
-                label: "H0"
+                label: "H0",
+                pointStyle: 'line'
             }]
         },
         "options": {
@@ -51,7 +52,13 @@ function plot_results_chart($scope) {
                 }
             },
             legend: {
-                display: true
+                display: true,
+                labels:{
+                    usePointStyle: true,
+                    fontSize: 11,
+                    fontColor: "#222222",
+                    fontFamily: "'Source Sans Pro', sans-serif"
+                }
             },
             scales: {
                 xAxes: [{
@@ -89,28 +96,33 @@ function get_results_datasets($scope) {
         data: $scope.distribution,
         borderColor: "rgba(47, 53, 66,1.0)",
         fill: false,
-        label: "H0"
+        label: "H0",
+        pointStyle: 'line',
     }, {
         data: CI_line,
         borderColor: "grey",
         fill: false,
         borderDash: [6],
         borderWidth: 1,
-        label: "Confidence interval"
+        label: "Confidence interval",
+        pointStyle: 'line'
     },
     {
         data: area_boundary,
         fill: true,
-        borderWidth: 0,
+        borderWidth: 4,
         backgroundColor: area_color,
-        label: "Significance level"
+        borderColor: area_color,
+        label: "Significance level",
+        pointStyle: 'line'
     },
     {
         data: Z_score_point,
-        borderColor: "#36a39e",
+        borderColor: "#3B99FC",
         fill: false,
         borderWidth: 4,
-        label: "Your AB score"
+        label: "Your AB score",
+        pointStyle: 'line'
     },
     ];
     return updated_datasets;

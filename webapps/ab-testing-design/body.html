@@ -23,8 +23,6 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
 
-
-
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -44,6 +42,14 @@
 <body ng-app="abApp" ng-controller="SizeController">
     <div class="d-flex justify-content-center dku-background" >
         <div class="w-75">
+
+            <div ng-if="modal.type"
+             class="modal-background"
+             tabindex=0
+             ng-keyup="$event.keyCode == 27 && removeModal()"
+             ng-click="removeModal($event)">
+            </div>
+
             <div  class="dku-white-form">
                     <div class="title-sb" style="padding-bottom:16px">
                         Frequentist AB Testing - Sample size estimator
