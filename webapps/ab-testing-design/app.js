@@ -158,7 +158,7 @@ app.directive("modalBackground", function($compile) {
     return {
         scope: true,
         restrict: "C",
-        templateUrl: "/plugins/ab-testing/resource/templates/modal.html",
+        templateUrl: "/plugins/ab-test-calculator/resource/templates/modal.html",
         link: function(scope, element) {
             if (scope.modal.conditions) {
                 const inputField = element.find("input");

@@ -48,7 +48,6 @@ app.controller("ResultController", function ($scope, $http, ModalService) {
 
     $scope.getResults = function () {
         let formData = { size_A: $scope.size_A, size_B: $scope.size_B, success_rate_A: $scope.success_rate_A, success_rate_B: $scope.success_rate_B, tail: $scope.tail, sig_level: $scope.sig_level };
-        console.log('before calling backend');
         $http.post(getWebAppBackendUrl("ab_calculator"), formData)
             .then(function (response) {
                 let response_data = response.data;
@@ -58,7 +57,6 @@ app.controller("ResultController", function ($scope, $http, ModalService) {
                 $scope.test_is_significant = test_outcome($scope);
                 $scope.chart.config.data.datasets = get_results_datasets($scope);
                 $scope.chart.update(0);
-                console.log('we are here')
             }, function(e) {
                 $scope.createModal.error(e.data);
             });
@@ -134,7 +132,7 @@ app.directive("modalBackground", function($compile) {
     return {
         scope: true,
         restrict: "C",
-        templateUrl: "/plugins/ab-testing/resource/templates/modal.html",
+        templateUrl: "/plugins/ab-test-calculator/resource/templates/modal.html",
         link: function(scope, element) {
             if (scope.modal.conditions) {
                 const inputField = element.find("input");

@@ -23,6 +23,7 @@ def analyse_results():
         form_data = json.loads(request.data)
         size_A = form_data.get("size_A")
         size_B = form_data.get("size_B")
+        print('-------', form_data.get("success_rate_A"))
         CR_A = form_data.get("success_rate_A")/100
         CR_B = form_data.get("success_rate_B")/100
         two_tailed = strtobool(form_data.get("tail"))
