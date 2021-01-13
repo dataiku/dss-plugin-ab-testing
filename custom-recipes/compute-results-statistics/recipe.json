@@ -1,7 +1,7 @@
 {
     "meta": {
-        "label": "AB testing statistics",
-        "description": "Compute statistics to analyze the result of an AB test",
+        "label": "Experiment summary",
+        "description": "Analyze the result of an AB test experiment",
         "icon": " icon-subscript"
     },
     "selectableFromDataset": "results",

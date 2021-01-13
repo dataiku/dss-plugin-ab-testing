@@ -1,7 +1,7 @@
 {
   "meta": {
-    "label": "AB testing design",
-    "description": "Design AB testing by computing the minimum sample size that you need",
+    "label": "AB test sample size calculator",
+    "description": "Computing the minimum sample size needed for an AB test",
     "icon": " icon-zoom-in"
   },
   "baseType": "STANDARD",

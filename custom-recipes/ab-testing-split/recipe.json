@@ -1,6 +1,6 @@
 {
     "meta": {
-        "label": "AB testing split",
+        "label": "Population split",
         "description": "Split a list of users into a A group and a B group.",
         "icon": "icon-beaker"
     },

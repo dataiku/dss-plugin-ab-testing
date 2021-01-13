@@ -1,6 +1,6 @@
 {
     "meta": {
-        "label": "AB testing results",
+        "label": "AB test results analysis",
         "description": "Analyse the results of an AB test",
         "icon": "icon-dashboard"
     },
