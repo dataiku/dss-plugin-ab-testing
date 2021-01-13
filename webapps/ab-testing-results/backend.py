@@ -8,7 +8,7 @@ from dataiku.customwebapp import get_webapp_config
 from results.ab_calculator import compute_Z_score, compute_p_value
 from results.statistics_helper import read_statistics
 from dku_tools import get_output_folder
-from helpers import save_parameters
+from helpers import save_parameters, check_int
 
 config = get_webapp_config()
 project_key = dataiku.default_project_key()
@@ -21,11 +21,15 @@ output_folder = get_output_folder(config, client, project_key)
 def analyse_results():
     try:
         form_data = json.loads(request.data)
+
+        check_int(form_data.get("size_A"), 'size A')
+        check_int(form_data.get("size_B"), 'size B')
+
         size_A = form_data.get("size_A")
         size_B = form_data.get("size_B")
-        print('-------', form_data.get("success_rate_A"))
-        CR_A = form_data.get("success_rate_A")/100
-        CR_B = form_data.get("success_rate_B")/100
+        CR_A = float(form_data.get("success_rate_A"))/100
+        CR_B = float(form_data.get("success_rate_B"))/100
+        print('aaaaaaa', CR_A, CR_B)
         two_tailed = strtobool(form_data.get("tail"))
         Z_score = round(compute_Z_score(size_A, size_B, CR_A, CR_B), 3)
         p_value = round(compute_p_value(Z_score, two_tailed), 3)

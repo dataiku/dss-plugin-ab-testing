@@ -25,6 +25,8 @@ explain("tail");
 explain("sig_level");
 */
 
+
+
 var app = angular.module("resultApp", []);
 
 app.controller("ResultController", function ($scope, $http, ModalService) {

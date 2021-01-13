@@ -10,3 +10,8 @@ def save_parameters(variables, folder, fields_to_save):
     parameters.write(dumps(tracking))
     parameters.seek(0)
     folder.upload_stream(filename, parameters)
+
+
+def check_int(x, name):
+    if not isinstance(x, int):
+        raise ValueError('{} needs to be an integer.'.format(name))
