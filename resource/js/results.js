@@ -6,10 +6,10 @@ function test_outcome($scope) {
     let displayed_difference = Math.round(difference * 100);
     let conclusion = $("#result_caption");
     if (difference > 0) {
-        var message = "<div class='dku-box p-4 text'> <div>Variant A is " + displayed_difference + "% better than variant B with a <b>" + displayed_confidence + "% confidence level.</b></div> ";
+        var message = "<div class='dku-box p-3 text-r'> <div>Variant A is " + displayed_difference + "% better than variant B with a <b>" + displayed_confidence + "% confidence level.</b></div> ";
     } else {
         displayed_difference = - displayed_difference
-        var message = "<div class='dku-box p-4 text'> <div>Variant B is " + displayed_difference + "% better than variant A with a <b>" + displayed_confidence + "% confidence level. </b> </div>";
+        var message = "<div class='dku-box p-3 text-r'> <div>Variant B is " + displayed_difference + "% better than variant A with a <b>" + displayed_confidence + "% confidence level. </b> </div>";
     };
     if (confidence_level >= sig_level) {
         message += "<div id = 'significance' >These results are statistically significant within <b>" + $scope.sig_level + "% significance level</b>.</div></div>";

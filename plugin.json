@@ -4,7 +4,7 @@
     "meta": {
         "label": "AB testing",
         "description": "Perform AB testing in the most enjoyable way",
-        "author": "Dataiku (Adam JELLEY and Marine SOBAS)",
+        "author": "Dataiku (Adam JELLEY, Marine SOBAS and Du PHAN)",
         "icon": "icon-beaker",
         "tags": [
             "Marketing"
