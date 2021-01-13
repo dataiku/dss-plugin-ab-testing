@@ -281,8 +281,7 @@ table, thead, tr, tbody, th {
 }
 
 .alert_recipe {
-    font-size: 14px;
-    color: rgb(54, 163, 158);
+    color: #4CAF50;
 }
 
 
