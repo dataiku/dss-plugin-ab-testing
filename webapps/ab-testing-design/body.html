@@ -83,7 +83,8 @@
                                         </div>
                                         <input type="number" name="bcr" placeholder="Enter a value between 0 and 100" id="bcr" ng-model="bcr"
                                             ng-change="computeSize()" min="0" max="100" />
-                                        <span id="alert_bcr" class="alert"> </span>
+                                        <div id="alert_bcr" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -96,13 +97,13 @@
                                         </div>
                                         <input type="number" name="mde" placeholder="Enter a value between 0 and 100" id="mde" ng-model="mde"
                                             ng-change="computeSize()" min="0" max="100" />
-                                        <span id="alert_mde" class="alert"> </span>
+                                        <div id="alert_mde" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="field decrease-padding">
+                                    <td class="field">
                                         <button class="text-r" id="more" type="button" style="color:#2D86FB; background:none; border:none; padding: 0; margin: 0; box-shadow: none; text-shadow: none; box-sizing: border-box; outline: 0; cursor: pointer;">
-                                            <span>&#9660</span> Advanced parameters
+                                            <span>&#9660</span> advanced parameters
                                         </button>
                                     </td>
                                 </tr>
@@ -134,7 +135,8 @@
 
                                         <input type="number" name="sig_level" placeholder="Enter a value between 0 and 100" id="sig_level"
                                             ng-model="sig_level" ng-change="computeSize()" min="0" max="100" />
-                                        <span id="alert_sig_level" class="alert"> </span>
+                                        <div id="alert_sig_level" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -152,7 +154,8 @@
                                         </div>
                                         <input type="number" name="power" placeholder="Enter a value between 0 and 100" id="power"
                                             ng-model="power" ng-change="computeSize()" min="0" max="100" />
-                                        <span id="alert_power" class="alert"> </span>
+                                        <div id="alert_power" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -170,7 +173,7 @@
                                         </div>
                                         <input type="number" name="ratio" placeholder="Enter a value between 0 and 100" id="ratio"
                                             ng-model="ratio" ng-change="computeSize()" min="0" max="100" />
-                                        <span id="alert_ratio" class="alert"> </span>
+                                        <div id="alert_ratio" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -218,25 +221,30 @@
                             </table>
                             <table class="table_fields">
                                 <tr>
-                                    <td class="field" style="padding-top:0px;">
+                                    <td class="field">
                                         <div class="text-r" for="traffic">Daily number of people exposed
+                                            <button id="daily_number" type="button" class="btn btn-link"
+                                                data-toggle="popover" title="" data-content="">
+                                                </button>
                                         </div>
                                         <input type="number" name="traffic" placeholder="Optional" id="traffic"
                                             ng-model="traffic" ng-change="computeSize()" min="0"/>
-                                        <span id="alert_traffic" class="alert"> </span>
+                                        <div id="alert_traffic" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="field">
                                         <div class="text-r" for="reach"> Percentage of the traffic affected
+                                                <button id="pct_traffic" type="button" class="btn btn-link"
+                                                data-toggle="popover" title="" data-content="">
+                                                </button>
                                         </div>
                                         <input type="number" name="reach" placeholder="Enter a value between 0 and 100" id="reach" ng-model="reach"
                                             ng-change="computeSize()" min="0" max="100" />
-                                        <span id="alert_reach" class="alert"> </span>
+                                        <div id="alert_reach" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
                                     </td>
                                 </tr>
                             </table>
-                            <div id="alert_size" class="alert d-none"></div>
                         </form>
                     </div>
                     <div class="col-9">
@@ -271,17 +279,6 @@
                                 </table>
                                 </div>
 
-                                <div class="col">
-                                    <div id="duration" class="d-none">
-                                        <div>
-                                            This experiment should run for
-                                        </div>
-                                        <span id="nb_of_days">
-                                        </span>
-                                        <div>
-                                            days
-                                        </div>
-                                    </div>
                                 <div class="col" id="save-button">
                                     <div class="row justify-content-end">
                                         <button id="attribution_button" type="button" style="background-color:var(--blue); color: #ffffff; border: 1px solid transparent;     font-family: 'SourceSansPro'; text-transform: uppercase; font-size: 13px; font-weight: 500; padding: 3px 8px; margin: 0; line-height: 1.4; background-image: inherit; box-shadow: none; text-shadow: none; box-sizing: border-box; outline: 0; cursor: pointer;
@@ -292,7 +289,12 @@
                                 </div>
 
                             </div>
-                        </div>
+                            <div>
+                                <div id="duration" class="d-none text-center text-sb" style="padding-top:16px">
+                                        This experiment should run for <span id="nb_of_days"></span> days
+                                </div>
+
+                            </div>
 
                         <div class="d-none alert_recipe text-center text" id="attribution_alert" style="padding-top:8px">
                             <div>

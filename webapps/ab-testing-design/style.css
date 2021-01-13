@@ -285,14 +285,8 @@ table, thead, tr, tbody, th {
     color: rgb(54, 163, 158);
 }
 
-#duration {
-    font-size: 14px;
-    color: rgb(54, 163, 158);
-    margin-bottom: 15px;
-}
 
 #nb_of_days {
-    font-size: 30;
 }
 
 .optional {
@@ -307,10 +301,17 @@ table, thead, tr, tbody, th {
 .field {
     text-align: left;
     padding-left:0px;
+    border: none;
+    border-collapse: collapse;
+    border-style: hidden;
+    padding-bottom:0px;
+    padding-top:0px;
 }
 
 .table_fields {
     border: none;
+    border-collapse: collapse;
+    border-style: hidden;
 }
 
 .decrease-padding{
