@@ -29,7 +29,6 @@ def analyse_results():
         size_B = form_data.get("size_B")
         CR_A = float(form_data.get("success_rate_A"))/100
         CR_B = float(form_data.get("success_rate_B"))/100
-        print('aaaaaaa', CR_A, CR_B)
         two_tailed = strtobool(form_data.get("tail"))
         Z_score = round(compute_Z_score(size_A, size_B, CR_A, CR_B), 3)
         p_value = round(compute_p_value(Z_score, two_tailed), 3)
