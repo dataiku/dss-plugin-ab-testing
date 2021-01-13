@@ -64,6 +64,9 @@ app.controller("ResultController", function ($scope, $http, ModalService) {
             });
     };
 
+    // for the first time when the webapp load
+    $scope.getResults()
+
     $scope.saveResults = function () {
         let results = { size_A: $scope.size_A, size_B: $scope.size_B, success_rate_A: $scope.success_rate_A, success_rate_B: $scope.success_rate_B, tail: $scope.tail, sig_level: $scope.sig_level, z_score: $scope.z_score, p_value: $scope.p_value, uplift: $scope.uplift };
         $http.post(getWebAppBackendUrl("write_parameters"), results)
