@@ -1,7 +1,7 @@
 {
     "meta": {
         "label": "Population split",
-        "description": "Split a list of users into a A group and a B group.",
+        "description": "Split a list of users into a A group and a B group. The plugin also provides a visual webapp to help you choose the best configuration.",
         "icon": "icon-beaker"
     },
     "selectableFromDataset": "user_list",
