@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "meta": {
         "label": "AB test calculator",
-        "description": "Perform AB testing in the most enjoyable way",
+        "description": "Design and analyse an AB test experiment",
         "author": "Dataiku (Marine SOBAS and Du PHAN)",
         "icon": "icon-beaker",
         "tags": [
