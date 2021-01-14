@@ -33,3 +33,4 @@ function get_ymax($scope) {
     let y_max = d3.max([y_A, y_B]);
     return y_max;
 }
+

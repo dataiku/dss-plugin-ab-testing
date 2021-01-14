@@ -3,7 +3,7 @@ from numpy import random
 import pandas as pd
 import logging
 
-from design_experiment.constants import AttributionMethod, Group, Column
+from constants import Columns, Group, AttributionMethod
 
 logger = logging.getLogger()
 logging.basicConfig(level=logging.INFO, format="AB testing plugin %(levelname)s - %(message)s")
@@ -58,17 +58,17 @@ class AbDispatcher(object):
         shuffled_index = np.array(population_df.index)
         random.seed(1)
         if leftovers_handling == AttributionMethod.LEFTOVER_TO_A:
-            population_df[Column.AB_GROUP.value] = Group.A.value
+            population_df[Columns.AB_GROUP] = Group.A.value
             random.shuffle(shuffled_index)
-            population_df.loc[shuffled_index[:self.size_B], Column.AB_GROUP.value] = Group.B.value
+            population_df.loc[shuffled_index[:self.size_B], Columns.AB_GROUP] = Group.B.value
         elif leftovers_handling == AttributionMethod.LEFTOVER_TO_B:
-            population_df[Column.AB_GROUP.value] = Group.B.value
+            population_df[Columns.AB_GROUP] = Group.B.value
             random.shuffle(shuffled_index)
-            population_df.loc[shuffled_index[:self.size_A], Column.AB_GROUP.value] = Group.A.value
+            population_df.loc[shuffled_index[:self.size_A], Columns.AB_GROUP] = Group.A.value
         elif leftovers_handling == AttributionMethod.LEFTOVER_BLANK:
-            population_df[Column.AB_GROUP.value] = np.nan
+            population_df[Columns.AB_GROUP] = np.nan
             random.shuffle(shuffled_index)
-            population_df.loc[shuffled_index[:self.size_A], Column.AB_GROUP.value] = Group.A.value
-            population_df.loc[shuffled_index[self.size_A:self.size_A+self.size_B], Column.AB_GROUP.value] = Group.B.value
+            population_df.loc[shuffled_index[:self.size_A], Columns.AB_GROUP] = Group.A.value
+            population_df.loc[shuffled_index[self.size_A:self.size_A+self.size_B], Columns.AB_GROUP] = Group.B.value
         logger.info("Dispatching experiment population: done")
         return population_df

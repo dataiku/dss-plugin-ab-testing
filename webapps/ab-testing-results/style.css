@@ -280,14 +280,10 @@ table, thead, tr, tbody, th {
     font-weight: 550;
 }
 
-
 .alert_recipe {
-    color:  #4CAF50;
+    color: #4CAF50;
 }
 
-
-#nb_of_days {
-}
 
 .optional {
     margin-left: 11px;
@@ -301,17 +297,10 @@ table, thead, tr, tbody, th {
 .field {
     text-align: left;
     padding-left:0px;
-    border: none;
-    border-collapse: collapse;
-    border-style: hidden;
-    padding-bottom:0px;
-    padding-top:0px;
 }
 
 .table_fields {
     border: none;
-    border-collapse: collapse;
-    border-style: hidden;
 }
 
 .decrease-padding{
@@ -554,6 +543,256 @@ table, thead, tr, tbody, th {
     background: #22a4d9;
 }
 
-.dku-box {
-    border: 1px solid green;
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans', sans-serif;
 }
+
+.columns-listing-container {
+    display: flex;
+    width: 100%;
+    height: 80vh;
+}
+
+.columns-listing-container section {
+    height: 100%;
+    overflow: auto;
+}
+
+.explanations {
+    font-size: 16px;
+    color: #718093
+}
+
+.alert {
+    color: #ff7979;
+}
+
+.group {
+    font-size: 25px;
+    justify-content: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.textbox_results {
+    height: 38px;
+}
+
+.headers {
+    font-size: 13px;
+}
+
+.corner {
+    font-size: 45px;
+    justify-content: center;
+}
+
+.explanation_text {
+    color: #718093;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#A_header {
+    color: #5473ff;
+}
+
+#B_header {
+    color:#ffc845;
+}
+
+.explanation_smaller {
+    font-size: 12px;
+}
+
+.spacing {
+    margin-bottom: 10px;
+}
+
+#submit {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    padding: 11px 28px;
+}
+
+.heads_tab {
+    text-align: center;
+    font-size: 20px;
+    color: #36a39e;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.result_table {
+    margin-bottom: 35px;
+}
+
+.tab_value {
+    text-align: center;
+}
+
+#result_caption {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    font-size: 18px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.red{
+    color: #EA2027;
+    font-weight:550;
+}
+
+.yellow{
+    color: #FFC312;
+}
+
+.green{
+    color: #009432;
+    font-weight:550;
+}
+
+.question{
+    font-size: 15px;
+    color: rgb(54, 163, 158);
+    font-family: 'Open Sans', sans-serif;
+}
+
+#save-section{
+    margin-bottom: 20px;
+}
+
+#save-caption{
+    font-size: 1.8rem;
+    color: #36a39e;
+}
+
+.background {
+    background-color: #f8f9fa;
+}
+
+.white-background{
+    background-color: white;
+}
+
+.title-padding{
+    padding-top:20px;
+}
+
+.navbar{
+    margin-bottom: 0px !important;
+}
+
+.border-top-custom{
+    border-top: 30px solid #f8f9fa;
+}
+
+.border-custom{
+    border-right: 3px solid #f8f9fa;
+}
+
+/*MODALS*/
+.dku-modal-footer {
+    height: 30px;
+    padding-top: 20px;
+}
+
+.dku-button-modal-div {
+    float: right;
+}
+
+.dku-button-modal {
+    font-weight: 450;
+    font-family: 'SourceSansPro';
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 3px 8px;
+    line-height: 1.4;
+    background-image: inherit;
+    box-shadow: none;
+    text-shadow: none;
+    box-sizing: border-box;
+    outline: 0;
+    cursor: pointer;
+    color: black;
+    border: 1px solid #cccccc;
+    height: 26px;
+    border-color: transparent;
+    background-color: transparent;
+    margin: 0;
+}
+
+.dku-button-modal:disabled {
+    color: var(--grey-lighten-5);
+}
+
+.dku-button-modal:enabled:hover {
+    color: black;
+    background-color: var(--grey-lighten-6);
+}
+
+.dku-button-modal:enabled:active {
+    color: black;
+    background-color: var(--grey-lighten-5);
+}
+
+.dku-modal {
+    max-height: 360px;
+    width: 500px;
+    padding: 16px;
+    padding-bottom: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: var(--white);
+}
+
+.dku-modal-title {
+    justify-content: space-between;
+}
+
+.dku-modal-body {
+    overflow: auto;
+    max-height: 250px;
+    white-space: pre-line;
+    text-align: justify;
+    font-size: 14px;
+
+}
+
+.dku-modal-body-error {
+    color: var(--error-red);
+}
+
+[name=promptForm] {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 2px;
+    padding-right: 2px;
+    min-width: 60%;
+    max-width: 80%;
+}
+
+.modal-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.dku-title {
+    display: flex;
+    align-items : center;
+    color: var(--grey-lighten-2);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--grey-lighten-6);
+    padding-bottom: 1%;
+    padding-top: 2%;
+    margin-bottom: 2%;
+    font-size:16px;
+    height: 5%;
