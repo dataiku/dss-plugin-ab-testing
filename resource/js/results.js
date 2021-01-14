@@ -19,7 +19,7 @@ function test_outcome($scope) {
         $("#p_value").addClass("green");
         var is_significant = true;
     } else {
-        message += "<div id = 'significance' > • These results are not statistically significant within <b>" + $scope.sig_level + "% significance level </b></div></div>";
+        message += "<div id = 'significance' >These results are not statistically significant within <b>" + $scope.sig_level + "% significance level </b></div></div>";
         conclusion.html(message);
         $("#significance").addClass("red");
         $("#p_value").removeClass("green");
