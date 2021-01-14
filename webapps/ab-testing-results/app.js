@@ -45,8 +45,6 @@ app.controller("ResultController", function ($scope, $http, ModalService) {
     $scope.z_score = null;
     $scope.p_value = null;
     $scope.distribution = Random_normal_Dist(0, 1);
-    get_inputs($scope, $http);
-    plot_results_chart($scope);
 
     $scope.getResults = function () {
         let formData = { size_A: $scope.size_A, size_B: $scope.size_B, success_rate_A: $scope.success_rate_A, success_rate_B: $scope.success_rate_B, tail: $scope.tail, sig_level: $scope.sig_level };
@@ -64,8 +62,11 @@ app.controller("ResultController", function ($scope, $http, ModalService) {
             });
     };
 
+
+    get_inputs($scope, $http);
+    plot_results_chart($scope);
     // for the first time when the webapp load
-    $scope.getResults()
+    //$scope.getResults()
 
     $scope.saveResults = function () {
         let results = { size_A: $scope.size_A, size_B: $scope.size_B, success_rate_A: $scope.success_rate_A, success_rate_B: $scope.success_rate_B, tail: $scope.tail, sig_level: $scope.sig_level, z_score: $scope.z_score, p_value: $scope.p_value, uplift: $scope.uplift };

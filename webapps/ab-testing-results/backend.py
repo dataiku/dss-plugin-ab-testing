@@ -26,14 +26,18 @@ def convert_numpy_int64_to_int(o):
 @app.route('/ab_calculator', methods=['POST'])
 def analyse_results():
     try:
-        print('START COMPUTING')
+        print('Star computing')
         form_data = json.loads(request.data)
+        print('Size A', form_data.get("size_A"))
+        print('Size B', form_data.get("size_B"))
         check_int(form_data.get("size_A"), 'size A')
         check_int(form_data.get("size_B"), 'size B')
         size_A = form_data.get("size_A")
         size_B = form_data.get("size_B")
         CR_A = float(form_data.get("success_rate_A"))/100
         CR_B = float(form_data.get("success_rate_B"))/100
+        if (CR_A > 1) or (CR_B > 1):
+            raise ValueError('Success rate must be between 0-100%')
         two_tailed = strtobool(form_data.get("tail"))
         Z_score = round(compute_Z_score(size_A, size_B, CR_A, CR_B), 3)
         p_value = round(compute_p_value(Z_score, two_tailed), 3)
@@ -41,7 +45,6 @@ def analyse_results():
         print('p_value', p_value)
         return simplejson.dumps({"Z_score": Z_score, "p_value": p_value}, ignore_nan=True, default=convert_numpy_int64_to_int)
     except:
-        print('ERROR ', traceback.format_exc())
         return traceback.format_exc(), 500
 
 
