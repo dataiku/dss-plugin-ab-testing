@@ -4,7 +4,7 @@
     "meta": {
         "label": "AB test calculator",
         "description": "Perform AB testing in the most enjoyable way",
-        "author": "Dataiku (Adam JELLEY, Marine SOBAS and Du PHAN)",
+        "author": "Dataiku (Marine SOBAS and Du PHAN)",
         "icon": "icon-beaker",
         "tags": [
             "Marketing"
