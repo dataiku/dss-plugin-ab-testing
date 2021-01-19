@@ -15,6 +15,7 @@
         $scope.size_B = 1000;
         $scope.success_rate_A = 20;
         $scope.success_rate_B = 30;
+        $scope.getResults(true);
     } else if (input_mode === "input_dataset") {
         if ($scope.dataset_name === undefined) {
             alert("Please, specify the input dataset containing the statistics. It should be the output of the AB statistics recipe from the AB testing plugin.");
@@ -37,7 +38,7 @@ function load_values_from_df($scope, $http) {
             $scope.size_B = parseInt(response_data.size_B);
             $scope.success_rate_A = parseFloat(response_data.success_rate_A);
             $scope.success_rate_B = parseFloat(response_data.success_rate_B);
-            $scope.getResults();
+            $scope.getResults(true);
         } else if(status ==="error"){
             alert(response_data.message);
         }
