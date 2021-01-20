@@ -12,6 +12,9 @@ from results.statistics_helper import read_statistics
 from dku_tools import get_output_folder
 from helpers import save_parameters, check_int
 
+config = get_webapp_config()
+project_key = dataiku.default_project_key()
+client = dataiku.api_client()
 
 def convert_numpy_int64_to_int(o):
     if isinstance(o, np.int64):
@@ -61,9 +64,6 @@ def get_statistics():
 @app.route('/write_parameters', methods=['POST'])
 def save():
     try:
-        config = get_webapp_config()
-        project_key = dataiku.default_project_key()
-        client = dataiku.api_client()
         output_folder = get_output_folder(config, client, project_key)
         data = json.loads(request.data)
         fields_to_save = ["size_A", "size_B", "success_rate_A", "success_rate_B", "uplift", "p_value", "z_score"]
