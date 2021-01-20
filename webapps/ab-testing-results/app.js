@@ -73,10 +73,10 @@ app.controller("ResultController", function ($scope, $http, ModalService) {
         $http.post(getWebAppBackendUrl("write_parameters"), results)
         .then(function(){
             console.log('All good')
+            $("#save-caption").removeClass("d-none");
         }, function(e){
             $scope.createModal.error(e.data);
         });
-        $("#save-caption").removeClass("d-none");
     }
 });
 

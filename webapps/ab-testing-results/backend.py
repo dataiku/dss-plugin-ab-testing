@@ -12,11 +12,6 @@ from results.statistics_helper import read_statistics
 from dku_tools import get_output_folder
 from helpers import save_parameters, check_int
 
-config = get_webapp_config()
-project_key = dataiku.default_project_key()
-client = dataiku.api_client()
-
-output_folder = get_output_folder(config, client, project_key)
 
 def convert_numpy_int64_to_int(o):
     if isinstance(o, np.int64):
@@ -48,10 +43,17 @@ def get_statistics():
     try:
         dataset_name = json.loads(request.data).get("dataset_name")
         column_name = json.loads(request.data).get("column_name")
-        dataset = dataiku.Dataset(dataset_name)
-        df = dataset.get_dataframe()
-        response = read_statistics(df, column_name)
-        return response
+        if dataset_name:
+            dataset = dataiku.Dataset(dataset_name)
+            df = dataset.get_dataframe()
+        else:
+            raise ValueError("Statistics dataset is missing, specify it in the settings or edit sizes and success rates manually.")
+        if column_name:
+            response = read_statistics(df, column_name)
+            return response
+        else:
+            raise ValueError(
+                "AB group column name is missing, specify it in the settings or edit sizes and success rates manually.")
     except:
         return traceback.format_exc(), 500
 
@@ -59,6 +61,10 @@ def get_statistics():
 @app.route('/write_parameters', methods=['POST'])
 def save():
     try:
+        config = get_webapp_config()
+        project_key = dataiku.default_project_key()
+        client = dataiku.api_client()
+        output_folder = get_output_folder(config, client, project_key)
         data = json.loads(request.data)
         fields_to_save = ["size_A", "size_B", "success_rate_A", "success_rate_B", "uplift", "p_value", "z_score"]
         save_parameters(data, output_folder, fields_to_save)
