@@ -44,6 +44,10 @@ function load_values_from_df($scope, $http) {
             $scope.createModal.error(response_data.message);
             }
         }, function(e){
+            if (e.status === 405) {
+                $scope.createModal.error("Unauthorized, make sure that backend is running");
+            } else {
             $scope.createModal.error(e.data);
+            };
         });
 }
