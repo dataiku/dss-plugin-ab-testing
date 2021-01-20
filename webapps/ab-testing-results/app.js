@@ -60,7 +60,11 @@ app.controller("ResultController", function ($scope, $http, ModalService) {
                     $scope.chart.config.data.datasets = get_results_datasets($scope);
                     $scope.chart.update(0);
                 }, function(e) {
-                    $scope.createModal.error(e.data);
+                        if (e.status === 405) {
+                            $scope.createModal.error("Unauthorized, make sure that backend is running");
+                        } else {
+                            $scope.createModal.error(e.data);
+                        };
                 });
             };
     };
@@ -75,7 +79,11 @@ app.controller("ResultController", function ($scope, $http, ModalService) {
             console.log('All good')
             $("#save-caption").removeClass("d-none");
         }, function(e){
-            $scope.createModal.error(e.data);
+            if (e.status === 405) {
+                $scope.createModal.error("Unauthorized, make sure that backend is running");
+            } else {
+                $scope.createModal.error(e.data);
+            };
         });
     }
 });
