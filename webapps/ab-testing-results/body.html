@@ -98,8 +98,11 @@
                             </div>
                         </div>
 
-                        <div class="row text-r alert alert-danger" role="alert" ng-show="ABTestForm.size_A.$invalid">
-                            <div> Size A needs to be a positive integer. </div>
+                        <div class="row text-r" role="alert" ng-show="ABTestForm.size_A.$invalid">
+                            <div class="col">
+                                <div class="alert alert-danger" role="alert"> Size A needs to be a positive integer.
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row text-r" style="padding-bottom:8px;">
@@ -116,8 +119,11 @@
                             </div>
                         </div>
 
-                        <div class="row text-r alert alert-danger" role="alert" ng-show="ABTestForm.size_B.$invalid">
-                            <div> Size B needs to be a positive integer. </div>
+                        <div class="row text-r" ng-show="ABTestForm.size_B.$invalid">
+                            <div class="col">
+                                <div class="alert alert-danger" role="alert"> Size B needs to be a positive integer.
+                                </div>
+                            </div>
                         </div>
 
 
@@ -147,8 +153,12 @@
                             </div>
                         </div>
 
-                        <div class="row text-r alert alert-danger" role="alert" ng-show="ABTestForm.success_rate_A.$invalid">
-                            <div> Success rate must be between 0 and 100% </div>
+                        <div class="row text-r"
+                             ng-show="ABTestForm.success_rate_A.$invalid">
+                            <div class="col">
+                                <div class="alert alert-danger" role="alert"> Success rate must be between 0 and 100%
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row text-r" style="padding-bottom:8px;">
@@ -166,8 +176,12 @@
                             </div>
                         </div>
 
-                        <div class="row text-r alert alert-danger" role="alert"  ng-show="ABTestForm.success_rate_B.$invalid">
-                            <div> Success rate must be between 0 and 100% </div>
+                        <div class="row text-r"
+                             ng-show="ABTestForm.success_rate_B.$invalid">
+                            <div class="col">
+                                <div class="alert alert-danger" role="alert"> Success rate must be between 0 and 100%
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row" style="padding-bottom:8px;">
@@ -209,9 +223,13 @@
                                        placeholder="1-alpha" type="number"/>
                             </div>
                         </div>
-                        <div class="row" style="padding-bottom:8px;">
-                            <span class="alert alert-danger" role="alert"
-                                  ng-show="ABTestForm.sig_level.$invalid"> The significance level needs to be between 0 and 100%. </span>
+                        <div class="row text-r" style="padding-bottom:8px;">
+                            <div class="col">
+                                <div class="alert alert-danger" role="alert"
+                                     ng-show="ABTestForm.sig_level.$invalid"> The significance level needs to be between
+                                    0 and 100%.
+                                </div>
+                            </div>
                         </div>
 
 
