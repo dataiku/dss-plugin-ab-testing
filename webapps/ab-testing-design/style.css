@@ -97,6 +97,14 @@ html {
     color: #222222;
 }
 
+.dku-alert{
+    color: #CE1228;
+    background-color: #F9E3E5;
+    position: relative;
+    margin-bottom: 1rem;
+    padding: .75rem 1.25rem;
+}
+
 .columns-listing-container {
     display: flex;
     width: 100%;
@@ -183,11 +191,6 @@ p {
 label {
     font-size: 12px !important;
     color: #718093;
-}
-
-.alert {
-    color: #ff7979;
-    font-size: 13px;
 }
 
 @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
