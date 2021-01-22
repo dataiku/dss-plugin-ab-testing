@@ -69,7 +69,7 @@
             <div class="dku-white-form">
                 <div class="row">
                     <div class="col-3 border-custom">
-                        <form id="form_data">
+                        <form id="form_data" name="ABTestForm">
                             <table class="table_fields">
                                 <tr>
                                     <td class="field">
@@ -82,8 +82,10 @@
                                                 [?] </button>
                                         </div>
                                         <input type="number" name="bcr" placeholder="Enter a value between 0 and 100" id="bcr" ng-model="bcr"
-                                            ng-change="computeSize()" min="0" max="100" />
-                                        <div id="alert_bcr" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
+                                            ng-change="computeSize(ABTestForm.$valid)" min="0" max="100" required style="margin-bottom:1rem" />
+                                        <div class="alert alert-danger text-r" role="alert" ng-show="ABTestForm.bcr.$invalid" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;">
+                                            The baseline conversion rate needs to be between 0 and 100%.
+                                        </div>
 
                                     </td>
                                 </tr>
@@ -96,8 +98,10 @@
                                             baseline conversion rate that you need to detect a statistically significant change."> [?] </button>
                                         </div>
                                         <input type="number" name="mde" placeholder="Enter a value between 0 and 100" id="mde" ng-model="mde"
-                                            ng-change="computeSize()" min="0" max="100" />
-                                        <div id="alert_mde" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
+                                            ng-change="computeSize(ABTestForm.$valid)" min="0.001" max="100" required style="margin-bottom:1rem" />
+                                        <div class="alert alert-danger text-r" role="alert" ng-show="ABTestForm.mde.$invalid" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;">
+                                            The minimum detectable effect needs to be strictly greater than 0 and below 100%.
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -134,8 +138,10 @@
                                         </div>
 
                                         <input type="number" name="sig_level" placeholder="Enter a value between 0 and 100" id="sig_level"
-                                            ng-model="sig_level" ng-change="computeSize()" min="0" max="100" />
-                                        <div id="alert_sig_level" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
+                                            ng-model="sig_level" ng-change="computeSize(ABTestForm.$valid)" min="0.0001" max="99.99999" required style="margin-bottom:1rem"/>
+                                        <div class="alert alert-danger text-r" role="alert" ng-show="ABTestForm.sig_level.$invalid" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;">
+                                            The significance level needs be strictly greater than 0 and below 100%.
+                                        </div>
 
                                     </td>
                                 </tr>
@@ -153,8 +159,10 @@
                                             The most common value for power is 80%."> [?] </button>
                                         </div>
                                         <input type="number" name="power" placeholder="Enter a value between 0 and 100" id="power"
-                                            ng-model="power" ng-change="computeSize()" min="0" max="100" />
-                                        <div id="alert_power" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
+                                            ng-model="power" ng-change="computeSize(ABTestForm.$valid)" min="0.0001" max="99.99999" required style="margin-bottom:1rem" />
+                                        <div class="alert alert-danger text-r" role="alert" ng-show="ABTestForm.power.$invalid" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;">
+                                            The power needs to be strictly greater than 0 and below 100%.
+                                        </div>
 
                                     </td>
                                 </tr>
@@ -172,8 +180,10 @@
                                             are impacted by the changes."> [?] </button>
                                         </div>
                                         <input type="number" name="ratio" placeholder="Enter a value between 0 and 100" id="ratio"
-                                            ng-model="ratio" ng-change="computeSize()" min="0" max="100" />
-                                        <div id="alert_ratio" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
+                                            ng-model="ratio" ng-change="computeSize(ABTestForm.$valid)" min="0" max="100" required style="margin-bottom:1rem"  />
+                                        <div class="alert alert-danger text-r" role="alert" ng-show="ABTestForm.ratio.$invalid" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;">
+                                            The ratio needs to be between 0 and 100%.
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -212,7 +222,7 @@
                                                 positive
                                                 changes.'> [?] </button>
                                         </div>
-                                        <select name="tail" id="tail" ng-model="tail" ng-change="computeSize()">
+                                        <select name="tail" id="tail" ng-model="tail" ng-change="computeSize(ABTestForm.$valid)">
                                             <option value="false" class="alert">False</option>
                                             <option value="true">True</option>
                                         </select>
@@ -228,8 +238,10 @@
                                                 </button>
                                         </div>
                                         <input type="number" name="traffic" placeholder="Optional" id="traffic"
-                                            ng-model="traffic" ng-change="computeSize()" min="0"/>
-                                        <div id="alert_traffic" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
+                                            ng-model="traffic" ng-change="computeSize(ABTestForm.$valid)" min="0" style="margin-bottom:1rem"/>
+                                        <div class="alert alert-danger text-r" role="alert" ng-show="ABTestForm.traffic.$invalid" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;">
+                                            The traffic needs to be a positive number.
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -240,8 +252,10 @@
                                                 </button>
                                         </div>
                                         <input type="number" name="reach" placeholder="Enter a value between 0 and 100" id="reach" ng-model="reach"
-                                            ng-change="computeSize()" min="0" max="100" />
-                                        <div id="alert_reach" class="alert" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;"> </div>
+                                            ng-change="computeSize(ABTestForm.$valid)" min="0.0000001" max="100" required style="margin-bottom:1rem" />
+                                        <div class="alert alert-danger text-r" role="alert" ng-show="ABTestForm.reach.$invalid" style="padding-left:0px; padding-right:0px; padding-bottom:0px; padding-top:0px;">
+                                            The reach rate needs to be between 0 and 100%.
+                                        </div>
                                     </td>
                                 </tr>
                             </table>

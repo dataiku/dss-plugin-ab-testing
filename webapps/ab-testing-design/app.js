@@ -73,30 +73,22 @@ app.controller("SizeController", function ($scope, $http, ModalService) {
     $scope.distribution_B = Random_normal_Dist($scope.mde / 100, $scope.std);
     $scope.chart = plot_chart($scope);
 
-    $scope.computeSize = function () {
-        $("#alert_size").addClass('d-none');
-        check_form_inputs($scope);
-        if (missing_values($scope)) {
-            alert_sample_size($scope, "A mandatory field is empty, please fill all of them", "missing value");
-            erase_chart($scope);
-        } else if (invalid_form($scope, 0, 100)) {
-            alert_sample_size($scope, "Invalid input, please check the values defined above", "invalid input");
-            erase_chart($scope);
-        } else {
-            let formData = { bcr: $scope.bcr, mde: $scope.mde, sig_level: $scope.sig_level, power: $scope.power, ratio: $scope.ratio, reach: $scope.reach, tail: $scope.tail }
-            $http.post(getWebAppBackendUrl("sample_size"), formData)
-                .then(function (response) {
-                    let response_data = response.data
-                    $scope.sample_size_A = response_data.sample_size_A;
-                    $scope.sample_size_B = response_data.sample_size_B;
-                    update_chart($scope);
-                    manage_duration($scope);
-                    hide_field("attribution_alert");
-                }, function(e) {
-                    $scope.createModal.error(e.data);
-                });
+    $scope.computeSize = function (validForm) {
+    if (validForm){
+        let formData = { bcr: $scope.bcr, mde: $scope.mde, sig_level: $scope.sig_level, power: $scope.power, ratio: $scope.ratio, reach: $scope.reach, tail: $scope.tail }
+        $http.post(getWebAppBackendUrl("sample_size"), formData)
+            .then(function (response) {
+                let response_data = response.data
+                $scope.sample_size_A = response_data.sample_size_A;
+                $scope.sample_size_B = response_data.sample_size_B;
+                update_chart($scope);
+                manage_duration($scope);
+                hide_field("attribution_alert");
+            }, function(e) {
+                $scope.createModal.error(e.data);
+            });
         }
-    };
+    }
 });
 
 

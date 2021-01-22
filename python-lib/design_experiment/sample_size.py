@@ -12,7 +12,7 @@ def min_sample_size(baseline_conversion_rate, minimum_detectable_effect, signifi
     if min_power == 1:
         raise ValueError('The power must be less than 100%')
     if min_power == 0:
-        raise ValueError('The power must be greater than 100%')
+        raise ValueError('The power must be strictly greater than 0%')
     if size_ratio == 0:
         raise ValueError('Size ratio must be greater than 0%')
 
