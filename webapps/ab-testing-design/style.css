@@ -287,8 +287,12 @@ table, thead, tr, tbody, th {
     color:  #4CAF50;
     background-color: #D7F0D6;
     position: relative;
-    margin-bottom: 1rem;
     padding: .75rem 1.25rem;
+    margin-top: 1rem;
+    width: 32rem;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 #nb_of_days {

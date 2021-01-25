@@ -289,7 +289,12 @@ table, thead, tr, tbody, th {
 }
 
 .alert_recipe {
-    color: #4CAF50;
+    color:  #4CAF50;
+    background-color: #D7F0D6;
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-top: 1rem;
+    width: 12rem;
 }
 
 
