@@ -56,5 +56,4 @@ def save():
         save_parameters(data, output_folder, fields_to_save)
         return json.dumps({"status": "Parameters saved"})
     except:
-        print(traceback.format_exc())
         return traceback.format_exc(), 500
