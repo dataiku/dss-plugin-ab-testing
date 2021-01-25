@@ -27,24 +27,6 @@ computation.addEventListener('click', function (event) {
     event.preventDefault();
 });
 
-// save parameters in the managed folder
-let hide_attribution = true;
-const attribution = document.getElementById('attribution_button');
-attribution.addEventListener("click", function (event) {
-    store_parameters()
-        .then(function (response) {
-            manage_response(response);
-        }).catch(function (error) {
-            console.log('There was an issue with the fetch operation ' + error.message);
-            $("#attribution_alert").addClass("d-none");
-            $("#error_save_button").removeClass("d-none");
-        });
-    display(hide_attribution, "attribution_button", "attribution_alert", false)
-    event.preventDefault();
-})
-
-
-// compute size
 var app = angular.module("abApp", []);
 
 app.controller("SizeController", function ($scope, $http, ModalService) {
@@ -83,11 +65,27 @@ app.controller("SizeController", function ($scope, $http, ModalService) {
                 $scope.sample_size_B = response_data.sample_size_B;
                 update_chart($scope);
                 manage_duration($scope);
-                hide_field("attribution_alert");
+                $("#attribution_alert").addClass("d-none");
             }, function(e) {
                 $scope.createModal.error(e.data);
             });
         }
+    }
+
+    $scope.saveResults = function () {
+        let parameters =  { bcr: $scope.bcr, mde: $scope.mde, sig_level: $scope.sig_level, power: $scope.power, ratio: $scope.ratio, reach: $scope.reach, tail: $scope.tail, size_A: $scope.sample_size_A, size_B: $scope.sample_size_B};
+        $http.post(getWebAppBackendUrl("write_parameters"), parameters)
+        .then(function(){
+            console.log('All good')
+            $("#attribution_alert").removeClass("d-none");
+        }, function(e){
+            $scope.invalid_folder = true;
+            if (e.status === 405) {
+                $scope.createModal.error(e.data);
+            } else {
+                $scope.createModal.error(e.data);
+            };
+        });
     }
 });
 

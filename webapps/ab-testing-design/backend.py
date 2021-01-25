@@ -50,7 +50,7 @@ def get_z_value():
 def save():
     try:
         output_folder = get_output_folder(config_settings, client, project_key)
-        data = request.form
+        data = json.loads(request.data)
         fields_to_save = [Parameters.SIZE_A.value, Parameters.SIZE_B.value, Parameters.RATIO.value, Parameters.POWER.value,
                           Parameters.MDE.value, Parameters.TAIL.value, Parameters.TRAFFIC.value, Parameters.SIG_LEVEL.value, Parameters.BCR.value]
         save_parameters(data, output_folder, fields_to_save)
