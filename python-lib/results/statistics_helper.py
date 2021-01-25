@@ -4,7 +4,7 @@ import json
 def read_statistics(df,  group_column):
     groups = df[group_column].values
     if invalid_format_df(df, group_column, groups):
-        response = {"status": "error", "message": "The format of the statistics dataset is invalid. Make sure it is the output of the AB statistics custom recipe or edit values manually."}
+        response = {"status": "error", "message": "The format of the statistics dataset is invalid. Make sure it is the output of the AB statistics custom recipe and the AB group column name is right. Otherwise, edit values manually."}
     else:
         A_df = df[df[group_column] == groups[0]]
         B_df = df[df[group_column] == groups[1]]

@@ -88,6 +88,14 @@ html {
     color: #222222;
 }
 
+.dku-alert{
+    color: #CE1228;
+    background-color: #F9E3E5;
+    position: relative;
+    margin-bottom: 1rem;
+    padding: .75rem 1.25rem;
+}
+
 .text-sb {
     font-family: var(--font-family);
     font-style: normal;
@@ -205,11 +213,11 @@ table, thead, tr, tbody, th {
     font-size: 20px;
 }
 
-#A_header {
+.A_header {
     color: rgb(54, 163, 158);
 }
 
-#B_header {
+.B_header {
     color: #ff7979;
 }
 
@@ -281,7 +289,12 @@ table, thead, tr, tbody, th {
 }
 
 .alert_recipe {
-    color: #4CAF50;
+    color:  #4CAF50;
+    background-color: #D7F0D6;
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-top: 1rem;
+    width: 12rem;
 }
 
 
@@ -563,10 +576,6 @@ h1, h2, h3, h4, h5, h6 {
     color: #718093
 }
 
-.alert {
-    color: #ff7979;
-}
-
 .group {
     font-size: 25px;
     justify-content: center;
@@ -590,14 +599,6 @@ h1, h2, h3, h4, h5, h6 {
     color: #718093;
     font-size: 14px;
     font-family: 'Open Sans', sans-serif;
-}
-
-#A_header {
-    color: #5473ff;
-}
-
-#B_header {
-    color:#ffc845;
 }
 
 .explanation_smaller {
@@ -796,3 +797,4 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 2%;
     font-size:16px;
     height: 5%;
+}

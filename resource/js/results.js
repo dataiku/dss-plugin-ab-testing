@@ -1,7 +1,7 @@
 function test_outcome($scope) {
     let sig_level = $scope.sig_level / 100;
     let confidence_level = 1 - $scope.p_value;
-    let displayed_confidence = confidence_level * 100;
+    let displayed_confidence = (confidence_level * 100).toFixed(2);
     let difference = $scope.success_rate_A / 100 - $scope.success_rate_B / 100;
     let displayed_difference = Math.round(difference * 100);
     let conclusion = $("#result_caption");
