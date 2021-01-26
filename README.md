@@ -8,7 +8,7 @@ A web app computes the minimum sample sizes needed in the experiment while provi
 
 Here is a more detailled description of these two main components : 
 
-### 1- AB testing design (custom web app)
+### 1- A/B test sample size calculator (custom web app)
 
 This visual web app computes the required sample size to conduct the experiment. 
 
@@ -31,7 +31,7 @@ From these values, a minimum sample size is computed and illustrated thanks to t
 
 There is no output, but when you click on the button save parameters, the parameters and the samples sizes are saved in the folder `Parameters` .
 
-### 2- AB testing split (custom recipe)
+### 2- Population split (custom recipe)
 
 This recipe splits the users enrolled in the experiment into two groups, usually based on the sample sizes which were previously computed in the `AB testing design` web app. 
 
@@ -57,7 +57,7 @@ This recipe splits the users enrolled in the experiment into two groups, usually
 
 Once the experiment is complete, the user may upload the results back to DSS. With a custom recipe, she computes the resulting statistics (conversion rate per group). With the second web app, she can analyse these results and determine the outcome of the statistical test. 
 
-### 3- AB testing statistics (custom recipe) 
+### 3- Experiment summary (custom recipe) 
 
 From the results of your experiment, this recipe computes the statistics required to analyse the outcome of the statistical test.
 
@@ -75,7 +75,7 @@ From the results of your experiment, this recipe computes the statistics require
 
 * `AB testing statistics` : Statistics required to answer the statistical test
 
-### 4- AB testing results (custom web app)
+### 4- Results analysis (custom web app)
 
 From the `AB testing statistics` dataset, this web app gives a clear answer to the statistical test. Make sure to **refresh** the settings page when you open it.  
 
