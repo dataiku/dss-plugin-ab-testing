@@ -1,111 +1,112 @@
 {
-    "meta": {
-        "label": "Population split",
-        "description": "Split a list of users into a A group and a B group. The plugin also provides a visual webapp to help you choose the best configuration.",
-        "icon": "icon-beaker"
+  "meta": {
+    "label": "Population split",
+    "description": "Split a list of users into a A group and a B group. The plugin also provides a visual webapp to help you choose the best configuration.",
+    "icon": "icon-beaker",
+    "displayOrderRank": 1
+  },
+  "selectableFromDataset": "user_list",
+  "selectableFromFolder": "folder",
+  "kind": "PYTHON",
+  "inputRoles": [
+    {
+      "name": "user_list",
+      "label": "Population",
+      "description": "Dataset with the reference of the users involved in the experiment(ids, emails...)",
+      "arity": "UNARY",
+      "required": true,
+      "acceptsDataset": true
     },
-    "selectableFromDataset": "user_list",
-    "selectableFromFolder": "folder",
-    "kind": "PYTHON",
-    "inputRoles": [
+    {
+      "name": "folder",
+      "label": "Folder",
+      "description": "Folder containing the parameters",
+      "arity": "UNARY",
+      "required": false,
+      "acceptsDataset": false,
+      "acceptsManagedFolder": true
+    }
+  ],
+  "outputRoles": [
+    {
+      "name": "groups",
+      "label": "Experiment dataset",
+      "description": "Input dataset with an extra column containing the group",
+      "arity": "UNARY",
+      "required": true,
+      "acceptsDataset": true
+    }
+  ],
+  "paramsPythonSetup": "py/compute_files_in_folder.py",
+  "params": [
+    {
+      "name": "user_reference",
+      "type": "COLUMN",
+      "label": "User reference",
+      "description": "Column containing user reference (user Id , email...). Each user should have a unique reference.",
+      "columnRole": "user_list"
+    },
+    {
+      "type": "SELECT",
+      "name": "sample_size_definition",
+      "label": "Sample size definition",
+      "selectChoices": [
         {
-            "name": "user_list",
-            "label": "Population",
-            "description": "Dataset with the reference of the users involved in the experiment(ids, emails...)",
-            "arity": "UNARY",
-            "required": true,
-            "acceptsDataset": true
+          "value": "web_app",
+          "label": "Retrieve values from web app"
         },
         {
-            "name": "folder",
-            "label": "Folder",
-            "description": "Folder containing the parameters",
-            "arity": "UNARY",
-            "required": false,
-            "acceptsDataset": false,
-            "acceptsManagedFolder": true
+          "value": "manual",
+          "label": "Edit sample sizes manually "
         }
-    ],
-    "outputRoles": [
+      ],
+      "defaultValue": "web_app"
+    },
+    {
+      "name": "parameters",
+      "label": "Parameters (computed in the web app)",
+      "type": "SELECT",
+      "getChoicesFromPython": true,
+      "description": "Name of the JSON file",
+      "mandatory": false,
+      "visibilityCondition": "model.sample_size_definition == 'web_app'"
+    },
+    {
+      "type": "INT",
+      "name": "size_A",
+      "label": "Sample size for variation A",
+      "description": "Minimum sample size for the A group",
+      "visibilityCondition": "model.sample_size_definition == 'manual'"
+    },
+    {
+      "type": "INT",
+      "name": "size_B",
+      "label": "Sample size for variation B",
+      "description": "Minimum sample size for the B group",
+      "visibilityCondition": "model.sample_size_definition == 'manual'"
+    },
+    {
+      "type": "SELECT",
+      "name": "leftovers_handling",
+      "label": "Deal with leftover users",
+      "description": "If the population is greater than the sample size, this field specifies in which group the leftover users should go.",
+      "selectChoices": [
         {
-            "name": "groups",
-            "label": "Experiment dataset",
-            "description": "Input dataset with an extra column containing the group",
-            "arity": "UNARY",
-            "required": true,
-            "acceptsDataset": true
+          "value": "leftover_to_A",
+          "label": "Add them to group A"
+        },
+        {
+          "value": "leftover_to_B",
+          "label": "Add them to group B"
+        },
+        {
+          "value": "leftover_blank",
+          "label": "Leave blank"
         }
-    ],
-    "paramsPythonSetup": "py/compute_files_in_folder.py",
-    "params": [
-        {
-            "name": "user_reference",
-            "type": "COLUMN",
-            "label": "User reference",
-            "description": "Column containing user reference (user Id , email...). Each user should have a unique reference.",
-            "columnRole": "user_list"
-        },
-        {
-            "type": "SELECT",
-            "name": "sample_size_definition",
-            "label": "Sample size definition",
-            "selectChoices": [
-                {
-                    "value": "web_app",
-                    "label": "Retrieve values from web app"
-                },
-                {
-                    "value": "manual",
-                    "label": "Edit sample sizes manually "
-                }
-            ],
-            "defaultValue": "web_app"
-        },
-        {
-            "name": "parameters",
-            "label": "Parameters (computed in the web app)",
-            "type": "SELECT",
-            "getChoicesFromPython": true,
-            "description": "Name of the JSON file",
-            "mandatory": false,
-            "visibilityCondition": "model.sample_size_definition == 'web_app'"
-        },
-        {
-            "type": "INT",
-            "name": "size_A",
-            "label": "Sample size for variation A",
-            "description": "Minimum sample size for the A group",
-            "visibilityCondition": "model.sample_size_definition == 'manual'"
-        },
-        {
-            "type": "INT",
-            "name": "size_B",
-            "label": "Sample size for variation B",
-            "description": "Minimum sample size for the B group",
-            "visibilityCondition": "model.sample_size_definition == 'manual'"
-        },
-        {
-            "type": "SELECT",
-            "name": "leftovers_handling",
-            "label": "Deal with leftover users",
-            "description": "If the population is greater than the sample size, this field specifies in which group the leftover users should go.",
-            "selectChoices": [
-                {
-                    "value": "leftover_to_A",
-                    "label": "Add them to group A"
-                },
-                {
-                    "value": "leftover_to_B",
-                    "label": "Add them to group B"
-                },
-                {
-                    "value": "leftover_blank",
-                    "label": "Leave blank"
-                }
-            ],
-            "defaultValue": "leftover_to_A",
-            "visibilityCondition": true
-        }
-    ],
-    "resourceKeys": []
+      ],
+      "defaultValue": "leftover_to_A",
+      "visibilityCondition": true
+    }
+  ],
+  "resourceKeys": []
 }
