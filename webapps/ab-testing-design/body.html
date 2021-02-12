@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="/static/public/styles/1.0.0/dku-styles.css" />
+<link rel="stylesheet" href="/static/public/styles/1.0.0/fonts.css" />
+<link rel="stylesheet" href="/static/public/styles/1.0.0/variables.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/assets/css/docs.min.css">
+</link>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/css/select2.min.css">
+</link>
+<link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&amp;display=swap"
+    rel="stylesheet">
+</link>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/jstat/latest/jstat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+
+<script src="/plugins/ab-test-calculator/resource/js/form.js" type="text/javascript"></script>
+<script src="/plugins/ab-test-calculator/resource/js/display.js" type="text/javascript"></script>
+
+<script src="/plugins/ab-test-calculator/resource/js/visualisation/statistics.js" type="text/javascript"></script>
+<script src="/plugins/ab-test-calculator/resource/js/visualisation/chart.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/plugins/ab-test-calculator/webapps/ab-testing-design/style.css" />
+
+
+<body ng-app="abApp" ng-controller="SizeController">
+    <div class="d-flex justify-content-center dku-background" >
+        <div class="w-75">
+
+            <div ng-if="modal.type"
+             class="modal-background"
+             tabindex=0
+             ng-keyup="$event.keyCode == 27 && removeModal()"
+             ng-click="removeModal($event)">
+            </div>
+
+            <div  class="dku-white-form">
+                    <div class="title-sb" style="padding-bottom:16px">
+                        AB Testing - Sample size calculator
+                    </div>
+
+                    <div class="text">
+                        Compare two proportions : conversion rate, click through rate.
+                        <br>
+                        The average conversion rates of two independent samples A and B are compared. A is the
+                        control group while B is the experiment group.
+                        <br>
+                        We assume that the two samples follow binomial
+                        distributions.
+                    </div>
+            </div>
+
+            <div class="dku-white-form">
+                <div class="row">
+                    <div class="col-3 border-custom">
+                        <form id="form_data" name="ABTestForm">
+                            <table class="table_fields">
+                                <tr>
+                                    <td class="field">
+                                        <div class="text-r" for="bcr">Baseline success rate (%)
+                                            <button id="info_bcr" type="button" class="btn btn-link"
+                                                data-toggle="popover" title="Baseline success rate" data-content="The baseline success rate defines the current success rate of
+                                                the campaign or the page.
+                                                This is the success rate of the control group A.
+                                                It equals to the number of successes divided by the reach.">
+                                                [?] </button>
+                                        </div>
+                                        <input type="number" name="bcr" placeholder="Enter a value between 0 and 100" id="bcr" ng-model="bcr"
+                                            ng-change="computeSize(ABTestForm.$valid)" min="0" max="100" required style="margin-bottom:1rem" />
+                                        <div class="text-r dku-alert" ng-show="ABTestForm.bcr.$invalid" >
+                                            The baseline conversion rate needs to be between 0 and 100%.
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="field">
+                                        <div class="text-r" for="mde"> Minimal detectable effect (%)
+                                            <button id="info_mde" type="button" class="btn btn-link text"
+                                                data-toggle="popover" title="Minimal detectable effect"
+                                                data-content="The minimum detectable effect is the minimal variation of the
+                                            baseline conversion rate that you need to detect a statistically significant change."> [?] </button>
+                                        </div>
+                                        <input type="number" name="mde" placeholder="Enter a value between 0 and 100" id="mde" ng-model="mde"
+                                            ng-change="computeSize(ABTestForm.$valid)" min="0.001" max="100" required style="margin-bottom:1rem" />
+                                        <div class="text-r dku-alert" ng-show="ABTestForm.mde.$invalid" >
+                                            The minimum detectable effect needs to be strictly greater than 0 and below 100%.
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="field">
+                                        <button class="text-r" id="more" type="button" style="color:#2D86FB; background:none; border:none; padding: 0; margin: 0; box-shadow: none; text-shadow: none; box-sizing: border-box; outline: 0; cursor: pointer;">
+                                            <span>&#9660</span> advanced parameters
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table_fields d-none" id="optional_fields">
+                                <tr>
+                                    <td class="field" style="padding-top:0px;">
+                                        <div class="text-r" for="sig_level"> Statistical significance (%)
+                                            <button id="info_sig_level" type="button" class="btn btn-link text"
+                                                data-toggle="popover" title="Statistical significance" data-content="The statistical significance is the probability to find that the two
+                                            samples
+                                            have
+                                            the same
+                                            conversion rate (H0), when this is the case. It is therefore the
+                                            minimum
+                                            threshold
+                                            of the true
+                                            positive probability.
+                                            It equals to 1 -the type I error.
+                                            The most common values for the statistical significance are 95% and
+                                            90%. When it is set too low, the test may detect a non existent
+                                            change, while if it is too high, it is less likely to detect a
+                                            variation
+                                            when
+                                            there
+                                            is one."> [?]
+                                            </button>
+                                        </div>
+
+                                        <input type="number" name="sig_level" placeholder="Enter a value between 0 and 100" id="sig_level"
+                                            ng-model="sig_level" ng-change="computeSize(ABTestForm.$valid)" min="0.0001" max="99.99999" required style="margin-bottom:1rem"/>
+                                        <div class="text-r dku-alert" ng-show="ABTestForm.sig_level.$invalid" >
+                                            The significance level needs be strictly greater than 0 and below 100%.
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="field">
+                                        <div class="text-r" for="power"> Power (%)
+                                            <button id="info_power" type="button" class="btn btn-link text"
+                                                data-toggle="popover" title="Power" data-content="The power is the probability to find that the two samples have a
+                                            different
+                                            conversion rates (H1) when this
+                                            is the case. It is therefore the minimum threshold of the true
+                                            negative
+                                            probability.
+                                            It equals to 1- beta, with beta the type II error.
+                                            The most common value for power is 80%."> [?] </button>
+                                        </div>
+                                        <input type="number" name="power" placeholder="Enter a value between 0 and 100" id="power"
+                                            ng-model="power" ng-change="computeSize(ABTestForm.$valid)" min="0.0001" max="99.99999" required style="margin-bottom:1rem" />
+                                        <div class="text-r dku-alert" ng-show="ABTestForm.power.$invalid">
+                                            The power needs to be strictly greater than 0 and below 100%.
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="field">
+                                        <div class="text-r" for="ratio"> Size ratio (%)
+                                            <button id="info_ratio" type="button" class="btn btn-link text"
+                                                data-toggle="popover" title="Ratio" data-content="The ratio between the size of group B and the size of group A, given
+                                            that A
+                                            outnumbers B.
+                                            It is especially useful when you want to reduce the size of the
+                                            B
+                                            group, so
+                                            that fewer people
+                                            are impacted by the changes."> [?] </button>
+                                        </div>
+                                        <input type="number" name="ratio" placeholder="Enter a value between 0 and 100" id="ratio"
+                                            ng-model="ratio" ng-change="computeSize(ABTestForm.$valid)" min="0" max="100" required style="margin-bottom:1rem"  />
+                                        <div class="text-r dku-alert" ng-show="ABTestForm.ratio.$invalid">
+                                            The ratio needs to be between 0 and 100%.
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="field decrease-padding">
+                                        <div class="text-r" id="tail_label" for="tail">Two tailed test
+                                            <button id="info_tail" type="button" class="btn btn-link text"
+                                                data-toggle="popover" title="Two tailed test" data-content='
+                                                Are you willing to test for an increase in conversion rate, a
+                                                decrease,
+                                                or
+                                                even
+                                                both?
+
+                                                If you only want to determine if there is any difference between the
+                                                two
+                                                groups,
+                                                you
+                                                should use a
+                                                two-tailed test. It means that you are testing both for positive and
+                                                negative
+                                                differences.
+                                                However, if you only test in one direction, to find out for
+                                                instance,
+                                                whether
+                                                the
+                                                conversion rate is
+                                                higher
+                                                for B, you may want to use a one-tailed distribution. For instance,
+                                                if
+                                                you
+                                                test a
+                                                new
+                                                email template,
+                                                your major concern is whether it leads to more conversion.
+                                                A two-tailed test is not necessary since you are only interested in
+                                                positive
+                                                changes.'> [?] </button>
+                                        </div>
+                                        <select name="tail" id="tail" ng-model="tail" ng-change="computeSize(ABTestForm.$valid)">
+                                            <option value="false" class="alert">False</option>
+                                            <option value="true">True</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="table_fields">
+                                <tr>
+                                    <td class="field">
+                                        <div class="text-r" for="traffic">Daily number of people exposed
+                                            <button id="daily_number" type="button" class="btn btn-link"
+                                                data-toggle="popover" title="" data-content="">
+                                                </button>
+                                        </div>
+                                        <input type="number" name="traffic" placeholder="Optional" id="traffic"
+                                            ng-model="traffic" ng-change="computeSize(ABTestForm.$valid)" min="0" style="margin-bottom:1rem"/>
+                                        <div class="text-r dku-alert" ng-show="ABTestForm.traffic.$invalid" >
+                                            The traffic needs to be a positive number.
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="field">
+                                        <div class="text-r" for="reach"> Percentage of the traffic affected
+                                                <button id="pct_traffic" type="button" class="btn btn-link"
+                                                data-toggle="popover" title="" data-content="">
+                                                </button>
+                                        </div>
+                                        <input type="number" name="reach" placeholder="Enter a value between 0 and 100" id="reach" ng-model="reach"
+                                            ng-change="computeSize(ABTestForm.$valid)" min="0.0000001" max="100" required style="margin-bottom:1rem" />
+                                        <div class="text-r dku-alert" ng-show="ABTestForm.reach.$invalid" >
+                                            The reach rate needs to be between 0 and 100%.
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="col-9">
+                        <div class="small-title-sb"> Visualisation of the statistical test
+                            <button id="info_chart" type="button" class="btn btn-link text" data-toggle="popover"
+                                data-content="How likely is a change in the success rate?
+                                To answer this, we define two probability laws that model the likelihood of two potential outcomes or hypothesis called H. H0 represents a zero difference in the success rate.
+                                H1 assumes that the difference is equal to the minimum detectable effect.
+                                The confidence interval represents a threshold for the observed difference. If the observed difference is above threshold, we accept H1, which means that a change is measured. If below, no change is detected.
+                                The significance level represents the probability to wrongly measure a change. The power represents the probability to rightly detect a change.
+                                The computation of the sample size results from a trade-off between the significance level and the power. ">
+                                [?] </button>
+                        </div>
+                        <canvas class="w-100" id="chart"></canvas>
+                        <br><br>
+                        <div class="row">
+                            <div class="col small-title-sb"> Sample sizes </div>
+                            <div class="col text">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th id="A_header">A</th>
+                                            <th id="B_header">B</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="sample_size_A">{{ sample_size_A }}</td>
+                                            <td id="sample_size_B">{{ sample_size_B }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+
+                                <div class="col" id="save-button">
+                                    <div class="row justify-content-end">
+                                        <button id="attribution_button" ng-click="saveResults()" type="button" style="background-color:var(--blue); color: #ffffff; border: 1px solid transparent;     font-family: 'SourceSansPro'; text-transform: uppercase; font-size: 13px; font-weight: 500; padding: 3px 8px; margin: 0; line-height: 1.4; background-image: inherit; box-shadow: none; text-shadow: none; box-sizing: border-box; outline: 0; cursor: pointer;
+        height: 26px;">
+                                            Save sizes in the folder
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div>
+                                <div id="duration" class="d-none text-center text-sb" style="padding-top:16px">
+                                        This experiment should run for <span id="nb_of_days"></span> days
+                                </div>
+
+                            </div>
+
+                        <div class="d-none alert_recipe text-center text" id="attribution_alert">
+                            <div>
+                                The sample sizes were saved in the chosen managed folder.
+                                <br>
+                                You can create an AB split recipe from the AB testing plugin using that folder as input.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dku-white-form">
+                <div class="small-title-sb"> Confusion matrix </div>
+                <div class="row justify-content-md-center">
+                    <div class="col-10 confusion-matrix">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="text-sb">Predicted : No changes</th>
+                                    <th class="text-sb">Predicted : Significant changes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="confusion">
+                                    <td class="text-sb">Actual : No changes</td>
+                                    <td class="text">1 - \( \alpha = \) stat significance = <span>{{sig_level}}</span>%
+                                    </td>
+                                    <td class="text"> \( \alpha = \) false positive probability = <span>{{100-sig_level}}</span>% </td>
+                                </tr>
+                                <tr class="confusion">
+                                    <td class="text-sb">Actual : Significant changes</td>
+                                    <td class="text">\( \beta\) = false negative probability = <span>{{100-power}}</span>%</td>
+                                    <td class="text"> 1-\( \beta = \) power = <span>{{power}}% </span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dku-white-form">
+                <div class="text-center">
+                    <button id="size_derivation" type="button" class="btn btn-link">
+                        <div class='text extra'> How is the sample size computed? </div>
+                    </button>
+                <div class="d-none text" id="derivation_text">
+                    <h2 class="derivation_headers"> References </h2>
+                    <div class="derivation">
+                        <ul>
+                            <li> S. Holmes.
+                                <a href="http://statweb.stanford.edu/~susan/courses/s141/hopower.pdf" target="_blank">
+                                    POWER
+                                    and SAMPLE SIZE </a> <span class="bib"> Introduction to
+                                    Statistics for Biology and Biostatistics </span> (2004)
+                                </a>
+                            </li>
+                            <li>
+                                E. L. Lehmann and J.P. Romano. <span class="bib">Testing statistical
+                                    hypotheses.</span>
+                                Springer Science & Business Media (2006)
+                            </li>
+                            <li>
+                                V. Spokoiny and T. Dickhaus. <span class="bib">Basics of modern mathematical
+                                    statistics</span> Springer (2015)
+                            </li>
+                        </ul>
+                    </div>
+                    <h2 class="derivation_headers"> Test definition </h2>
+                    <div class="derivation">
+                        Let's define two groups, A and B. \(n_A\) samples are drawn from A, \(n_B\) samples are
+                        drawn
+                        from
+                        B.
+                    </div>
+                    <div class="derivation">
+                        \(X_i^A \sim B(p_A)\) is a random variable representing a sample from group A
+                    </div>
+                    <div class="derivation">
+                        \(X_i^B\sim B(p_B)\) is a random variable representing a sample from group B
+                    </div>
+                    <div class="derivation">
+                        Our goal is to compare \(p_A\) and \(p_B\). Depending on your use case, please choose one of
+                        these
+                        two simple hypothesis tests :
+                        <ul>
+                            <li>
+                                <span class="derivation">
+                                    A two-tailed test : \(H_0\) : \(p_A = p_B \), \(H_1\) : \(p_A \neq p_B \)
+                                </span>
+                            </li>
+                            <li>
+                                <span class="derivation">
+                                    A one-tailed test : \(H_0\) : \(p_A = p_B \), \(H_1\) : \(p_A < p_B \) </span>
+                            </li>
+                        </ul>
+                        We assume that all samples are independent so : $$T^A = \sum_{i=1}^{n_{A}} X_i^A \sim
+                        B(n_A,p_A)
+                        $$
+                        $$ T^B = \sum_{i=1}^{n_{B}} X_i^B \sim B(n_B,p_B) $$ We assume that \(T_A\) and \(T_B\) are
+                        independent and \(n_A\) and \(n_B\) are large enough for the
+                        theorem central limit theorem to apply.
+                    </div>
+                    <div class="derivation">
+                        According to the theorem central limit, \(T^A \sim N(p_A,n_Ap_A(1-p_A))\) and \(T^B \sim
+                        N(p_B,n_Bp_B(1-p_B))\)
+
+                    </div>
+                    <div class="derivation">
+                        \(\frac{T^A}{n_A}\) and \(\frac{T^B}{n_B}\) are minimum variance unbiased estimator for
+                        \(p_A\)
+                        and
+                        \(p_B\). If we want to test \(H_0\) : \(p_A = p_B \), it makes sense to choose a rejection
+                        region
+                        \(W = \{ |\frac{t^B}{n_B} - \frac{t^A}{n_A} | > t \}\)
+                        for a two-tailed test and \(W' = \{ \frac{t^B}{n_B} - \frac{t^A}{n_A} > t \}\) for a
+                        one-tailed
+                        test.
+                    </div>
+                    <div class="derivation">
+                        As \(T^A\) and \(T^B\) are independent: $$ \frac{T^B}{n_B} - \frac{T^A}{n_A} \sim N(p_B-p_A,
+                        \frac{p_A(1-p_A)}{n_A} + \frac{p_B(1-p_B)}{n_B} )$$ Under \(H_0\), \(p_A = p_B = p\), so :
+                        $$
+                        \frac{\frac{T^B}{n_B} - \frac{T^A}{n_A}}{\sqrt{p(1-p)(\frac{1}{n_A}
+                        + \frac{1}{n_B})}} \sim N(0,1) $$ \(p\) is unknown. However, under \(H_0\), \(\hat{p}=
+                        \frac{T_A+T_B}{n_A+n_B} \) is minimum variance unbiased estimator for \(p\). So this result
+                        is
+                        still
+                        valid when \(p\) is replaced with \(\hat{p}\).
+                    </div>
+                    <div class="derivation">
+                        Therefore, the test is built using the random variables \(U_0\) and \(U_1\). Under \(H_0\) :
+                        $$
+                        U_0
+                        = \frac{\frac{T^B}{n_B} -
+                        \frac{T^B}{n_B}}{\sqrt{\frac{T_A+T_B}{n_A+n_B}(1-\frac{T_A+T_B}{n_A +
+                        n_B})(\frac{1}{n_A} + \frac{1}{n_B})}} \sim N(0,1) $$ Under
+                        \(H_1\), the variance of \(U_1\) is the same as under \(H_0\) given the test definition. So
+                        :
+                        $$\frac{T^B}{n_B} - \frac{T^A}{n_A} \sim N(p_B-p_A,p(1-p)(\frac{1}{n_A} + \frac{1}{n_B}))$$
+                        $$U_1 =
+                        \frac{\frac{T^B}{n_B} - \frac{T^A}{n_A}
+                        - (p_B-p_A)}{\sqrt{\frac{T_A+T_B}{n_A+n_B}(1-\frac{T_A+T_B}{n_A + n_B})(\frac{1}{n_A} +
+                        \frac{1}{n_B})}} \sim N(0,1)$$
+                    </div>
+                    <h2 class="derivation_headers"> Sample size computation </h2>
+
+                    <div class="derivation">
+                        Let's define the random variable D : $$D = \frac{T^B}{n_B} - \frac{T^A}{n_A} $$
+
+                    </div>
+                    <div class="derivation">
+                        During the design of the experiment, you set minimum values for the statistical significance
+                        and
+                        the
+                        power, respectively \(1-\alpha\) and \(1-\beta\). The sample size is derived from these two
+                        constraints. For a two tailed test, let's find the threshold
+                        value t for the rejection region \(W = \{ |d| > t \}\), given that : $$ \left\{
+                        \begin{array}{ll}
+                        P_{H_{0}}(|D| \leq t) = 1-\alpha & (1) \\ P_{H_{1}}(|D| \leq t) = \beta & (2) \end{array}
+                        \right. $$
+                        Let's derive (1):
+                    </div>
+                    <div class="derivation">
+                        We want to find \(t\) such that \(P(|D| \leq t) = 1 - \alpha\ \).
+                    </div>
+                    <div class="derivation">
+
+                        \(U_0\ \sim N(0,1) \), \( \phi \) is the cumulative distribution function of a standard
+                        normal
+                        distribution. \(\forall x \in R, \) $$P(|U_0| \leq x) = 1 - \alpha$$ $$ \Leftrightarrow
+                        P(U_0\leq x)
+                        - P(U_0 \leq -x) = \phi(x) - (1-\phi(-x)) = 1-\alpha $$
+                        \( \phi \) is symetric so: $$ \Leftrightarrow 2\phi(x)-1= 1- \alpha $$ $$\Leftrightarrow
+                        \phi(x)
+                        =
+                        1- \frac{\alpha}{2}$$ $$ \Leftrightarrow x = \phi ^{-1}(1- \frac{\alpha}{2}) =
+                        z_{1-\frac{\alpha}{2}} $$ As a consequence : $$ P(|U_0|\leq
+                        z_{1-\frac{\alpha}{2}} ) = 1 - \alpha $$ As, \(U_0 = \frac{D}{\sigma _p} \), $$
+                        \Leftrightarrow
+                        P(|D| \leq z_{1-\frac{\alpha}{2}} \times \sigma_p ) = 1- \alpha $$ with \( \sigma _p^2 =
+                        \frac{p_A(1-p_A)}{n_A} + \frac{p_B(1-p_B)}{n_B}
+                        = \frac{p_A+p_B}{n_A+n_B}(1-\frac{p_A+p_B}{n_A + n_B})(\frac{1}{n_A} + \frac{1}{n_B}) \)
+                    </div>
+                    <div class="derivation">
+                        Given (1), $$ \Leftrightarrow t = z_{1-\frac{\alpha}{2}} \times \sigma_p $$
+                    </div>
+                    <div class="derivation">
+                        Consequently, $$(2) \Leftrightarrow P_{H_1}(|D| \leq z_{1-\frac{\alpha}{2}} \sigma_p ) =
+                        \beta
+                        $$ As
+                        \(U_1 = \frac{D - (p_B-p_A)}{\sigma _p}\) $$\Leftrightarrow P(U_1 \leq
+                        z_{1-\frac{\alpha}{2}} -
+                        \frac{(p_B-p_A)}{\sigma _p}) - P(U_1 \leq - z_{1-\frac{\alpha}{2}}
+                        - \frac{(p_B-p_A)}{\sigma _p}) = \beta $$ If we assume that \(\frac{p_B-p_A}{\sigma_p} \geq
+                        1\),
+                        then : $$ P(U_1\leq - z_{1-\frac{\alpha}{2}}- \frac{(p_B-p_A)}{\sigma_p}) \leq \phi(-1 -
+                        z_{1-\frac{\alpha}{2}}) \simeq 0 $$ So : $$ P(U_1
+                        \leq z_{1-\frac{\alpha}{2}} - \frac{(p_B-p_A)}{\sigma _p}) = \beta $$ Besides : \(\forall x
+                        \in
+                        R,
+                        \) $$ P(U_1 \leq x) = \beta\ $$ $$ \Leftrightarrow x = \phi ^{-1}(\beta) = z_{\beta} =
+                        -z_{1-\beta}
+                        $$ Hence, $$ z_{1-\frac{\alpha}{2}}
+                        - \frac{p_B - p_A}{\sigma _p} = z_{\beta} \quad (a) $$ Let's consider \( \sigma\ \), such as
+                        \(\sigma^2 = p(1-p) \) with \(p = \frac{p_A+p_B}{n_A+n_B} \), and r, the size ratio : \(r =
+                        \frac{n_B}{n_A}\) with \(n_B \leq n_A\) $$\sigma
+                        _p = \sqrt{p(1-p)(\frac{1}{n_A} + \frac{1}{n_B})} = \sqrt{\sigma^2 (\frac{1}{n_A} +
+                        \frac{1}{rn_A})
+                        } \quad (b) $$ Let's note \(\delta \), the minimum detectable effect, \(\delta = p_B-p_A \)
+                    </div>
+                    <div class="derivation">
+                        By combining \((a)\) and \((b)\), we obtain the following result for a two tailed test : $$
+                        n_A
+                        =
+                        \frac{r+1}{r} \frac{\sigma^2(z_{1-\frac{ \alpha}{2}}+ z_{1-\beta})^2}{\delta^2}$$ For a one
+                        tailed
+                        test : $$ n_A = \frac{r+1}{r} \frac{\sigma^2(z_{1-\alpha}+
+                        z_{1-\beta})^2}{\delta^2}$$
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        </div>
+    </div>
+</body>

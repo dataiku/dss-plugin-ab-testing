@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "label": "AB test sample size calculator",
+    "description": "Computing the minimum sample size needed for an AB test",
+    "icon": " icon-zoom-in"
+  },
+  "baseType": "STANDARD",
+  "hasBackend": "true",
+  "noJSSecurity": "true",
+  "standardWebAppLibraries": [
+    "dataiku",
+    "d3"
+  ],
+  "kind": "PYTHON",
+  "paramsPythonSetup": "py/webapp_helper.py",
+  "params": [
+    {
+      "name": "output_managed_folder",
+      "label": "Output folder for parameters",
+      "type": "SELECT",
+      "description": "Where do you want to save the parameters of the experiment?",
+      "getChoicesFromPython": true
+    },
+    {
+      "name": "output_new_folder_name",
+      "label": "Output folder name",
+      "type": "STRING",
+      "mandatory": true,
+      "visibilityCondition": "model.output_managed_folder == 'create_new_folder'"
+    }
+  ],
+  "roles": []
+}

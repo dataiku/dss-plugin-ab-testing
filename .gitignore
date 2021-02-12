@@ -2,7 +2,7 @@
 dist/
 .wlock
 .ts
-
+.idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -139,3 +139,11 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
+state.json
+
+#vs code
+.vscode/
+setup.cfg
+
+#Mac 
+.DS_Store

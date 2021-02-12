@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "label": "Experiment summary",
+    "description": "Analyze the result of an AB test experiment",
+    "icon": " icon-subscript",
+    "displayOrderRank": 2
+  },
+  "selectableFromDataset": "results",
+  "kind": "PYTHON",
+  "inputRoles": [
+    {
+      "name": "results",
+      "label": "Experiment results",
+      "description": "This dataset should contain the experiment's results at a user level. There should be group column and a conversion column.",
+      "arity": "UNARY",
+      "required": true,
+      "acceptsDataset": true
+    }
+  ],
+  "outputRoles": [
+    {
+      "name": "statistics",
+      "label": "AB testing statistics",
+      "description": "Statistics required to answer the statistical test",
+      "arity": "UNARY",
+      "required": true,
+      "acceptsDataset": true
+    }
+  ],
+  "params": [
+    {
+      "name": "user_reference",
+      "type": "COLUMN",
+      "label": "User reference",
+      "description": "Column containing user reference (user Id , email...). Each user should have a unique reference.",
+      "columnRole": "results"
+    },
+    {
+      "name": "conversion_column",
+      "type": "COLUMN",
+      "label": "Conversion column",
+      "description": "Column indicating if a user converted or not (Binary values)",
+      "columnRole": "results"
+    },
+    {
+      "name": "group_column",
+      "type": "COLUMN",
+      "label": "AB group column",
+      "description": "Column indicating to which group a user belongs (A or B)",
+      "columnRole": "results"
+    }
+  ],
+  "resourceKeys": []
+}
