@@ -1,24 +1,15 @@
-// compute duration
-function manage_duration($scope) {
-    if ($scope.traffic != undefined) {
-        display_experiment_duration($scope.hide_duration);
+function manage_duration(sample_size_A, sample_size_B, traffic) {
+    if (traffic) {
+        display_experiment_duration(sample_size_A, sample_size_B, traffic);
     } else {
         hide_field("duration");
     };
 }
 
 
-function display_experiment_duration() {
-    let duration = compute_duration();
+function display_experiment_duration(sample_size_A, sample_size_B, traffic) {
+    let sample_size = sample_size_A + sample_size_B
+    let duration = Math.ceil(sample_size / traffic);
     $("#nb_of_days").html(duration);
     $("#duration").removeClass('d-none');
-}
-
-
-function compute_duration() {
-    let daily_traffic = parseFloat($("#traffic").val());
-    let n_A = parseFloat($("#sample_size_A").html());
-    let n_B = parseFloat($("#sample_size_B").html());
-    let sample_size = n_A + n_B;
-    return Math.ceil(sample_size / daily_traffic);
 }

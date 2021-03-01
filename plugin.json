@@ -1,6 +1,6 @@
 {
     "id": "ab-test-calculator",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "meta": {
         "label": "AB test calculator",
         "description": "Design and analyse an AB test experiment",
