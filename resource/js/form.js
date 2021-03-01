@@ -1,5 +1,5 @@
 function manage_duration(sample_size_A, sample_size_B, traffic) {
-    if (traffic && traffic > 0) {
+    if (traffic) {
         display_experiment_duration(sample_size_A, sample_size_B, traffic);
     } else {
         hide_field("duration");
