@@ -64,7 +64,7 @@ app.controller("SizeController", function ($scope, $http, ModalService) {
                 $scope.sample_size_A = response_data.sample_size_A;
                 $scope.sample_size_B = response_data.sample_size_B;
                 update_chart($scope);
-                manage_duration($scope);
+                manage_duration($scope.sample_size_A, $scope.sample_size_B, $scope.traffic);
                 $("#attribution_alert").addClass("d-none");
             }, function(e) {
                 $scope.createModal.error(e.data);
