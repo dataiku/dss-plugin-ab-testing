@@ -93,3 +93,35 @@ From the `AB testing statistics` dataset, this web app gives a clear answer to t
 #### Output
 
 There is no output, but when you click on the button save results, the results are saved in the output folder. 
+
+# Release notes
+## Release 1.0.1
+- Fixed a bug : the duration of the experiment was not always properly updated
+
+## Release 1.0.0 
+### AB test size calculator web app
+- Include A/B tests for binomial metrics such as click through rate
+- Compute minimum sample sizes for two different variants 
+- Visualisation of the statistical test in a dynamic chart
+- Save the parameters of the experiment in a json, stored in a managed folder
+- Confusion matrix
+- Mathematical derivation of the sample size computation
+
+
+### Population split recipe
+- Split an input dataset into two groups
+- Use the json computed in the `AB test size calculator web app` to set the sizes of each group
+- Add the leftover users to group A, group B or leave blank
+
+### Summary recipe
+- Compute statistics for binomial metrics (success rates)
+- Conversion column should only contain 0 or 1
+- AB group column should only contain 2 unique values
+
+### AB test results analysis web app
+- Analyse results from the output dataset of the `summary recipe`
+- Manually edit sizes
+- Results are phrased in a text box
+- Visualisation of the results using the reject zone and the confidence interval
+- Save results in a json, stored in a managed folder
+
