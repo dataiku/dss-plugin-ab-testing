@@ -2,7 +2,9 @@
     "acceptedPythonInterpreters": [
         "PYTHON36",
         "PYTHON39",
-        "PYTHON311"
+        "PYTHON310",
+        "PYTHON311",
+        "PYTHON312"
     ],
     "corePackagesSet": "AUTO",
     "forceConda": false,
